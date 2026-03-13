@@ -1,0 +1,40 @@
+import { useState, useEffect, createContext, useContext, useCallback } from "react";
+
+const ToastContext = createContext(null);
+
+export function ToastProvider({ children }) {
+  const [toasts, setToasts] = useState([]);
+
+  const addToast = useCallback((message, type = "info", duration = 3000) => {
+    const id = Date.now() + Math.random();
+    setToasts((prev) => [...prev, { id, message, type }]);
+    setTimeout(() => setToasts((prev) => prev.filter((t) => t.id !== id)), duration);
+  }, []);
+
+  return (
+    <ToastContext.Provider value={addToast}>
+      {children}
+      <div className="fixed bottom-6 right-6 z-[100] flex flex-col gap-2 pointer-events-none">
+        {toasts.map((t) => (
+          <ToastItem key={t.id} toast={t} onDismiss={() => setToasts((prev) => prev.filter((x) => x.id !== t.id))} />
+        ))}
+      </div>
+    </ToastContext.Provider>
+  );
+}
+
+function ToastItem({ toast, onDismiss }) {
+  const bg = toast.type === "error" ? "bg-red-600" : toast.type === "success" ? "bg-green-600" : "bg-gray-700";
+  return (
+    <div className={`${bg} text-white px-5 py-3 rounded-xl shadow-lg animate-slide-up pointer-events-auto flex items-center gap-3 min-w-[260px]`}>
+      <span className="flex-1 text-sm">{toast.message}</span>
+      <button onClick={onDismiss} className="text-white/70 hover:text-white text-lg leading-none">&times;</button>
+    </div>
+  );
+}
+
+export function useToast() {
+  const ctx = useContext(ToastContext);
+  if (!ctx) throw new Error("useToast must be used within ToastProvider");
+  return ctx;
+}
