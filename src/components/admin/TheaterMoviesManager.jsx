@@ -15,11 +15,10 @@ export default function TheaterMoviesManager({ theaterId, onClose }) {
     const fetchData = async () => {
       try {
         setLoading(true);
-        
+
         const moviesRes = await get("/api/movies");
         setAllMovies(moviesRes.data || []);
 
-        
         const theaterRes = await get(`/api/theaters/${theaterId}/movies`);
         setTheater(theaterRes.data);
         setSelectedMovies((theaterRes.data.movies || []).map((m) => m._id));

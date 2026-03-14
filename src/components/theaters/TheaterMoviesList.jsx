@@ -38,20 +38,22 @@ export default function TheaterMoviesList({ theaterId, onMovieClick }) {
       {moviesList.length ? (
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
           {moviesList.map((m) => (
-            <div 
-              key={m._id || m} 
+            <div
+              key={m._id || m}
               onClick={() => handleMovieClick(m._id || m)}
               className="cursor-pointer"
             >
-              <MovieCard 
-                movie={typeof m === "string" ? { _id: m, name: m } : m} 
+              <MovieCard
+                movie={typeof m === "string" ? { _id: m, name: m } : m}
               />
             </div>
           ))}
         </div>
       ) : (
         <div className="bg-white rounded-xl border border-gray-200 p-8 text-center">
-          <p className="text-gray-600 font-medium">No movies assigned to this theater yet</p>
+          <p className="text-gray-600 font-medium">
+            No movies assigned to this theater yet
+          </p>
         </div>
       )}
     </div>

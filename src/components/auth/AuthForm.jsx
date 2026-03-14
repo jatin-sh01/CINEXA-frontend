@@ -4,7 +4,6 @@ import { useAuth } from "../../contexts/AuthContext";
 import { useToast } from "../Toast";
 import { primaryButton, inputField, cardForm } from "../../lib/uiPatterns";
 
-
 export default function AuthForm({ mode = "login", onSuccess }) {
   const { login, register } = useAuth();
   const toast = useToast();
@@ -34,14 +33,14 @@ export default function AuthForm({ mode = "login", onSuccess }) {
         toast("Account created!", "success");
       }
 
-      
       if (onSuccess) {
         onSuccess();
       } else {
         navigate("/");
       }
     } catch (err) {
-      const errorMsg = err.message || (isLogin ? "Login failed" : "Registration failed");
+      const errorMsg =
+        err.message || (isLogin ? "Login failed" : "Registration failed");
       toast(errorMsg, "error");
     } finally {
       setBusy(false);
@@ -61,13 +60,11 @@ export default function AuthForm({ mode = "login", onSuccess }) {
   const linkTarget = isLogin ? "Register" : "Sign In";
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className={cardForm}
-    >
-      <h1 className="text-2xl font-bold text-white text-center">{headingText}</h1>
+    <form onSubmit={handleSubmit} className={cardForm}>
+      <h1 className="text-2xl font-bold text-white text-center">
+        {headingText}
+      </h1>
 
-      
       {isRegister && (
         <input
           type="text"
@@ -79,7 +76,6 @@ export default function AuthForm({ mode = "login", onSuccess }) {
         />
       )}
 
-      
       <input
         type="email"
         placeholder="Email"
@@ -89,7 +85,6 @@ export default function AuthForm({ mode = "login", onSuccess }) {
         className={inputField}
       />
 
-      
       <input
         type="password"
         placeholder={isRegister ? "Password (min 6 chars)" : "Password"}
@@ -100,7 +95,6 @@ export default function AuthForm({ mode = "login", onSuccess }) {
         className={inputField}
       />
 
-      
       <button
         disabled={busy}
         className={`${primaryButton} w-full disabled:opacity-50 disabled:cursor-not-allowed`}
@@ -108,10 +102,12 @@ export default function AuthForm({ mode = "login", onSuccess }) {
         {buttonText}
       </button>
 
-      
       <p className="text-gray-400 text-sm text-center">
         {linkText}{" "}
-        <Link to={linkHref} className="text-purple-400 hover:underline font-medium">
+        <Link
+          to={linkHref}
+          className="text-purple-400 hover:underline font-medium"
+        >
           {linkTarget}
         </Link>
       </p>

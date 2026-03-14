@@ -56,7 +56,9 @@ export default function AdminTheaters() {
       <div className="mb-8 flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold text-gray-900 mb-2">Theaters</h1>
-          <p className="text-gray-600">Manage theaters and their movie lineups.</p>
+          <p className="text-gray-600">
+            Manage theaters and their movie lineups.
+          </p>
         </div>
         <button
           onClick={openCreate}
@@ -85,16 +87,29 @@ export default function AdminTheaters() {
             <table className="w-full text-sm">
               <thead className="bg-gray-50 border-b border-gray-200">
                 <tr>
-                  <th className="text-left px-6 py-4 font-semibold text-gray-900">Theater Name</th>
-                  <th className="text-left px-6 py-4 font-semibold text-gray-900">Location</th>
-                  <th className="text-left px-6 py-4 font-semibold text-gray-900">Screens</th>
-                  <th className="text-left px-6 py-4 font-semibold text-gray-900">Actions</th>
+                  <th className="text-left px-6 py-4 font-semibold text-gray-900">
+                    Theater Name
+                  </th>
+                  <th className="text-left px-6 py-4 font-semibold text-gray-900">
+                    Location
+                  </th>
+                  <th className="text-left px-6 py-4 font-semibold text-gray-900">
+                    Screens
+                  </th>
+                  <th className="text-left px-6 py-4 font-semibold text-gray-900">
+                    Actions
+                  </th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200">
                 {theaters.map((t) => (
-                  <tr key={t._id || t.id} className="hover:bg-gray-50 transition">
-                    <td className="px-6 py-4 font-medium text-gray-900">{t.name}</td>
+                  <tr
+                    key={t._id || t.id}
+                    className="hover:bg-gray-50 transition"
+                  >
+                    <td className="px-6 py-4 font-medium text-gray-900">
+                      {t.name}
+                    </td>
                     <td className="px-6 py-4 text-gray-600">
                       <div className="flex items-center gap-2">
                         <FiMapPin size={16} className="text-gray-400" />
@@ -104,7 +119,9 @@ export default function AdminTheaters() {
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-2">
                         <FiMonitor size={16} className="text-gray-400" />
-                        <span className="text-gray-600">{t.totalScreens || 1}</span>
+                        <span className="text-gray-600">
+                          {t.totalScreens || 1}
+                        </span>
                       </div>
                     </td>
                     <td className="px-6 py-4">
@@ -124,7 +141,10 @@ export default function AdminTheaters() {
                 ))}
                 {!theaters.length && !loading && (
                   <tr>
-                    <td colSpan={4} className="px-6 py-12 text-center text-gray-500">
+                    <td
+                      colSpan={4}
+                      className="px-6 py-12 text-center text-gray-500"
+                    >
                       No theaters found
                     </td>
                   </tr>

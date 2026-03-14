@@ -12,7 +12,7 @@ export default function AuthModal({ onClose }) {
   const toast = useToast();
   const navigate = useNavigate();
 
-  const [mode, setMode] = useState("login"); 
+  const [mode, setMode] = useState("login");
   const [form, setForm] = useState({ name: "", email: "", password: "" });
   const [busy, setBusy] = useState(false);
   const [showTerms, setShowTerms] = useState(false);
@@ -51,16 +51,13 @@ export default function AuthModal({ onClose }) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
-      
       <div
         className="absolute inset-0 bg-black/50 backdrop-blur-sm"
         onClick={onClose}
         aria-hidden="true"
       />
 
-      
       <div className="relative z-10 bg-white rounded-2xl shadow-2xl w-full max-w-md mx-4 p-8 animate-slide-up">
-        
         <button
           onClick={onClose}
           aria-label="Close"
@@ -69,14 +66,12 @@ export default function AuthModal({ onClose }) {
           <FiX size={18} />
         </button>
 
-        
         <div className="text-center mb-6">
           <div className="inline-block text-gray-900">
             <CinexaLogo className="h-7 w-auto" />
           </div>
         </div>
 
-        
         <h2 className="text-xl font-bold text-gray-900 text-center">
           {mode === "login" ? "Sign in to your account" : "Create your account"}
         </h2>
@@ -86,7 +81,6 @@ export default function AuthModal({ onClose }) {
             : "Join Cinexa for the best movie booking experience"}
         </p>
 
-        
         <form onSubmit={handleSubmit} className="space-y-4">
           {mode === "register" && (
             <input
@@ -130,7 +124,6 @@ export default function AuthModal({ onClose }) {
           </button>
         </form>
 
-        
         <p className="text-xs text-gray-500 text-center mt-5">
           {mode === "login" ? (
             <>
@@ -173,7 +166,6 @@ export default function AuthModal({ onClose }) {
         </p>
       </div>
 
-      
       <ContentModal
         isOpen={showTerms}
         onClose={() => setShowTerms(false)}

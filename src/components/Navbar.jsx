@@ -43,15 +43,12 @@ export default function Navbar() {
 
   return (
     <>
-      
       <nav className="sticky top-0 z-40 bg-white shadow-sm">
         <div className="w-full px-2 sm:px-2 lg:px-6 xl:px-10 flex items-center h-14 lg:h-16 gap-6 lg:gap-8">
-          
           <Link to="/" className="shrink-0">
             <CinexaLogo className="h-6 lg:h-7 w-auto text-gray-900" />
           </Link>
 
-          
           <div className="hidden lg:flex items-center gap-12 text-sm font-medium mx-auto ml-16">
             <NavLink to="/" end className={navLinkClass}>
               Home
@@ -69,10 +66,8 @@ export default function Navbar() {
             )}
           </div>
 
-          
           <div className="flex-1" />
 
-          
           <form
             onSubmit={handleSearch}
             className="hidden lg:flex items-center relative w-72 lg:w-80"
@@ -90,7 +85,6 @@ export default function Navbar() {
             />
           </form>
 
-          
           <div className="flex lg:hidden items-center gap-3">
             <button
               aria-label="Search"
@@ -107,7 +101,6 @@ export default function Navbar() {
             </button>
           </div>
 
-          
           {user ? (
             <button
               onClick={() => setShowProfile(true)}
@@ -127,9 +120,6 @@ export default function Navbar() {
           )}
         </div>
 
-        
-
-        
         {mobileSearch && (
           <div className="lg:hidden px-4 py-2 bg-white border-b border-gray-100">
             <form onSubmit={handleSearch} className="relative">
@@ -150,7 +140,6 @@ export default function Navbar() {
         )}
       </nav>
 
-      
       <div className="lg:hidden fixed bottom-0 inset-x-0 z-40 bg-white border-t border-gray-200 safe-bottom">
         <div className="flex items-center justify-around h-14 px-2">
           <NavLink to="/" end className={bottomLinkClass}>
@@ -195,10 +184,8 @@ export default function Navbar() {
         </div>
       </div>
 
-      
       {showAuth && <AuthModal onClose={() => setShowAuth(false)} />}
 
-      
       {showProfile && (
         <ProfileSidebar
           user={user}

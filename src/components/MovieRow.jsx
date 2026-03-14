@@ -3,7 +3,6 @@ import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 
 import MovieCard from "./MovieCard";
 
-
 const MovieRow = memo(function MovieRow({
   title,
   movies = [],
@@ -48,7 +47,6 @@ const MovieRow = memo(function MovieRow({
         </div>
       ) : (
         <div className="relative group/row">
-          
           <button
             onClick={() => scroll("left")}
             aria-label={`Scroll ${title} left`}
@@ -69,10 +67,7 @@ const MovieRow = memo(function MovieRow({
             className="flex gap-md lg:gap-lg overflow-x-auto scrollbar-hide scroll-smooth pb-sm"
           >
             {movies.map((movie) => (
-              <div
-                key={movie.id}
-                className="shrink-0 w-37.5 sm:w-42.5"
-              >
+              <div key={movie.id} className="shrink-0 w-37.5 sm:w-42.5">
                 <MovieCard movie={movie} onClick={onCardClick} />
               </div>
             ))}

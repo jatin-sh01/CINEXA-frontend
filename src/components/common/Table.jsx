@@ -1,21 +1,18 @@
-
-
-import { useState, useMemo } from 'react';
-import { uiPatterns } from '../../lib/uiPatterns';
+import { useState, useMemo } from "react";
+import { uiPatterns } from "../../lib/uiPatterns";
 
 export default function Table({
   data = [],
   columns = [],
   onRowSelect,
   loading = false,
-  emptyMessage = 'No data available',
+  emptyMessage = "No data available",
   selectable = true,
 }) {
   const [selectedRows, setSelectedRows] = useState(new Set());
   const [sortBy, setSortBy] = useState(null);
-  const [sortDir, setSortDir] = useState('asc');
+  const [sortDir, setSortDir] = useState("asc");
 
-  
   const sortedData = useMemo(() => {
     if (!sortBy) return data;
 
@@ -23,13 +20,13 @@ export default function Table({
       const aVal = a[sortBy];
       const bVal = b[sortBy];
 
-      if (typeof aVal === 'number' && typeof bVal === 'number') {
-        return sortDir === 'asc' ? aVal - bVal : bVal - aVal;
+      if (typeof aVal === "number" && typeof bVal === "number") {
+        return sortDir === "asc" ? aVal - bVal : bVal - aVal;
       }
 
-      const aStr = String(aVal || '').toLowerCase();
-      const bStr = String(bVal || '').toLowerCase();
-      return sortDir === 'asc'
+      const aStr = String(aVal || "").toLowerCase();
+      const bStr = String(bVal || "").toLowerCase();
+      return sortDir === "asc"
         ? aStr.localeCompare(bStr)
         : bStr.localeCompare(aStr);
     });
@@ -37,17 +34,15 @@ export default function Table({
     return sorted;
   }, [data, sortBy, sortDir]);
 
-  
   const handleSort = (key) => {
     if (sortBy === key) {
-      setSortDir(sortDir === 'asc' ? 'desc' : 'asc');
+      setSortDir(sortDir === "asc" ? "desc" : "asc");
     } else {
       setSortBy(key);
-      setSortDir('asc');
+      setSortDir("asc");
     }
   };
 
-  
   const handleSelectAll = (e) => {
     if (e.target.checked) {
       const allIds = new Set(data.map((row) => row.id));
@@ -59,7 +54,6 @@ export default function Table({
     }
   };
 
-  
   const handleSelectRow = (id, checked) => {
     const next = new Set(selectedRows);
     if (checked) {
@@ -73,7 +67,9 @@ export default function Table({
 
   if (loading) {
     return (
-      <div className={`${uiPatterns.card} ${uiPatterns.cardInset} text-center py-8`}>
+      <div
+        className={`${uiPatterns.card} ${uiPatterns.cardInset} text-center py-8`}
+      >
         <div className={uiPatterns.spinner} />
         <p className={`${uiPatterns.bodySmall} mt-2`}>Loading...</p>
       </div>
@@ -82,7 +78,9 @@ export default function Table({
 
   if (data.length === 0) {
     return (
-      <div className={`${uiPatterns.card} ${uiPatterns.cardInset} text-center py-12`}>
+      <div
+        className={`${uiPatterns.card} ${uiPatterns.cardInset} text-center py-12`}
+      >
         <p className={uiPatterns.bodySmall}>{emptyMessage}</p>
       </div>
     );
@@ -108,16 +106,18 @@ export default function Table({
               <th
                 key={col.key}
                 className={`${uiPatterns.tableHeadCell} ${
-                  col.sortable ? uiPatterns.tableHeadCellSortable : ''
+                  col.sortable ? uiPatterns.tableHeadCellSortable : ""
                 }`}
                 onClick={() => col.sortable && handleSort(col.key)}
-                role={col.sortable ? 'button' : undefined}
+                role={col.sortable ? "button" : undefined}
                 tabIndex={col.sortable ? 0 : undefined}
               >
                 <div className="flex items-center gap-2">
                   {col.label}
                   {col.sortable && sortBy === col.key && (
-                    <span className="text-xs">{sortDir === 'asc' ? '↑' : '↓'}</span>
+                    <span className="text-xs">
+                      {sortDir === "asc" ? "↑" : "↓"}
+                    </span>
                   )}
                 </div>
               </th>

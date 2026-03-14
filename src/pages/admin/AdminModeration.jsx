@@ -1,5 +1,3 @@
-
-
 import { useState, useMemo } from "react";
 import { FiAlertTriangle, FiCheck, FiX, FiTrash2 } from "react-icons/fi";
 import usePaginatedFetch from "../../hooks/usePaginatedFetch";
@@ -31,7 +29,6 @@ export default function AdminModeration() {
     refetch,
   } = usePaginatedFetch(() => adminApi.getUsers(), ITEMS_PER_PAGE);
 
-  
   const filteredUsers = useMemo(() => {
     return users
       .filter((user) => {
@@ -42,7 +39,7 @@ export default function AdminModeration() {
         const matchStatus = !statusFilter || user.userStatus === statusFilter;
         return matchSearch && matchStatus;
       })
-      .slice(0, 50); 
+      .slice(0, 50);
   }, [users, search, statusFilter]);
 
   const confirmAction = async () => {
@@ -145,7 +142,6 @@ export default function AdminModeration() {
         />
       </div>
 
-      
       <div className="grid sm:grid-cols-4 gap-4 mb-6">
         {[
           {

@@ -10,7 +10,6 @@ export default function Home() {
   const navigate = useNavigate();
   const { hero, sections, languages, genres, loading } = useHomeData();
 
-  
   const [selected, setSelected] = useState({ languages: [], genres: [] });
 
   const handleToggle = useCallback((type, value) => {
@@ -25,7 +24,6 @@ export default function Home() {
     });
   }, []);
 
-  
   const filteredSections = useMemo(() => {
     const hasFilters = selected.languages.length || selected.genres.length;
     if (!hasFilters) return sections;
@@ -53,10 +51,8 @@ export default function Home() {
 
   return (
     <div className="bg-white min-h-screen">
-      
       <HeroBanner items={hero} />
 
-      
       <Filters
         languages={languages}
         genres={genres}
@@ -64,7 +60,6 @@ export default function Home() {
         onToggle={handleToggle}
       />
 
-      
       {filteredSections.map((section) => (
         <MovieRow
           key={section.title}

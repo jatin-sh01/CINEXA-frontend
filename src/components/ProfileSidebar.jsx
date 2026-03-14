@@ -19,16 +19,13 @@ export default function ProfileSidebar({ user, onClose, onLogout }) {
 
   return (
     <div className="fixed inset-0 z-50 flex justify-end">
-      
       <div
         className="absolute inset-0 bg-black/40 backdrop-blur-sm"
         onClick={onClose}
         aria-hidden="true"
       />
 
-      
       <div className="relative z-10 w-full max-w-sm bg-white h-full shadow-2xl animate-slide-in-right flex flex-col">
-        
         <div className="flex items-center gap-3 px-5 py-4 border-b border-gray-100">
           <button
             onClick={onClose}
@@ -40,7 +37,6 @@ export default function ProfileSidebar({ user, onClose, onLogout }) {
           <h2 className="text-lg font-semibold text-gray-900">Profile</h2>
         </div>
 
-        
         <div className="flex items-center gap-4 px-5 py-5">
           <div className="w-14 h-14 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center text-xl font-bold shrink-0">
             {initial}
@@ -55,9 +51,7 @@ export default function ProfileSidebar({ user, onClose, onLogout }) {
           </div>
         </div>
 
-        
         <div className="flex-1 overflow-y-auto px-3">
-          
           <SidebarLink
             to="/dashboard"
             icon={<FiFileText size={18} />}
@@ -65,7 +59,6 @@ export default function ProfileSidebar({ user, onClose, onLogout }) {
             onClick={onClose}
           />
 
-          
           <SectionTitle>Support</SectionTitle>
           <SidebarLink
             to="/dashboard"
@@ -74,14 +67,15 @@ export default function ProfileSidebar({ user, onClose, onLogout }) {
             onClick={onClose}
           />
 
-          
           <SectionTitle>More</SectionTitle>
           <button
             onClick={() => setShowTerms(true)}
             className="w-full flex items-center justify-between px-4 py-3 rounded-xl text-gray-700 hover:bg-gray-50 transition"
           >
             <div className="flex items-center gap-3 text-sm font-medium">
-              <span className="text-gray-500"><FiHelpCircle size={18} /></span>
+              <span className="text-gray-500">
+                <FiHelpCircle size={18} />
+              </span>
               Terms & Conditions
             </div>
             <FiChevronRight size={16} className="text-gray-400" />
@@ -91,14 +85,15 @@ export default function ProfileSidebar({ user, onClose, onLogout }) {
             className="w-full flex items-center justify-between px-4 py-3 rounded-xl text-gray-700 hover:bg-gray-50 transition"
           >
             <div className="flex items-center gap-3 text-sm font-medium">
-              <span className="text-gray-500"><FiShield size={18} /></span>
+              <span className="text-gray-500">
+                <FiShield size={18} />
+              </span>
               Privacy Policy
             </div>
             <FiChevronRight size={16} className="text-gray-400" />
           </button>
         </div>
 
-        
         <div className="px-3 pb-5">
           <button
             onClick={() => {
@@ -113,7 +108,6 @@ export default function ProfileSidebar({ user, onClose, onLogout }) {
         </div>
       </div>
 
-      
       <ContentModal
         isOpen={showTerms}
         onClose={() => setShowTerms(false)}

@@ -3,7 +3,6 @@ import { useNavigate, Link } from "react-router-dom";
 import { formatDate } from "../utils/format";
 import { badgeSuccess, badgeWarning, badgeError } from "../lib/uiPatterns";
 
-
 const MovieCard = memo(function MovieCard({
   movie,
   size = "md",
@@ -13,7 +12,6 @@ const MovieCard = memo(function MovieCard({
 }) {
   const navigate = useNavigate();
 
-  
   const id = movie._id || movie.id;
   const title = movie.name || movie.title;
   const posterUrl = movie.poster || movie.posterUrl;
@@ -23,13 +21,11 @@ const MovieCard = memo(function MovieCard({
   const certificate = movie.certificate || "";
   const badges = movie.badges || [];
 
-  
   const handleClick = useCallback(() => {
     if (onClick) return onClick(id);
     if (useNavigateProp && id) navigate(`/movies/${id}`);
   }, [id, onClick, navigate, useNavigateProp]);
 
-  
   const handleKeyDown = useCallback(
     (e) => {
       if ((e.key === "Enter" || e.key === " ") && !useLink) {
@@ -40,7 +36,6 @@ const MovieCard = memo(function MovieCard({
     [handleClick, useLink],
   );
 
-  
   const getStatusBadgeClass = (status) => {
     switch (status) {
       case "RELEASED":
@@ -53,7 +48,6 @@ const MovieCard = memo(function MovieCard({
     }
   };
 
-  
   const getTitleClass = () => {
     switch (size) {
       case "sm":
@@ -65,7 +59,6 @@ const MovieCard = memo(function MovieCard({
     }
   };
 
-  
   const PosterSection = () => (
     <div className="aspect-2/3 rounded-xl overflow-hidden bg-neutral-200 shadow-sm hover:shadow-lg transition-shadow duration-300">
       {posterUrl ? (
@@ -83,12 +76,10 @@ const MovieCard = memo(function MovieCard({
     </div>
   );
 
-  
   const InfoSection = () => (
     <div className="mt-2 px-0.5">
       <h3 className={getTitleClass()}>{title}</h3>
 
-      
       <p className="text-xs text-neutral-600 mt-1 truncate">
         {certificate && <span>{certificate}</span>}
         {certificate && language && <span className="mx-1">•</span>}
@@ -96,34 +87,39 @@ const MovieCard = memo(function MovieCard({
         {!certificate && !language && releaseDate && formatDate(releaseDate)}
       </p>
 
-      
       {badges && badges.length > 0 ? (
         <div className="flex gap-1 mt-2 flex-wrap">
           {badges.map((badge) => (
-            <span key={badge} className={`${badgeSuccess} text-[10px] px-2 py-1`}>
+            <span
+              key={badge}
+              className={`${badgeSuccess} text-[10px] px-2 py-1`}
+            >
               {badge}
             </span>
           ))}
         </div>
       ) : releaseStatus ? (
-        <span className={`${getStatusBadgeClass(releaseStatus)} text-[10px] px-2 py-1 mt-2 inline-block`}>
+        <span
+          className={`${getStatusBadgeClass(releaseStatus)} text-[10px] px-2 py-1 mt-2 inline-block`}
+        >
           {releaseStatus.replace("_", " ")}
         </span>
       ) : null}
     </div>
   );
 
-  
   if (useLink && id) {
     return (
-      <Link to={`/movies/${id}`} className="group block hover:opacity-90 transition">
+      <Link
+        to={`/movies/${id}`}
+        className="group block hover:opacity-90 transition"
+      >
         <PosterSection />
         <InfoSection />
       </Link>
     );
   }
 
-  
   return (
     <div
       className="group block cursor-pointer hover:opacity-90 transition"

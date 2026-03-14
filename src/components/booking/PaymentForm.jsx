@@ -27,16 +27,37 @@ export default function PaymentForm({ booking, showId, onSuccess }) {
     }
   };
 
-  const selectCls = "w-full px-4 py-2.5 rounded-lg bg-gray-800 text-white border border-gray-700 focus:border-purple-500 focus:outline-none text-sm";
+  const selectCls =
+    "w-full px-4 py-2.5 rounded-lg bg-gray-800 text-white border border-gray-700 focus:border-purple-500 focus:outline-none text-sm";
 
   return (
     <div className="space-y-4">
       <h3 className="text-white font-semibold">Payment</h3>
-      <p className="text-gray-400 text-sm">Amount: <strong className="text-white">{Number(booking.totalCost).toLocaleString("en-IN", { style: "currency", currency: "INR" })}</strong></p>
-      <select value={method} onChange={(e) => setMethod(e.target.value)} className={selectCls}>
-        {METHODS.map((m) => <option key={m} value={m}>{m.replace(/_/g, " ")}</option>)}
+      <p className="text-gray-400 text-sm">
+        Amount:{" "}
+        <strong className="text-white">
+          {Number(booking.totalCost).toLocaleString("en-IN", {
+            style: "currency",
+            currency: "INR",
+          })}
+        </strong>
+      </p>
+      <select
+        value={method}
+        onChange={(e) => setMethod(e.target.value)}
+        className={selectCls}
+      >
+        {METHODS.map((m) => (
+          <option key={m} value={m}>
+            {m.replace(/_/g, " ")}
+          </option>
+        ))}
       </select>
-      <button onClick={handlePay} disabled={busy} className="w-full py-2 sm:py-3 text-sm sm:text-base rounded-lg bg-green-600 hover:bg-green-500 text-white font-semibold disabled:opacity-50">
+      <button
+        onClick={handlePay}
+        disabled={busy}
+        className="w-full py-2 sm:py-3 text-sm sm:text-base rounded-lg bg-green-600 hover:bg-green-500 text-white font-semibold disabled:opacity-50"
+      >
         {busy ? "Processing\u2026" : "Pay Now"}
       </button>
     </div>

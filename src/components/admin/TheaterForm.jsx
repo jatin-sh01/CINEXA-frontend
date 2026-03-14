@@ -1,7 +1,14 @@
 import { useState, useEffect } from "react";
 import { post, patch, del, get } from "../../api";
 import { useToast } from "../Toast";
-import { FiMapPin, FiFileText, FiGrid, FiTrash2, FiSave, FiFilm } from "react-icons/fi";
+import {
+  FiMapPin,
+  FiFileText,
+  FiGrid,
+  FiTrash2,
+  FiSave,
+  FiFilm,
+} from "react-icons/fi";
 
 const empty = {
   name: "",
@@ -67,7 +74,7 @@ export default function TheaterForm({ theater, onSaved }) {
         setSelectedMovies(
           assignedMovies
             .map((movie) => (typeof movie === "string" ? movie : movie?._id))
-            .filter(Boolean)
+            .filter(Boolean),
         );
         setMoviesReady(true);
       } catch (err) {
@@ -88,7 +95,7 @@ export default function TheaterForm({ theater, onSaved }) {
     setSelectedMovies((prev) =>
       prev.includes(movieId)
         ? prev.filter((id) => id !== movieId)
-        : [...prev, movieId]
+        : [...prev, movieId],
     );
   };
 
@@ -125,7 +132,8 @@ export default function TheaterForm({ theater, onSaved }) {
 
   const handleDelete = async () => {
     if (!theater) return;
-    if (!window.confirm("Delete this theater? This action cannot be undone.")) return;
+    if (!window.confirm("Delete this theater? This action cannot be undone."))
+      return;
     setBusy(true);
     try {
       await del(`/api/theaters/${theater._id}`);
@@ -146,7 +154,8 @@ export default function TheaterForm({ theater, onSaved }) {
   const filledLocation = [form.city, form.pincode].filter(Boolean).join(" - ");
   const summaryName = form.name?.trim() || "Untitled theater";
   const summaryLocation = filledLocation || "Location not set";
-  const summaryScreens = Number(form.totalScreens) > 0 ? Number(form.totalScreens) : 1;
+  const summaryScreens =
+    Number(form.totalScreens) > 0 ? Number(form.totalScreens) : 1;
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
@@ -158,11 +167,15 @@ export default function TheaterForm({ theater, onSaved }) {
         <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
           <div className="rounded-xl bg-white/90 px-3 py-2 border border-purple-100">
             <p className="text-xs text-gray-500">Location</p>
-            <p className="text-sm font-semibold text-gray-800">{summaryLocation}</p>
+            <p className="text-sm font-semibold text-gray-800">
+              {summaryLocation}
+            </p>
           </div>
           <div className="rounded-xl bg-white/90 px-3 py-2 border border-purple-100">
             <p className="text-xs text-gray-500">Screens</p>
-            <p className="text-sm font-semibold text-gray-800">{summaryScreens}</p>
+            <p className="text-sm font-semibold text-gray-800">
+              {summaryScreens}
+            </p>
           </div>
         </div>
       </div>
@@ -198,7 +211,9 @@ export default function TheaterForm({ theater, onSaved }) {
             rows={3}
             className={inputCls}
           />
-          <p className={helpCls}>Optional: amenities, highlights, or internal notes.</p>
+          <p className={helpCls}>
+            Optional: amenities, highlights, or internal notes.
+          </p>
         </div>
 
         <div>
@@ -262,7 +277,8 @@ export default function TheaterForm({ theater, onSaved }) {
                 Movies In This Theater
               </h4>
               <p className="mt-1 text-xs text-gray-500">
-                Select movies to include in this theater lineup. Changes are saved when you click Update Theater.
+                Select movies to include in this theater lineup. Changes are
+                saved when you click Update Theater.
               </p>
             </div>
             <span className="rounded-full border border-purple-200 bg-purple-50 px-2.5 py-1 text-xs font-semibold text-purple-700">
@@ -288,7 +304,9 @@ export default function TheaterForm({ theater, onSaved }) {
                     className="h-4 w-4 rounded border-gray-300 text-purple-600 focus:ring-purple-500"
                   />
                   <div className="min-w-0">
-                    <p className="text-sm font-medium text-gray-900 truncate">{movie.name}</p>
+                    <p className="text-sm font-medium text-gray-900 truncate">
+                      {movie.name}
+                    </p>
                     <p className="text-xs text-gray-500">
                       {movie.language || "Language N/A"}
                       {movie.releaseStatus ? ` • ${movie.releaseStatus}` : ""}

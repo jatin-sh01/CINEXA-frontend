@@ -22,15 +22,11 @@ export default function TheaterList() {
   return (
     <section className="min-h-screen bg-white px-4 py-12">
       <div className="max-w-7xl mx-auto">
-        
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">
-            Theaters
-          </h1>
+          <h1 className="text-4xl font-bold text-gray-900 mb-2">Theaters</h1>
           <p className="text-gray-600 text-sm">Discover cinemas near you</p>
         </div>
 
-        
         <div className="flex gap-3 mb-8 flex-col sm:flex-row">
           <div className="flex-1 relative">
             <FiSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
@@ -52,7 +48,6 @@ export default function TheaterList() {
           </div>
         </div>
 
-        
         {loading ? (
           <Spinner />
         ) : error ? (
@@ -63,7 +58,8 @@ export default function TheaterList() {
           <>
             {theaters.length > 0 && (
               <p className="text-gray-600 text-sm mb-6">
-                Showing {theaters.length} theater{theaters.length !== 1 ? "s" : ""}
+                Showing {theaters.length} theater
+                {theaters.length !== 1 ? "s" : ""}
               </p>
             )}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -74,7 +70,9 @@ export default function TheaterList() {
                   <div className="bg-white border border-gray-200 rounded-2xl p-12 text-center shadow-sm">
                     <FiMapPin className="w-12 h-12 text-gray-300 mx-auto mb-3" />
                     <p className="text-gray-600 text-lg">No theaters found</p>
-                    <p className="text-gray-500 text-sm mt-1">Try adjusting your search filters</p>
+                    <p className="text-gray-500 text-sm mt-1">
+                      Try adjusting your search filters
+                    </p>
                   </div>
                 </div>
               )}

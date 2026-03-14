@@ -14,7 +14,8 @@ export default function Footer() {
     },
     {
       id: 2,
-      question: "Discover Trending Films in Popular Cities & Grab Tickets for the Hottest Releases!",
+      question:
+        "Discover Trending Films in Popular Cities & Grab Tickets for the Hottest Releases!",
       answer:
         "Find what's trending in your city and reserve seats before popular shows sell out.",
     },
@@ -26,13 +27,15 @@ export default function Footer() {
     },
     {
       id: 4,
-      question: "Top Movie Genres You'll Love - Action, Comedy, Romance & More!",
+      question:
+        "Top Movie Genres You'll Love - Action, Comedy, Romance & More!",
       answer:
         "Filter by your favorite genres and discover shows that match your mood.",
     },
     {
       id: 5,
-      question: "Explore & Book Tickets for Your Favorite Movie Genres in Popular Cities!",
+      question:
+        "Explore & Book Tickets for Your Favorite Movie Genres in Popular Cities!",
       answer:
         "From thrillers to family films, book shows in major cities with a smooth checkout experience.",
     },
@@ -69,7 +72,9 @@ export default function Footer() {
         <div className="max-w-6xl mx-auto px-4">
           <div className="flex items-start justify-between gap-4 mb-4">
             <div>
-              <h3 className="text-base md:text-lg font-semibold text-gray-900">Frequently Asked Questions</h3>
+              <h3 className="text-base md:text-lg font-semibold text-gray-900">
+                Frequently Asked Questions
+              </h3>
               <p className="text-xs md:text-sm text-gray-600 mt-1">
                 Everything you need before booking.
               </p>
@@ -87,10 +92,14 @@ export default function Footer() {
               >
                 <button
                   type="button"
-                  onClick={() => setOpenFaq(openFaq === item.id ? null : item.id)}
+                  onClick={() =>
+                    setOpenFaq(openFaq === item.id ? null : item.id)
+                  }
                   className="w-full px-5 md:px-6 py-4 text-left flex items-center justify-between hover:bg-gray-50 transition"
                 >
-                  <span className="text-base text-gray-900 font-medium leading-snug pr-3">{item.question}</span>
+                  <span className="text-base text-gray-900 font-medium leading-snug pr-3">
+                    {item.question}
+                  </span>
                   <FiChevronDown
                     size={18}
                     className={`shrink-0 text-gray-700 transition-transform ${openFaq === item.id ? "rotate-180" : ""}`}
@@ -170,8 +179,8 @@ export default function Footer() {
 
         <div className="mt-8 pt-6 border-t border-gray-800/90">
           <p className="text-gray-400 text-xs text-center md:text-left leading-relaxed">
-            By using Cinexa, you agree to our Terms of Service and Privacy Policy. All rights reserved
-            © {new Date().getFullYear()} Cinexa.
+            By using Cinexa, you agree to our Terms of Service and Privacy
+            Policy. All rights reserved © {new Date().getFullYear()} Cinexa.
           </p>
         </div>
       </div>

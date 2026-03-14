@@ -20,7 +20,9 @@ const toTimingDate = (value, fallbackDateValue) => {
   const raw = String(value || "").trim();
   if (!raw) return null;
 
-  const fallbackBase = fallbackDateValue ? new Date(fallbackDateValue) : new Date();
+  const fallbackBase = fallbackDateValue
+    ? new Date(fallbackDateValue)
+    : new Date();
   const base = Number.isNaN(fallbackBase.getTime()) ? new Date() : fallbackBase;
 
   const twelveHourMatch = raw.match(/^(\d{1,2}):(\d{2})\s*(AM|PM)$/i);
@@ -72,7 +74,10 @@ export default function ShowList({ theaterId, movieId }) {
   if (theaterId) params.theaterId = theaterId;
   if (movieId) params.movieId = movieId;
 
-  const { data, loading, error } = useFetch(() => get("/api/show", params), [theaterId, movieId]);
+  const { data, loading, error } = useFetch(
+    () => get("/api/show", params),
+    [theaterId, movieId],
+  );
   const shows = useMemo(() => {
     return Array.isArray(data?.data) ? data.data : [];
   }, [data]);
@@ -162,8 +167,18 @@ export default function ShowList({ theaterId, movieId }) {
   }, [theaterId, parsedShows]);
 
   if (loading) return <Spinner />;
-  if (error) return <p className="text-red-600 font-semibold text-center py-8 bg-red-50 rounded-lg p-4">{error}</p>;
-  if (!shows.length) return <p className="text-gray-600 text-center py-12 text-lg">No shows available</p>;
+  if (error)
+    return (
+      <p className="text-red-600 font-semibold text-center py-8 bg-red-50 rounded-lg p-4">
+        {error}
+      </p>
+    );
+  if (!shows.length)
+    return (
+      <p className="text-gray-600 text-center py-12 text-lg">
+        No shows available
+      </p>
+    );
 
   if (movieId) {
     const undatedCount = parsedShows.filter((show) => !show._timingDate).length;
@@ -190,8 +205,12 @@ export default function ShowList({ theaterId, movieId }) {
                       : "border-gray-200 bg-white text-gray-700 hover:border-purple-300 hover:bg-purple-50"
                   }`}
                 >
-                  <p className="text-xs font-semibold uppercase tracking-wide">{label.day}</p>
-                  <p className="text-lg font-bold leading-tight">{label.date}</p>
+                  <p className="text-xs font-semibold uppercase tracking-wide">
+                    {label.day}
+                  </p>
+                  <p className="text-lg font-bold leading-tight">
+                    {label.date}
+                  </p>
                   <p className="text-xs font-medium">{label.month}</p>
                 </button>
               );
@@ -199,18 +218,26 @@ export default function ShowList({ theaterId, movieId }) {
           </div>
           {undatedCount > 0 && (
             <p className="mt-3 text-xs text-amber-700">
-              {undatedCount} show(s) have invalid timing format and are hidden from date-wise view.
+              {undatedCount} show(s) have invalid timing format and are hidden
+              from date-wise view.
             </p>
           )}
         </div>
 
         <div className="space-y-4">
           {groupedByTheaterForMovie.map((group) => (
-            <div key={group.theaterId} className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm">
+            <div
+              key={group.theaterId}
+              className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm"
+            >
               <div className="flex items-center justify-between gap-3 mb-4">
                 <div>
-                  <h3 className="text-lg font-bold text-gray-900">{group.theaterName}</h3>
-                  <p className="text-sm text-gray-600">{group.theaterCity || "City unavailable"}</p>
+                  <h3 className="text-lg font-bold text-gray-900">
+                    {group.theaterName}
+                  </h3>
+                  <p className="text-sm text-gray-600">
+                    {group.theaterCity || "City unavailable"}
+                  </p>
                 </div>
                 <span className="rounded-full bg-purple-50 px-3 py-1 text-xs font-semibold text-purple-700 border border-purple-100">
                   {group.shows.length} slot{group.shows.length !== 1 ? "s" : ""}
@@ -224,9 +251,15 @@ export default function ShowList({ theaterId, movieId }) {
                     to={`/shows/${show._id}`}
                     className="group min-w-30 rounded-lg border border-gray-300 bg-white px-3 py-2 hover:border-purple-400 hover:bg-purple-50 transition"
                   >
-                    <p className="text-sm font-bold text-gray-900">{show._timingDate ? formatTime(show.timing) : show.timing}</p>
-                    <p className="text-xs text-gray-600">{show.format || "Standard"}</p>
-                    <p className="text-xs font-semibold text-purple-700 mt-1">{formatCurrency(show.price)}</p>
+                    <p className="text-sm font-bold text-gray-900">
+                      {show._timingDate ? formatTime(show.timing) : show.timing}
+                    </p>
+                    <p className="text-xs text-gray-600">
+                      {show.format || "Standard"}
+                    </p>
+                    <p className="text-xs font-semibold text-purple-700 mt-1">
+                      {formatCurrency(show.price)}
+                    </p>
                   </Link>
                 ))}
               </div>
@@ -234,7 +267,9 @@ export default function ShowList({ theaterId, movieId }) {
           ))}
 
           {!groupedByTheaterForMovie.length && (
-            <p className="text-gray-600 text-center py-8">No shows available for this date.</p>
+            <p className="text-gray-600 text-center py-8">
+              No shows available for this date.
+            </p>
           )}
         </div>
       </div>
@@ -245,7 +280,10 @@ export default function ShowList({ theaterId, movieId }) {
     return (
       <div className="space-y-8">
         {groupedByMovieForTheater.map((group) => (
-          <div key={group.movieId} className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
+          <div
+            key={group.movieId}
+            className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm"
+          >
             <h3 className="text-xl font-bold text-gray-900 mb-4 inline-flex items-center gap-2">
               <FiFilm className="text-purple-600" />
               {group.movieName}
@@ -263,7 +301,9 @@ export default function ShowList({ theaterId, movieId }) {
                       <FiClock className="text-purple-600" />
                       {show._timingDate ? formatTime(show.timing) : show.timing}
                     </div>
-                    <span className="text-sm font-bold text-purple-700">{formatCurrency(show.price)}</span>
+                    <span className="text-sm font-bold text-purple-700">
+                      {formatCurrency(show.price)}
+                    </span>
                   </div>
                   <div className="mt-2 text-xs text-gray-600 inline-flex items-center gap-2">
                     <FiTag className="text-orange-600" />
@@ -303,21 +343,28 @@ export default function ShowList({ theaterId, movieId }) {
 
             <div className="flex items-start justify-between gap-3 mb-3 pb-3 border-b border-gray-100">
               <div>
-                <div className="text-xs text-gray-500 font-semibold mb-1">Format</div>
+                <div className="text-xs text-gray-500 font-semibold mb-1">
+                  Format
+                </div>
                 <div className="inline-block bg-orange-100 text-orange-700 px-2.5 py-1 rounded-lg text-sm font-bold">
                   {show.format || "Standard"}
                 </div>
               </div>
               <div className="text-right">
-                <div className="text-xs text-gray-500 font-semibold mb-1">Price</div>
-                <div className="text-xl font-bold text-purple-600">{formatCurrency(show.price)}</div>
+                <div className="text-xs text-gray-500 font-semibold mb-1">
+                  Price
+                </div>
+                <div className="text-xl font-bold text-purple-600">
+                  {formatCurrency(show.price)}
+                </div>
               </div>
             </div>
 
             <div className="flex items-center gap-2 mb-4">
               <FiTag className="text-orange-600" size={16} />
               <span className="text-sm text-gray-700">
-                <span className="font-bold">{show.noOfSeats}</span> seats available
+                <span className="font-bold">{show.noOfSeats}</span> seats
+                available
               </span>
             </div>
 

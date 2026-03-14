@@ -14,7 +14,7 @@ export default function SeatSelector({ show, onSelect }) {
 
   useEffect(() => {
     selectedRef.current = selected;
-    
+
     console.log("[SeatSelector] Selected seats:", [...selected]);
   }, [selected]);
 
@@ -45,9 +45,6 @@ export default function SeatSelector({ show, onSelect }) {
         seatIds.forEach((id) => next.add(id));
         return next;
       });
-
-      
-      
     });
 
     const offReleased = on("seat_released", (payload) => {
@@ -122,7 +119,11 @@ export default function SeatSelector({ show, onSelect }) {
       for (let c = 0; c < cols; c++) {
         const num = r * cols + c + 1;
         if (num > totalSeats) break;
-        arr.push({ id: `${String.fromCharCode(65 + r)}${c + 1}`, row: r, col: c });
+        arr.push({
+          id: `${String.fromCharCode(65 + r)}${c + 1}`,
+          row: r,
+          col: c,
+        });
       }
     }
     return arr;
@@ -140,10 +141,8 @@ export default function SeatSelector({ show, onSelect }) {
         next.delete(id);
         emit("release_seats", { showId, seatIds: [id] });
       } else {
-        
         next.add(id);
         if (!locked.has(id)) {
-          
           emit("lock_seats", { showId, seatIds: [id] });
         }
       }
@@ -160,22 +159,27 @@ export default function SeatSelector({ show, onSelect }) {
 
   return (
     <div className="space-y-8 bg-linear-to-b from-gray-50 to-white rounded-2xl p-8 border border-gray-200">
-      
       <div className="flex flex-col items-center gap-4">
         <div className="w-full h-2 bg-linear-to-r from-transparent via-gray-900 to-transparent rounded-full" />
-        <div className="text-sm font-bold text-gray-600 tracking-widest">SCREEN</div>
+        <div className="text-sm font-bold text-gray-600 tracking-widest">
+          SCREEN
+        </div>
       </div>
 
-      
       <div className="flex justify-center">
-        <div className="grid gap-2" style={{ gridTemplateColumns: `repeat(${cols}, 1fr)` }}>
+        <div
+          className="grid gap-2"
+          style={{ gridTemplateColumns: `repeat(${cols}, 1fr)` }}
+        >
           {seats.map((s) => (
             <button
               key={s.id}
               onClick={() => toggle(s.id)}
-              disabled={booked.has(s.id) || (locked.has(s.id) && !selected.has(s.id))}
+              disabled={
+                booked.has(s.id) || (locked.has(s.id) && !selected.has(s.id))
+              }
               aria-label={`Row ${String.fromCharCode(65 + s.row)} Seat ${s.col + 1}`}
-              className={`w-10 h-10 rounded-lg text-[11px] font-bold transition-all transform hover:scale-110 ${ 
+              className={`w-10 h-10 rounded-lg text-[11px] font-bold transition-all transform hover:scale-110 ${
                 selected.has(s.id)
                   ? "bg-linear-to-br from-purple-600 to-purple-700 text-white shadow-lg scale-110 border-2 border-purple-800"
                   : booked.has(s.id)
@@ -191,7 +195,6 @@ export default function SeatSelector({ show, onSelect }) {
         </div>
       </div>
 
-      
       <div className="flex flex-wrap justify-center gap-6 text-sm pt-4 border-t border-gray-200">
         <div className="flex items-center gap-3">
           <div className="w-6 h-6 rounded-lg border-2 border-gray-300 bg-white" />
@@ -199,7 +202,10 @@ export default function SeatSelector({ show, onSelect }) {
         </div>
         <div className="flex items-center gap-3">
           <div className="w-6 h-6 rounded-lg bg-linear-to-br from-purple-600 to-purple-700 border-2 border-purple-800" />
-          <span className="text-gray-700 font-medium">Selected <span className="text-purple-600 font-bold">({selected.size})</span></span>
+          <span className="text-gray-700 font-medium">
+            Selected{" "}
+            <span className="text-purple-600 font-bold">({selected.size})</span>
+          </span>
         </div>
         <div className="flex items-center gap-3">
           <div className="w-6 h-6 rounded-lg bg-amber-400 border border-amber-500" />

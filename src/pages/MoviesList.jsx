@@ -48,12 +48,26 @@ export default function MoviesList() {
       </div>
 
       <p className="text-sm text-gray-500 mb-6">
-        {search ? `Showing results for "${search}"` : "Browse all currently available movies"}
+        {search
+          ? `Showing results for "${search}"`
+          : "Browse all currently available movies"}
       </p>
 
-      {loading ? <Spinner /> : error ? <p className="text-red-500">{error}</p> : (
+      {loading ? (
+        <Spinner />
+      ) : error ? (
+        <p className="text-red-500">{error}</p>
+      ) : (
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-          {movies.length ? movies.map((m) => <MovieCard key={m._id} movie={m} navigate={true} />) : <p className="text-gray-500 col-span-full text-center py-12">No movies found</p>}
+          {movies.length ? (
+            movies.map((m) => (
+              <MovieCard key={m._id} movie={m} navigate={true} />
+            ))
+          ) : (
+            <p className="text-gray-500 col-span-full text-center py-12">
+              No movies found
+            </p>
+          )}
         </div>
       )}
     </section>
