@@ -34,7 +34,7 @@ export default {
     },
   },
   plugins: [
-    function ({ addBase, addComponents, addUtilities }) {
+    function ({ addBase, addUtilities }) {
       addBase({
         
         "input, button, select, textarea": {

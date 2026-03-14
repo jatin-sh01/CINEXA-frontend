@@ -1,0 +1,163 @@
+@import "tailwindcss";
+
+
+:root {
+  
+  --bg: #ffffff;
+  --card-bg: #f9fafb;
+  --border: #e5e7eb;
+  
+  
+  --primary: #0f172a;
+  --secondary: #64748b;
+  --muted: #94a3b8;
+  
+  
+  --success: #16a34a;
+  --warning: #ea580c;
+  --error: #dc2626;
+  --info: #0284c7;
+}
+
+
+input,
+button,
+select,
+textarea {
+  font-size: 16px;
+}
+
+
+html {
+  touch-action: manipulation;
+}
+
+
+button {
+  transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease,
+    opacity 0.2s ease, transform 0.2s ease;
+}
+
+
+@media (max-width: 640px) {
+  button:not(.text-2xl):not(.text-lg) {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+  }
+}
+
+
+html,
+body {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;
+}
+
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+
+html {
+  scroll-behavior: smooth;
+  font-size: 18px; 
+}
+
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-slide-up {
+  animation: slide-up 0.25s ease-out;
+}
+
+
+@keyframes slide-in-right {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+.animate-slide-in-right {
+  animation: slide-in-right 0.25s ease-out;
+}
+
+
+.hero-swiper .swiper-pagination {
+  bottom: 18px !important;
+}
+.hero-swiper .swiper-pagination-bullet {
+  width: 8px;
+  height: 8px;
+  background: #9ca3af;
+  opacity: 0.4;
+  transition: all 0.25s;
+}
+.hero-swiper .swiper-pagination-bullet-active {
+  background: #374151;
+  opacity: 1;
+  width: 24px;
+  border-radius: 4px;
+}
+
+.hero-swiper {
+  touch-action: pan-x pan-y;
+}
+
+
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+
+@keyframes ken-burns {
+  from {
+    transform: scale(1.1);
+  }
+  to {
+    transform: scale(1.25);
+  }
+}
+.animate-ken-burns {
+  animation: ken-burns 8s ease-out forwards;
+}
+
+
+@keyframes poster-in {
+  from {
+    transform: scale(0.92);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+.animate-poster-in {
+  animation: poster-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+
+@media (max-width: 767px) {
+  body {
+    padding-bottom: 3.5rem;
+  }
+}

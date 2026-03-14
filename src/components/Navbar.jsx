@@ -20,7 +20,7 @@ const bottomLinkClass = ({ isActive }) =>
   `flex flex-col items-center gap-0.5 text-[11px] transition ${isActive ? "text-gray-900 font-semibold" : "text-gray-400"}`;
 
 export default function Navbar() {
-  const { user, logout, isAdmin, isClient } = useAuth();
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
   const [search, setSearch] = useState("");
   const [showAuth, setShowAuth] = useState(false);
@@ -153,9 +153,9 @@ export default function Navbar() {
       
       <div className="lg:hidden fixed bottom-0 inset-x-0 z-40 bg-white border-t border-gray-200 safe-bottom">
         <div className="flex items-center justify-around h-14 px-2">
-          <NavLink to="/movies" className={bottomLinkClass}>
+          <NavLink to="/" end className={bottomLinkClass}>
             <FiFilm size={20} />
-            <span>Movies</span>
+            <span>Home</span>
           </NavLink>
           <NavLink to="/theaters" className={bottomLinkClass}>
             <FiMonitor size={20} />
