@@ -151,9 +151,14 @@ export default function AdminLayout() {
             <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
               <div>
                 <p className="admin-muted text-sm">
-                  Admin / <span className="font-semibold admin-heading">{currentItem?.label || "Dashboard"}</span>
+                  Admin /{" "}
+                  <span className="font-semibold admin-heading">
+                    {currentItem?.label || "Dashboard"}
+                  </span>
                 </p>
-                <h1 className="admin-title mt-1">{currentItem?.label || "Dashboard"}</h1>
+                <h1 className="admin-title mt-1">
+                  {currentItem?.label || "Dashboard"}
+                </h1>
               </div>
 
               <div className="flex w-full items-center justify-end md:w-auto" />

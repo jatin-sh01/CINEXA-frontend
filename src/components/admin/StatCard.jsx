@@ -76,9 +76,7 @@ export default function StatCard({
               <div className="mt-2 h-8 w-24 rounded-lg bg-slate-200 animate-pulse" />
             ) : (
               <>
-                <p className="admin-stat-number mt-1">
-                  {displayValue}
-                </p>
+                <p className="admin-stat-number mt-1">{displayValue}</p>
                 {trend && (
                   <div className="mt-2 inline-flex items-center gap-1 rounded-full bg-slate-100 px-2 py-1 text-[11px] font-semibold text-slate-700">
                     <FiTrendingUp size={14} />

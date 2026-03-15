@@ -57,7 +57,10 @@ function bookingMovie(booking) {
 
 function bookingTheater(booking) {
   const theater =
-    booking?.theater || booking?.show?.theater || booking?.show?.theatre || null;
+    booking?.theater ||
+    booking?.show?.theater ||
+    booking?.show?.theatre ||
+    null;
   return {
     name:
       theater?.name ||
@@ -65,7 +68,9 @@ function bookingTheater(booking) {
       booking?.show?.theaterName ||
       booking?.show?.theatreName ||
       null,
-    capacity: Number(theater?.capacity || theater?.seats || theater?.totalSeats || 0),
+    capacity: Number(
+      theater?.capacity || theater?.seats || theater?.totalSeats || 0,
+    ),
   };
 }
 
@@ -94,7 +99,9 @@ function buildLast7DaysSeries(bookings, mode) {
     const date = bookingDate(booking);
     if (!date) return;
 
-    const key = formatDayKey(new Date(date.getFullYear(), date.getMonth(), date.getDate()));
+    const key = formatDayKey(
+      new Date(date.getFullYear(), date.getMonth(), date.getDate()),
+    );
     const bucket = bucketMap[key];
     if (!bucket) return;
 
@@ -163,15 +170,25 @@ export default function AdminDashboard() {
         ]);
 
         const movies =
-          results[0].status === "fulfilled" ? getCollection(results[0].value) : [];
+          results[0].status === "fulfilled"
+            ? getCollection(results[0].value)
+            : [];
         const theaters =
-          results[1].status === "fulfilled" ? getCollection(results[1].value) : [];
+          results[1].status === "fulfilled"
+            ? getCollection(results[1].value)
+            : [];
         const shows =
-          results[2].status === "fulfilled" ? getCollection(results[2].value) : [];
+          results[2].status === "fulfilled"
+            ? getCollection(results[2].value)
+            : [];
         const users =
-          results[3].status === "fulfilled" ? getCollection(results[3].value) : [];
+          results[3].status === "fulfilled"
+            ? getCollection(results[3].value)
+            : [];
         const bookings =
-          results[4].status === "fulfilled" ? getCollection(results[4].value) : [];
+          results[4].status === "fulfilled"
+            ? getCollection(results[4].value)
+            : [];
 
         const revenue = bookings.reduce(
           (total, booking) => total + bookingAmount(booking),
@@ -288,28 +305,48 @@ export default function AdminDashboard() {
       label: "Total Movies",
       value: stats.movies,
       color: "bg-purple-600",
-      trend: periodDeltaLabel(moviesList, 30, (m) => toDate(m?.createdAt), "this month"),
+      trend: periodDeltaLabel(
+        moviesList,
+        30,
+        (m) => toDate(m?.createdAt),
+        "this month",
+      ),
     },
     {
       icon: FiMapPin,
       label: "Theaters",
       value: stats.theaters,
       color: "bg-blue-600",
-      trend: periodDeltaLabel(theatersList, 30, (t) => toDate(t?.createdAt), "this month"),
+      trend: periodDeltaLabel(
+        theatersList,
+        30,
+        (t) => toDate(t?.createdAt),
+        "this month",
+      ),
     },
     {
       icon: FiCalendar,
       label: "Shows",
       value: stats.shows,
       color: "bg-green-600",
-      trend: periodDeltaLabel(showsList, 30, (s) => toDate(s?.createdAt || s?.date), "this month"),
+      trend: periodDeltaLabel(
+        showsList,
+        30,
+        (s) => toDate(s?.createdAt || s?.date),
+        "this month",
+      ),
     },
     {
       icon: FiUsers,
       label: "Users",
       value: stats.users,
       color: "bg-orange-600",
-      trend: periodDeltaLabel(usersList, 30, (u) => toDate(u?.createdAt), "this month"),
+      trend: periodDeltaLabel(
+        usersList,
+        30,
+        (u) => toDate(u?.createdAt),
+        "this month",
+      ),
     },
     {
       icon: FiActivity,
@@ -328,7 +365,8 @@ export default function AdminDashboard() {
   ];
 
   const apiOnline = !error;
-  const databaseConnected = bookingsList.length > 0 || moviesList.length > 0 || theatersList.length > 0;
+  const databaseConnected =
+    bookingsList.length > 0 || moviesList.length > 0 || theatersList.length > 0;
   const realtimeActive = loading ? false : true;
 
   return (
@@ -356,7 +394,9 @@ export default function AdminDashboard() {
       <section className="grid grid-cols-1 gap-6 xl:grid-cols-3">
         <div className="admin-card p-6 xl:col-span-2">
           <div className="mb-5 flex items-center justify-between">
-            <h2 className="text-lg font-semibold admin-heading">Quick Actions</h2>
+            <h2 className="text-lg font-semibold admin-heading">
+              Quick Actions
+            </h2>
             <span className="admin-label">Fast access modules</span>
           </div>
 
@@ -385,7 +425,9 @@ export default function AdminDashboard() {
                   <FiMapPin size={18} />
                 </span>
                 <div>
-                  <p className="text-sm font-medium text-slate-500">Operations</p>
+                  <p className="text-sm font-medium text-slate-500">
+                    Operations
+                  </p>
                   <p className="text-base font-semibold">Manage Theaters</p>
                 </div>
               </div>
@@ -400,7 +442,9 @@ export default function AdminDashboard() {
                   <FiCalendar size={18} />
                 </span>
                 <div>
-                  <p className="text-sm font-medium text-slate-500">Scheduling</p>
+                  <p className="text-sm font-medium text-slate-500">
+                    Scheduling
+                  </p>
                   <p className="text-base font-semibold">Manage Shows</p>
                 </div>
               </div>
@@ -409,26 +453,34 @@ export default function AdminDashboard() {
         </div>
 
         <div className="admin-card p-6">
-          <h2 className="mb-5 text-lg font-semibold admin-heading">System Status</h2>
+          <h2 className="mb-5 text-lg font-semibold admin-heading">
+            System Status
+          </h2>
           <div className="space-y-3">
             <div className="admin-surface flex items-center justify-between rounded-xl px-3 py-3">
               <span className="admin-label">API Status</span>
               <span className="inline-flex items-center gap-1 rounded-full bg-slate-100 px-2.5 py-1 text-xs font-semibold text-slate-700">
-                <span className={`h-2 w-2 rounded-full ${apiOnline ? "bg-slate-700" : "bg-slate-400"}`} />
+                <span
+                  className={`h-2 w-2 rounded-full ${apiOnline ? "bg-slate-700" : "bg-slate-400"}`}
+                />
                 {apiOnline ? "Online" : "Unavailable"}
               </span>
             </div>
             <div className="admin-surface flex items-center justify-between rounded-xl px-3 py-3">
               <span className="admin-label">Database</span>
               <span className="inline-flex items-center gap-1 rounded-full bg-slate-100 px-2.5 py-1 text-xs font-semibold text-slate-700">
-                <span className={`h-2 w-2 rounded-full ${databaseConnected ? "bg-slate-700" : "bg-slate-400"}`} />
+                <span
+                  className={`h-2 w-2 rounded-full ${databaseConnected ? "bg-slate-700" : "bg-slate-400"}`}
+                />
                 {databaseConnected ? "Connected" : "Syncing"}
               </span>
             </div>
             <div className="admin-surface flex items-center justify-between rounded-xl px-3 py-3">
               <span className="admin-label">Real-time</span>
               <span className="inline-flex items-center gap-1 rounded-full bg-slate-100 px-2.5 py-1 text-xs font-semibold text-slate-700">
-                <span className={`h-2 w-2 rounded-full ${realtimeActive ? "bg-slate-700" : "bg-slate-400"}`} />
+                <span
+                  className={`h-2 w-2 rounded-full ${realtimeActive ? "bg-slate-700" : "bg-slate-400"}`}
+                />
                 {realtimeActive ? "Active" : "Loading"}
               </span>
             </div>
@@ -439,14 +491,18 @@ export default function AdminDashboard() {
       <section className="grid grid-cols-1 gap-6 xl:grid-cols-2">
         <div className="admin-card p-6">
           <div className="mb-4 flex items-center justify-between">
-            <h3 className="text-lg font-semibold admin-heading">Bookings Per Day</h3>
+            <h3 className="text-lg font-semibold admin-heading">
+              Bookings Per Day
+            </h3>
             <span className="inline-flex items-center gap-1 text-xs font-semibold text-slate-700">
               <FiTrendingUp size={14} /> Last 7 days
             </span>
           </div>
           <div className="admin-surface admin-chart-grid rounded-xl p-3">
             {bookingsList.length === 0 ? (
-              <p className="admin-label py-12 text-center">No booking data available</p>
+              <p className="admin-label py-12 text-center">
+                No booking data available
+              </p>
             ) : (
               <svg viewBox="0 0 300 120" className="h-36 w-full">
                 <polyline
@@ -463,8 +519,12 @@ export default function AdminDashboard() {
 
         <div className="admin-card p-6">
           <div className="mb-4 flex items-center justify-between">
-            <h3 className="text-lg font-semibold admin-heading">Revenue Analytics</h3>
-            <span className="text-xs font-semibold text-slate-700">Last 7 days</span>
+            <h3 className="text-lg font-semibold admin-heading">
+              Revenue Analytics
+            </h3>
+            <span className="text-xs font-semibold text-slate-700">
+              Last 7 days
+            </span>
           </div>
           <div className="grid grid-cols-7 gap-2 rounded-xl admin-surface p-3">
             {revenueSeries.map((item, idx) => (
@@ -480,7 +540,9 @@ export default function AdminDashboard() {
                     }}
                   />
                 </div>
-                <span className="text-[11px] admin-muted">{item.label || `D${idx + 1}`}</span>
+                <span className="text-[11px] admin-muted">
+                  {item.label || `D${idx + 1}`}
+                </span>
               </div>
             ))}
           </div>
@@ -488,7 +550,9 @@ export default function AdminDashboard() {
 
         <div className="admin-card p-6">
           <div className="mb-4 flex items-center justify-between">
-            <h3 className="text-lg font-semibold admin-heading">Top Performing Movies</h3>
+            <h3 className="text-lg font-semibold admin-heading">
+              Top Performing Movies
+            </h3>
             <FiBarChart2 className="text-slate-700" />
           </div>
           <div className="space-y-3">
@@ -496,12 +560,17 @@ export default function AdminDashboard() {
               <p className="admin-label">No movie booking data available</p>
             ) : (
               topMovies.map((movie) => {
-                const maxBookings = Math.max(...topMovies.map((m) => m.bookings), 1);
+                const maxBookings = Math.max(
+                  ...topMovies.map((m) => m.bookings),
+                  1,
+                );
                 const width = Math.round((movie.bookings / maxBookings) * 100);
                 return (
                   <div key={movie.title} className="space-y-1.5">
                     <div className="flex items-center justify-between">
-                      <p className="text-sm font-medium admin-heading">{movie.title}</p>
+                      <p className="text-sm font-medium admin-heading">
+                        {movie.title}
+                      </p>
                       <span className="text-xs font-semibold admin-muted">
                         {movie.bookings} bookings
                       </span>
@@ -521,18 +590,29 @@ export default function AdminDashboard() {
 
         <div className="admin-card p-6">
           <div className="mb-4 flex items-center justify-between">
-            <h3 className="text-lg font-semibold admin-heading">Theater Occupancy</h3>
-            <span className="text-xs font-semibold text-slate-700">Live from bookings</span>
+            <h3 className="text-lg font-semibold admin-heading">
+              Theater Occupancy
+            </h3>
+            <span className="text-xs font-semibold text-slate-700">
+              Live from bookings
+            </span>
           </div>
           <div className="space-y-3">
             {theaterOccupancy.length === 0 ? (
               <p className="admin-label">No theater occupancy data available</p>
             ) : (
               theaterOccupancy.map((item) => (
-                <div key={item.name} className="admin-surface rounded-xl px-3 py-3">
+                <div
+                  key={item.name}
+                  className="admin-surface rounded-xl px-3 py-3"
+                >
                   <div className="mb-2 flex items-center justify-between text-sm">
-                    <span className="font-medium admin-heading">{item.name}</span>
-                    <span className="font-semibold admin-muted">{item.value}%</span>
+                    <span className="font-medium admin-heading">
+                      {item.name}
+                    </span>
+                    <span className="font-semibold admin-muted">
+                      {item.value}%
+                    </span>
                   </div>
                   <div className="h-2 overflow-hidden rounded-full bg-slate-100">
                     <div

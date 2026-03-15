@@ -1,5 +1,3 @@
-
-
 import { useState } from "react";
 import {
   FiUser,
@@ -38,7 +36,7 @@ export default function AdminSettings() {
   const handleSaveSettings = async () => {
     try {
       setIsSaving(true);
-      
+
       await new Promise((resolve) => setTimeout(resolve, 500));
       toast("success", "Settings saved successfully");
     } finally {
@@ -54,7 +52,7 @@ export default function AdminSettings() {
     }
     try {
       setIsSaving(true);
-      
+
       await new Promise((resolve) => setTimeout(resolve, 500));
       toast("success", "Password changed successfully");
       setPasswordForm({
@@ -74,7 +72,6 @@ export default function AdminSettings() {
         description="Manage your admin account and preferences."
       />
 
-      
       <div className="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm mb-6">
         <div className="flex items-center gap-4 pb-6 border-b border-gray-200">
           <div className="w-16 h-16 bg-purple-500 rounded-full flex items-center justify-center text-white text-2xl font-bold">
@@ -115,7 +112,6 @@ export default function AdminSettings() {
         </div>
       </div>
 
-      
       <div className="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm mb-6">
         <div className="flex items-center gap-2 mb-6 pb-4 border-b border-gray-200">
           <FiLock className="text-purple-600" size={20} />
@@ -189,7 +185,6 @@ export default function AdminSettings() {
         </form>
       </div>
 
-      
       <div className="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm mb-6">
         <div className="flex items-center gap-2 mb-6 pb-4 border-b border-gray-200">
           <FiBell className="text-purple-600" size={20} />
