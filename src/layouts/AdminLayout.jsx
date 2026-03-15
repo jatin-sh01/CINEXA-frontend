@@ -69,34 +69,20 @@ export default function AdminLayout() {
   );
 
   return (
-    <div className="admin-shell min-h-screen">
-      <div className="lg:hidden fixed inset-x-4 top-4 z-50 flex items-center justify-between">
-        <button
-          onClick={() => setMobileOpen(true)}
-          className="admin-glass rounded-xl p-2.5 text-slate-700"
-          aria-label="Open menu"
-        >
-          <FiMenu size={20} />
-        </button>
-        <div className="admin-glass rounded-xl px-4 py-2">
-          <CinexaLogo className="h-5 w-auto text-slate-900" />
-        </div>
-      </div>
+    <div className="admin-shell min-h-screen pt-16 lg:pt-0">
+      {/* Hamburger menu now inside header below */}
 
       <div
-        className={`fixed inset-0 z-40 bg-slate-950/40 transition-opacity duration-200 lg:hidden ${mobileOpen ? "opacity-100" : "pointer-events-none opacity-0"}`}
+        className={`fixed inset-0 z-40 bg-slate-950/40 transition-opacity duration-200 lg:hidden ${mobileOpen ? "opacity-100 pointer-events-auto" : "pointer-events-none opacity-0"}`}
         onClick={() => setMobileOpen(false)}
       />
 
       <aside
-        className={`fixed left-0 top-0 z-50 h-screen w-72 admin-surface flex flex-col px-4 py-5 transition-transform duration-200 lg:translate-x-0 ${
+        className={`fixed left-0 top-0 z-60 h-screen w-72 admin-surface flex flex-col px-4 py-5 transition-transform duration-200 lg:translate-x-0 ${
           mobileOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        <div className="mb-4 flex items-center justify-between px-2">
-          <div>
-            <CinexaLogo className="h-6 w-auto text-slate-900" />
-          </div>
+        <div className="mb-4 flex items-center justify-end px-2">
           <button
             onClick={() => setMobileOpen(false)}
             className="lg:hidden rounded-lg p-2 text-slate-600 hover:bg-slate-100"
@@ -146,21 +132,31 @@ export default function AdminLayout() {
       </aside>
 
       <main className="min-h-screen lg:pl-72">
-        <header className="sticky top-0 z-30 px-4 pt-4 md:px-6 lg:px-8">
+        <header className="px-4 pt-4 md:px-6 lg:px-8">
           <div className="admin-glass rounded-2xl px-4 py-4 md:px-6 md:py-5">
             <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-              <div>
-                <p className="admin-muted text-sm">
-                  Admin /{" "}
-                  <span className="font-semibold admin-heading">
+              <div className="flex items-center gap-3">
+                {/* Hamburger menu for mobile */}
+                <button
+                  onClick={() => setMobileOpen(true)}
+                  className="lg:hidden admin-glass rounded-xl p-2.5 text-slate-700"
+                  aria-label="Open menu"
+                  style={{ marginLeft: '-0.5rem' }}
+                >
+                  <FiMenu size={20} />
+                </button>
+                <div>
+                  <p className="admin-muted text-sm">
+                    Admin /{" "}
+                    <span className="font-semibold admin-heading">
+                      {currentItem?.label || "Dashboard"}
+                    </span>
+                  </p>
+                  <h1 className="admin-title mt-1">
                     {currentItem?.label || "Dashboard"}
-                  </span>
-                </p>
-                <h1 className="admin-title mt-1">
-                  {currentItem?.label || "Dashboard"}
-                </h1>
+                  </h1>
+                </div>
               </div>
-
               <div className="flex w-full items-center justify-end md:w-auto" />
             </div>
           </div>

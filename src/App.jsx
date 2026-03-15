@@ -4,6 +4,7 @@ import { AuthProvider } from "./contexts/AuthContext";
 import { SocketProvider } from "./contexts/SocketContext.jsx";
 import { ToastProvider } from "./components/Toast";
 import Navbar from "./components/Navbar";
+import ScrollToTop from "./components/ScrollToTop";
 import Footer from "./components/Footer";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Spinner from "./components/shared/Spinner";
@@ -70,6 +71,7 @@ function AdminFallback() {
 export default function App() {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <SocketProvider>
         <AuthProvider>
           <ToastProvider>

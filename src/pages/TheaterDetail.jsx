@@ -36,7 +36,7 @@ export default function TheaterDetail() {
     );
 
   const handleMovieClick = (movieId) => {
-    navigate(`/shows?movieId=${movieId}&theaterId=${id}`);
+    navigate(`/movies/${movieId}`);
   };
 
   return (

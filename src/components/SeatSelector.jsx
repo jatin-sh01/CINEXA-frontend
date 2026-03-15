@@ -158,7 +158,7 @@ export default function SeatSelector({ show, onSelect }) {
   }, [selected, onSelect]);
 
   return (
-    <div className="space-y-8 bg-linear-to-b from-gray-50 to-white rounded-2xl p-8 border border-gray-200">
+    <div className="space-y-6 sm:space-y-8 bg-linear-to-b from-gray-50 to-white rounded-2xl p-4 sm:p-8 border border-gray-200">
       <div className="flex flex-col items-center gap-4">
         <div className="w-full h-2 bg-linear-to-r from-transparent via-gray-900 to-transparent rounded-full" />
         <div className="text-sm font-bold text-gray-600 tracking-widest">
@@ -166,10 +166,10 @@ export default function SeatSelector({ show, onSelect }) {
         </div>
       </div>
 
-      <div className="flex justify-center">
+      <div className="flex justify-center pb-1 px-1">
         <div
-          className="grid gap-2"
-          style={{ gridTemplateColumns: `repeat(${cols}, 1fr)` }}
+          className="grid gap-3 sm:gap-4 w-full"
+          style={{ gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))` }}
         >
           {seats.map((s) => (
             <button
@@ -179,9 +179,9 @@ export default function SeatSelector({ show, onSelect }) {
                 booked.has(s.id) || (locked.has(s.id) && !selected.has(s.id))
               }
               aria-label={`Row ${String.fromCharCode(65 + s.row)} Seat ${s.col + 1}`}
-              className={`w-10 h-10 rounded-lg text-[11px] font-bold transition-all transform hover:scale-110 ${
+              className={`w-8 h-8 sm:w-9 sm:h-9 rounded-md sm:rounded-lg text-[10px] sm:text-[11px] leading-none whitespace-nowrap flex items-center justify-center font-bold transition-all transform hover:scale-105 ${
                 selected.has(s.id)
-                  ? "bg-linear-to-br from-purple-600 to-purple-700 text-white shadow-lg scale-110 border-2 border-purple-800"
+                  ? "bg-linear-to-br from-purple-600 to-purple-700 text-white shadow-lg scale-105 border-2 border-purple-800"
                   : booked.has(s.id)
                     ? "bg-red-500 text-white cursor-not-allowed opacity-60 border border-red-600"
                     : locked.has(s.id)

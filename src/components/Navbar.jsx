@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import {
-  FiMapPin,
   FiSearch,
   FiUser,
   FiFilm,
@@ -98,12 +97,6 @@ export default function Navbar() {
               className="w-9 h-9 flex items-center justify-center text-gray-600"
             >
               <FiSearch size={20} />
-            </button>
-            <button
-              aria-label="Location"
-              className="flex items-center gap-1 text-gray-600 sm:hidden"
-            >
-              <FiMapPin size={18} className="text-red-500" />
             </button>
           </div>
 

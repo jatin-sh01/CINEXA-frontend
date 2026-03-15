@@ -11,7 +11,6 @@ import {
   FiUsers,
   FiDollarSign,
   FiFilm,
-  FiMapPin,
   FiPlay,
 } from "react-icons/fi";
 
@@ -42,7 +41,6 @@ export default function ShowPage() {
     );
 
   const movieName = show.movieId?.name || "Movie";
-  const theaterName = show.theaterId?.name || "Theater";
   const totalPrice = seats.length * show.price;
 
   const handleBook = () => {
@@ -77,10 +75,6 @@ export default function ShowPage() {
             <span>Select Your Seats</span>
           </div>
           <h1 className="text-4xl font-bold text-gray-900">{movieName}</h1>
-          <div className="flex items-center gap-2 text-gray-600">
-            <FiMapPin size={18} className="text-gray-500" />
-            <span className="text-lg">{theaterName}</span>
-          </div>
         </div>
 
         <div className="bg-white border border-gray-200 rounded-2xl p-8 shadow-sm hover:shadow-md transition">
