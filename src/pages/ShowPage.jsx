@@ -6,13 +6,7 @@ import SeatSelector from "../components/SeatSelector";
 import { useAuth } from "../contexts/AuthContext";
 import { formatCurrency, formatTime } from "../utils/format";
 import { useState } from "react";
-import {
-  FiClock,
-  FiUsers,
-  FiDollarSign,
-  FiFilm,
-  FiPlay,
-} from "react-icons/fi";
+import { FiClock, FiUsers, FiDollarSign, FiFilm, FiPlay } from "react-icons/fi";
 
 export default function ShowPage() {
   const { id } = useParams();

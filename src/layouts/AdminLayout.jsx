@@ -141,7 +141,7 @@ export default function AdminLayout() {
                   onClick={() => setMobileOpen(true)}
                   className="lg:hidden admin-glass rounded-xl p-2.5 text-slate-700"
                   aria-label="Open menu"
-                  style={{ marginLeft: '-0.5rem' }}
+                  style={{ marginLeft: "-0.5rem" }}
                 >
                   <FiMenu size={20} />
                 </button>

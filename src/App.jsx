@@ -25,40 +25,16 @@ import ProfileCard from "./components/auth/ProfileCard";
 import TheaterList from "./components/theaters/TheaterList";
 import "./App.css";
 
-
-
-
-const AdminLayout = lazy(
-  () => import( "./layouts/AdminLayout"),
-);
-const AdminDashboard = lazy(
-  () => import( "./pages/admin/AdminDashboard"),
-);
-const AdminMovies = lazy(
-  () => import( "./pages/admin/AdminMovies"),
-);
-const AdminTheaters = lazy(
-  () => import( "./pages/admin/AdminTheaters"),
-);
-const AdminShows = lazy(
-  () => import( "./pages/admin/AdminShows"),
-);
-const AdminUsers = lazy(
-  () => import( "./pages/admin/AdminUsers"),
-);
-const AdminBookings = lazy(
-  () => import( "./pages/admin/AdminBookings"),
-);
-const AdminAnalytics = lazy(
-  () => import( "./pages/admin/AdminAnalytics"),
-);
-const AdminModeration = lazy(
-  () => import( "./pages/admin/AdminModeration"),
-);
-const AdminSettings = lazy(
-  () => import( "./pages/admin/AdminSettings"),
-);
-
+const AdminLayout = lazy(() => import("./layouts/AdminLayout"));
+const AdminDashboard = lazy(() => import("./pages/admin/AdminDashboard"));
+const AdminMovies = lazy(() => import("./pages/admin/AdminMovies"));
+const AdminTheaters = lazy(() => import("./pages/admin/AdminTheaters"));
+const AdminShows = lazy(() => import("./pages/admin/AdminShows"));
+const AdminUsers = lazy(() => import("./pages/admin/AdminUsers"));
+const AdminBookings = lazy(() => import("./pages/admin/AdminBookings"));
+const AdminAnalytics = lazy(() => import("./pages/admin/AdminAnalytics"));
+const AdminModeration = lazy(() => import("./pages/admin/AdminModeration"));
+const AdminSettings = lazy(() => import("./pages/admin/AdminSettings"));
 
 function AdminFallback() {
   return (
@@ -76,7 +52,6 @@ export default function App() {
         <AuthProvider>
           <ToastProvider>
             <Routes>
-              
               <Route
                 path="/admin"
                 element={
@@ -165,7 +140,6 @@ export default function App() {
                 />
               </Route>
 
-              
               <Route
                 path="/*"
                 element={
