@@ -36,7 +36,7 @@ button {
 }
 
 @media (max-width: 640px) {
-  button:not(.text-2xl):not(.text-lg) {
+  button:not(.text-2xl):not(.text-lg):not(.mobile-nav-item) {
     padding: 0.5rem 0.75rem;
     font-size: 0.875rem;
   }

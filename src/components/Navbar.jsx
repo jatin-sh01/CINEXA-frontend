@@ -17,7 +17,13 @@ const navLinkClass = ({ isActive }) =>
   `px-3 py-1.5 rounded-full text-sm transition ${isActive ? "bg-gray-900 text-white font-semibold" : "text-gray-600 hover:text-gray-900"}`;
 
 const bottomLinkClass = ({ isActive }) =>
-  `flex flex-col items-center gap-0.5 text-[11px] transition ${isActive ? "text-gray-900 font-semibold" : "text-gray-400"}`;
+  `mobile-nav-item flex min-w-[70px] flex-col items-center justify-center gap-0.5 py-1 text-[11px] leading-none font-normal transition ${isActive ? "text-gray-900" : "text-gray-400"}`;
+
+const bottomButtonClass =
+  "mobile-nav-item flex min-w-[70px] flex-col items-center justify-center gap-0.5 py-1 text-[11px] leading-none font-normal text-gray-400 transition";
+
+const bottomIconClass = "h-4 w-4";
+const bottomLabelClass = "text-[11px] leading-none font-normal";
 
 export default function Navbar() {
   const { user, logout } = useAuth();
@@ -143,42 +149,42 @@ export default function Navbar() {
       <div className="lg:hidden fixed bottom-0 inset-x-0 z-40 bg-white border-t border-gray-200 safe-bottom">
         <div className="flex items-center justify-around h-14 px-2">
           <NavLink to="/" end className={bottomLinkClass}>
-            <FiFilm size={20} />
-            <span>Home</span>
+            <FiFilm className={bottomIconClass} />
+            <span className={bottomLabelClass}>Home</span>
           </NavLink>
           <NavLink to="/theaters" className={bottomLinkClass}>
-            <FiMonitor size={20} />
-            <span>Theatres</span>
+            <FiMonitor className={bottomIconClass} />
+            <span className={bottomLabelClass}>Theatres</span>
           </NavLink>
           {user ? (
             <NavLink to="/dashboard" className={bottomLinkClass}>
-              <FiBookOpen size={20} />
-              <span>Bookings</span>
+              <FiBookOpen className={bottomIconClass} />
+              <span className={bottomLabelClass}>Bookings</span>
             </NavLink>
           ) : (
             <button
               onClick={() => setShowAuth(true)}
-              className="flex flex-col items-center gap-0.5 text-[11px] text-gray-400"
+              className={bottomButtonClass}
             >
-              <FiBookOpen size={20} />
-              <span>Bookings</span>
+              <FiBookOpen className={bottomIconClass} />
+              <span className={bottomLabelClass}>Bookings</span>
             </button>
           )}
           {user ? (
             <button
               onClick={() => setShowProfile(true)}
-              className="flex flex-col items-center gap-0.5 text-[11px] text-gray-400"
+              className={bottomButtonClass}
             >
-              <FiUser size={20} />
-              <span>Profile</span>
+              <FiUser className={bottomIconClass} />
+              <span className={bottomLabelClass}>Profile</span>
             </button>
           ) : (
             <button
               onClick={() => setShowAuth(true)}
-              className="flex flex-col items-center gap-0.5 text-[11px] text-gray-400"
+              className={bottomButtonClass}
             >
-              <FiUser size={20} />
-              <span>Profile</span>
+              <FiUser className={bottomIconClass} />
+              <span className={bottomLabelClass}>Profile</span>
             </button>
           )}
         </div>
