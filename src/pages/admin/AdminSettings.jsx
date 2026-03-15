@@ -259,33 +259,6 @@ export default function AdminSettings() {
           {isSaving ? "Saving..." : "Save Preferences"}
         </button>
       </div>
-
-      
-      <div className="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm">
-        <h3 className="text-lg font-bold text-gray-900 mb-4">
-          System Information
-        </h3>
-        <div className="grid sm:grid-cols-2 gap-4">
-          <div className="p-3 bg-gray-50 rounded-lg">
-            <p className="text-sm text-gray-600">Admin Panel Version</p>
-            <p className="font-semibold text-gray-900">v2.0.0</p>
-          </div>
-          <div className="p-3 bg-gray-50 rounded-lg">
-            <p className="text-sm text-gray-600">Last Login</p>
-            <p className="font-semibold text-gray-900">
-              {new Date().toLocaleDateString()}
-            </p>
-          </div>
-          <div className="p-3 bg-gray-50 rounded-lg">
-            <p className="text-sm text-gray-600">API Status</p>
-            <p className="font-semibold text-green-600">✓ Connected</p>
-          </div>
-          <div className="p-3 bg-gray-50 rounded-lg">
-            <p className="text-sm text-gray-600">Database Status</p>
-            <p className="font-semibold text-green-600">✓ Healthy</p>
-          </div>
-        </div>
-      </div>
     </div>
   );
 }
