@@ -66,7 +66,8 @@ export default function PaymentSuccess() {
       setPaymentStatus(latestPaymentStatus || "");
 
       const isSuccess =
-        latestBookingStatus === "successfull" || latestPaymentStatus === "SUCCESS";
+        latestBookingStatus === "successfull" ||
+        latestPaymentStatus === "SUCCESS";
       const isFailed =
         latestBookingStatus === "cancelled" ||
         latestBookingStatus === "expired" ||
@@ -102,7 +103,9 @@ export default function PaymentSuccess() {
         } catch (error) {
           if (!active) return;
           if (attempt === maxAttempts - 1) {
-            setVerificationError(error?.message || "Unable to verify payment status.");
+            setVerificationError(
+              error?.message || "Unable to verify payment status.",
+            );
             setVerifying(false);
             return;
           }
@@ -177,21 +180,29 @@ export default function PaymentSuccess() {
         <div className="space-y-3 rounded-xl border border-gray-200 bg-gray-50 p-4 text-sm text-gray-700">
           <p>
             <span className="font-semibold text-gray-900">Booking ID:</span>{" "}
-            <span className="font-mono break-all">{bookingId || "Not available"}</span>
+            <span className="font-mono break-all">
+              {bookingId || "Not available"}
+            </span>
           </p>
           <p>
             <span className="font-semibold text-gray-900">Payment ID:</span>{" "}
-            <span className="font-mono break-all">{paymentId || "Not available"}</span>
+            <span className="font-mono break-all">
+              {paymentId || "Not available"}
+            </span>
           </p>
           {sessionId && (
             <p>
-              <span className="font-semibold text-gray-900">Checkout Session:</span>{" "}
+              <span className="font-semibold text-gray-900">
+                Checkout Session:
+              </span>{" "}
               <span className="font-mono break-all">{sessionId}</span>
             </p>
           )}
           {paymentIntent && (
             <p>
-              <span className="font-semibold text-gray-900">Payment Intent:</span>{" "}
+              <span className="font-semibold text-gray-900">
+                Payment Intent:
+              </span>{" "}
               <span className="font-mono break-all">{paymentIntent}</span>
             </p>
           )}

@@ -148,7 +148,8 @@ export default function BookingDetail() {
     expired: "Expired",
   };
 
-  const hasValidTiming = booking?.timing && !Number.isNaN(Date.parse(booking.timing));
+  const hasValidTiming =
+    booking?.timing && !Number.isNaN(Date.parse(booking.timing));
   const showTimingText = hasValidTiming
     ? `${formatDate(booking.timing)} • ${formatTime(booking.timing)}`
     : booking?.timing || "-";
@@ -160,7 +161,9 @@ export default function BookingDetail() {
     <div className="min-h-screen bg-white px-4 py-12">
       <div className="max-w-2xl mx-auto">
         <div className="mb-10">
-          <h1 className="text-4xl font-bold text-gray-900 mb-1">Review your booking</h1>
+          <h1 className="text-4xl font-bold text-gray-900 mb-1">
+            Review your booking
+          </h1>
           <p className="text-gray-600 text-sm">
             {booking.status === "processing"
               ? "Review and complete payment before hold expires"
@@ -178,10 +181,14 @@ export default function BookingDetail() {
           >
             {isHoldActive ? (
               <p>
-                Complete your booking in <span className="font-bold">{holdLabel}</span> mins
+                Complete your booking in{" "}
+                <span className="font-bold">{holdLabel}</span> mins
               </p>
             ) : (
-              <p>Booking hold time expired. Payment is disabled while status refreshes.</p>
+              <p>
+                Booking hold time expired. Payment is disabled while status
+                refreshes.
+              </p>
             )}
           </div>
         )}
@@ -190,7 +197,9 @@ export default function BookingDetail() {
           <h2 className="text-3xl font-bold text-gray-900 mb-1">
             Booking Details
           </h2>
-          <p className="text-gray-600 text-sm">Review your cinema ticket reservation</p>
+          <p className="text-gray-600 text-sm">
+            Review your cinema ticket reservation
+          </p>
         </div>
 
         <div className="bg-white border border-gray-200 rounded-xl p-8 mb-8 space-y-8">
@@ -280,7 +289,8 @@ export default function BookingDetail() {
         {booking.status === "processing" && !isHoldActive && (
           <div className="bg-red-50 border border-red-200 rounded-xl p-6">
             <p className="text-red-700 font-medium">
-              This booking hold expired. Please create a new booking if payment is not confirmed.
+              This booking hold expired. Please create a new booking if payment
+              is not confirmed.
             </p>
           </div>
         )}

@@ -8,14 +8,19 @@ export default function PaymentCancel() {
   const pending = useMemo(() => loadPendingPayment(), []);
 
   const bookingId =
-    searchParams.get("booking_id") || searchParams.get("bookingId") || pending?.bookingId || "";
+    searchParams.get("booking_id") ||
+    searchParams.get("bookingId") ||
+    pending?.bookingId ||
+    "";
 
   return (
     <div className="min-h-screen bg-linear-to-b from-rose-50 to-white px-4 py-12">
       <div className="mx-auto max-w-2xl rounded-2xl border border-rose-200 bg-white p-8 shadow-sm">
         <div className="mb-6 flex items-center gap-3 text-rose-700">
           <FiXCircle size={30} />
-          <h1 className="text-3xl font-bold text-gray-900">Payment cancelled</h1>
+          <h1 className="text-3xl font-bold text-gray-900">
+            Payment cancelled
+          </h1>
         </div>
 
         <p className="mb-6 text-sm text-gray-700">
