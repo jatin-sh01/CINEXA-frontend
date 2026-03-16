@@ -16,6 +16,8 @@ import ShowPage from "./pages/ShowPage";
 import BookingSummary from "./pages/BookingSummary";
 import BookingDetail from "./pages/BookingDetail";
 import PaymentPage from "./pages/PaymentPage";
+import PaymentSuccess from "./pages/PaymentSuccess";
+import PaymentCancel from "./pages/PaymentCancel";
 import Dashboard from "./pages/Dashboard";
 import ForbiddenPage from "./pages/ForbiddenPage";
 import NotFound from "./pages/NotFound";
@@ -183,6 +185,8 @@ export default function App() {
                             </ProtectedRoute>
                           }
                         />
+                        <Route path="/success" element={<PaymentSuccess />} />
+                        <Route path="/cancel" element={<PaymentCancel />} />
                         <Route
                           path="/dashboard"
                           element={
