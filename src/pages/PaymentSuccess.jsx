@@ -38,12 +38,14 @@ export default function PaymentSuccess() {
   const [copied, setCopied] = useState(false);
 
   const pending = useMemo(() => loadPendingPayment(), []);
-  const bookingId =
+  const initialBookingId =
     searchParams.get("booking_id") ||
+    searchParams.get("bookingId") ||
+    searchParams.get("id") ||
     pending?.bookingId ||
     searchParams.get("client_reference_id") ||
     "";
-  const paymentId = searchParams.get("payment_id") || pending?.paymentId || "";
+  const initialPaymentId = searchParams.get("payment_id") || pending?.paymentId || "";
   const sessionId = searchParams.get("session_id") || pending?.sessionId || "";
   const paymentIntent =
     searchParams.get("payment_intent") || pending?.paymentIntentId || "";
@@ -55,21 +57,13 @@ export default function PaymentSuccess() {
   useEffect(() => {
     let active = true;
 
-    const hasIds = Boolean(bookingId || paymentId);
-    if (!hasIds) {
-      setVerifying(false);
-      return () => {
-        active = false;
-      };
-    }
-
-    const loadStatus = async () => {
+    const loadStatusForId = async (bId, pId) => {
       const checks = [];
 
-      if (bookingId) checks.push(get(`/api/booking/${bookingId}`));
+      if (bId) checks.push(get(`/api/booking/${bId}`));
       else checks.push(Promise.resolve(null));
 
-      if (paymentId) checks.push(get(`/api/payment/${paymentId}`));
+      if (pId) checks.push(get(`/api/payment/${pId}`));
       else checks.push(Promise.resolve(null));
 
       const [bookingRes, paymentRes] = await Promise.allSettled(checks);
@@ -88,8 +82,8 @@ export default function PaymentSuccess() {
         setBooking(latestBookingData);
       }
 
-      setBookingStatus(latestBookingStatus || "");
-      setPaymentStatus(latestPaymentStatus || "");
+      if (latestBookingStatus) setBookingStatus(latestBookingStatus);
+      if (latestPaymentStatus) setPaymentStatus(latestPaymentStatus);
 
       const isSuccess =
         latestBookingStatus === "successfull" ||
@@ -100,7 +94,6 @@ export default function PaymentSuccess() {
         latestPaymentStatus === "FAILED";
 
       if (isSuccess || isFailed) {
-        setVerifying(false);
         return { done: true, failed: isFailed };
       }
 
@@ -111,21 +104,55 @@ export default function PaymentSuccess() {
       setVerifying(true);
       setVerificationError("");
 
+      let currentBookingId = initialBookingId;
+      let currentPaymentId = initialPaymentId;
+
       try {
         if (sessionId) {
-          await confirmStripeCheckoutSession(sessionId);
+          const res = await confirmStripeCheckoutSession(sessionId);
+          const data = res?.data || res;
+          if (data?.bookingId) currentBookingId = data.bookingId;
+          if (data?.paymentId) currentPaymentId = data.paymentId;
+          if (data?.booking) setBooking(data.booking);
         } else if (paymentIntent) {
-          await confirmStripePaymentIntent(paymentIntent);
+          const res = await confirmStripePaymentIntent(paymentIntent);
+          const data = res?.data || res;
+          if (data?.bookingId) currentBookingId = data.bookingId;
+          if (data?.paymentId) currentPaymentId = data.paymentId;
+          if (data?.booking) setBooking(data.booking);
         }
       } catch {
-        // Keep polling below for eventual consistency when immediate confirmation fails.
+        // Keep polling below
+      }
+
+      // If no booking ID was provided in URL/session, attempt to load user's most recent confirmed booking
+      if (!currentBookingId) {
+        try {
+          const userBookings = await get("/api/booking");
+          const list = Array.isArray(userBookings?.data) ? userBookings.data : [];
+          if (list.length > 0) {
+            currentBookingId = list[0]._id;
+            setBooking(list[0]);
+            setBookingStatus(list[0].status);
+          }
+        } catch {
+          // Ignore
+        }
+      }
+
+      if (!currentBookingId && !currentPaymentId) {
+        if (active) setVerifying(false);
+        return;
       }
 
       const maxAttempts = 8;
       for (let attempt = 0; attempt < maxAttempts; attempt += 1) {
         try {
-          const result = await loadStatus();
-          if (result.done) return;
+          const result = await loadStatusForId(currentBookingId, currentPaymentId);
+          if (result.done) {
+            if (active) setVerifying(false);
+            return;
+          }
         } catch (error) {
           if (!active) return;
           if (attempt === maxAttempts - 1) {
@@ -137,7 +164,7 @@ export default function PaymentSuccess() {
           }
         }
 
-        await new Promise((resolve) => setTimeout(resolve, 2500));
+        await new Promise((resolve) => setTimeout(resolve, 2000));
       }
 
       if (active) {
@@ -150,7 +177,7 @@ export default function PaymentSuccess() {
     return () => {
       active = false;
     };
-  }, [bookingId, paymentId, paymentIntent, sessionId]);
+  }, [initialBookingId, initialPaymentId, paymentIntent, sessionId]);
 
   // Fetch real movie, theater, and show records from DB
   useEffect(() => {
@@ -158,10 +185,12 @@ export default function PaymentSuccess() {
 
     // 1. Movie record
     const rawMovie = booking.movieId;
-    if (rawMovie && typeof rawMovie === "object") {
+    const effectiveMovieId =
+      typeof rawMovie === "object" ? rawMovie?._id : rawMovie;
+    if (rawMovie && typeof rawMovie === "object" && rawMovie.name) {
       setMovie(rawMovie);
-    } else if (rawMovie && typeof rawMovie === "string") {
-      get(`/api/movies/${rawMovie}`)
+    } else if (effectiveMovieId) {
+      get(`/api/movies/${effectiveMovieId}`)
         .then((res) => {
           if (res?.data) setMovie(res.data);
         })
@@ -170,10 +199,12 @@ export default function PaymentSuccess() {
 
     // 2. Theater record
     const rawTheater = booking.theaterId;
-    if (rawTheater && typeof rawTheater === "object") {
+    const effectiveTheaterId =
+      typeof rawTheater === "object" ? rawTheater?._id : rawTheater;
+    if (rawTheater && typeof rawTheater === "object" && rawTheater.name) {
       setTheater(rawTheater);
-    } else if (rawTheater && typeof rawTheater === "string") {
-      get(`/api/theaters/${rawTheater}`)
+    } else if (effectiveTheaterId) {
+      get(`/api/theaters/${effectiveTheaterId}`)
         .then((res) => {
           if (res?.data) setTheater(res.data);
         })
@@ -182,10 +213,12 @@ export default function PaymentSuccess() {
 
     // 3. Show record (to get exact show price, screen format, and timing)
     const rawShow = booking.showId;
-    if (rawShow && typeof rawShow === "object") {
+    const effectiveShowId =
+      typeof rawShow === "object" ? rawShow?._id : rawShow;
+    if (rawShow && typeof rawShow === "object" && rawShow.price) {
       setShow(rawShow);
-    } else if (rawShow && typeof rawShow === "string") {
-      get(`/api/show/${rawShow}`)
+    } else if (effectiveShowId) {
+      get(`/api/show/${effectiveShowId}`)
         .then((res) => {
           if (res?.data) setShow(res.data);
         })
@@ -193,10 +226,6 @@ export default function PaymentSuccess() {
     }
   }, [booking]);
 
-  const isSuccess =
-    bookingStatus === "successfull" ||
-    paymentStatus === "SUCCESS" ||
-    (!verifying && booking?.status === "successfull");
   const isFailed =
     bookingStatus === "cancelled" ||
     bookingStatus === "expired" ||
@@ -207,7 +236,7 @@ export default function PaymentSuccess() {
     movie?.name ||
     (typeof booking?.movieId === "object" ? booking?.movieId?.name : null) ||
     show?.movieId?.name ||
-    "Movie";
+    "";
 
   const realMoviePoster =
     movie?.poster ||
@@ -227,7 +256,7 @@ export default function PaymentSuccess() {
     theater?.name ||
     (typeof booking?.theaterId === "object" ? booking?.theaterId?.name : null) ||
     show?.theaterId?.name ||
-    "Cinema Theater";
+    "";
 
   const realTheaterAddress =
     theater?.address ||
@@ -241,7 +270,7 @@ export default function PaymentSuccess() {
     show?.theaterId?.city ||
     "";
 
-  const realScreenFormat = show?.format || "Standard";
+  const realScreenFormat = show?.format || "";
 
   const timing = booking?.timing || show?.timing || "";
   const hasTimingDate = timing && !Number.isNaN(Date.parse(timing));
@@ -249,10 +278,10 @@ export default function PaymentSuccess() {
     ? formatDate(timing)
     : booking?.createdAt
       ? formatDate(booking.createdAt)
-      : "Confirmed Date";
+      : "";
   const timingTimeText = hasTimingDate
     ? formatTime(timing)
-    : timing || "Showtime";
+    : timing || "";
 
   const seatString = booking?.seat || "";
   const seatList = useMemo(() => {
@@ -280,15 +309,17 @@ export default function PaymentSuccess() {
     user?.email ||
     "";
 
+  const effectiveBookingId = booking?._id || initialBookingId;
+
   const copyBookingId = () => {
-    if (!bookingId) return;
-    navigator.clipboard?.writeText(bookingId).then(() => {
+    if (!effectiveBookingId) return;
+    navigator.clipboard?.writeText(effectiveBookingId).then(() => {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     }).catch(() => null);
   };
 
-  // State: Verifying in progress
+  // State 1: Verifying in progress
   if (verifying) {
     return (
       <div className="min-h-screen bg-gray-50/50 px-4 py-12 flex items-center justify-center">
@@ -300,7 +331,7 @@ export default function PaymentSuccess() {
             Confirming Payment
           </h1>
           <p className="text-sm text-gray-500 leading-relaxed mb-6">
-            We are confirming your payment status with Stripe. This takes just a few moments.
+            We are confirming your payment status with Stripe and issuing your pass.
           </p>
           <div className="h-1.5 w-full bg-gray-100 rounded-full overflow-hidden">
             <div className="h-full bg-gray-950 rounded-full w-2/3 animate-pulse" />
@@ -310,7 +341,7 @@ export default function PaymentSuccess() {
     );
   }
 
-  // State: Failed payment
+  // State 2: Failed payment
   if (isFailed) {
     return (
       <div className="min-h-screen bg-gray-50/50 px-4 py-12 flex items-center justify-center">
@@ -325,9 +356,9 @@ export default function PaymentSuccess() {
             {verificationError || "The transaction could not be completed or the reservation hold timed out."}
           </p>
           <div className="flex flex-col gap-2.5">
-            {bookingId && (
+            {effectiveBookingId && (
               <Link
-                to={`/booking/${bookingId}`}
+                to={`/booking/${effectiveBookingId}`}
                 className="w-full inline-flex items-center justify-center px-5 py-2.5 bg-gray-950 hover:bg-gray-800 text-white rounded-xl text-sm font-medium active:scale-[0.98] transition duration-150 shadow-xs"
               >
                 Return to Booking
@@ -345,7 +376,40 @@ export default function PaymentSuccess() {
     );
   }
 
-  // State: Successful payment & Confirmed Cinema Ticket
+  // State 3: No active booking found
+  if (!booking) {
+    return (
+      <div className="min-h-screen bg-gray-50/50 px-4 py-12 flex items-center justify-center">
+        <div className="mx-auto max-w-md w-full rounded-2xl border border-gray-200/90 bg-white p-8 text-center shadow-xs animate-modal-pop">
+          <div className="w-12 h-12 rounded-full bg-gray-100 text-gray-500 flex items-center justify-center mx-auto mb-4">
+            <FiFilm size={24} />
+          </div>
+          <h1 className="text-xl font-bold tracking-tight text-gray-900 mb-2">
+            No Active Ticket Found
+          </h1>
+          <p className="text-sm text-gray-500 leading-relaxed mb-6">
+            Please select a confirmed booking from your dashboard to view and print your cinema pass.
+          </p>
+          <div className="flex flex-col gap-2.5">
+            <Link
+              to="/dashboard"
+              className="w-full inline-flex items-center justify-center px-5 py-2.5 bg-gray-950 hover:bg-gray-800 text-white rounded-xl text-sm font-medium active:scale-[0.98] transition duration-150 shadow-xs"
+            >
+              Go to My Bookings
+            </Link>
+            <Link
+              to="/movies"
+              className="w-full inline-flex items-center justify-center px-5 py-2.5 bg-white border border-gray-200 hover:bg-gray-50 text-gray-900 rounded-xl text-sm font-medium active:scale-[0.98] transition duration-150 shadow-2xs"
+            >
+              Browse Movies
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // State 4: Confirmed Cinema Ticket with real database entities
   return (
     <div className="min-h-screen bg-gray-50/50 px-4 py-8 sm:py-12">
       <div className="max-w-xl mx-auto">
@@ -415,7 +479,7 @@ export default function PaymentSuccess() {
                 </div>
 
                 <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-gray-900 leading-snug">
-                  {realMovieName}
+                  {realMovieName || "Feature Film"}
                 </h2>
 
                 {realMovieDuration && (
@@ -442,9 +506,9 @@ export default function PaymentSuccess() {
                   Theater
                 </p>
                 <p className="text-sm font-bold text-gray-900 mt-0.5 leading-snug">
-                  {realTheaterName}
+                  {realTheaterName || "Partner Cinema"}
                 </p>
-                {realTheaterAddress && (
+                {(realTheaterAddress || realTheaterCity) && (
                   <p className="text-xs text-gray-500 mt-0.5 truncate">
                     {realTheaterAddress}{realTheaterCity ? `, ${realTheaterCity}` : ""}
                   </p>
@@ -457,10 +521,10 @@ export default function PaymentSuccess() {
                   Date & Time
                 </p>
                 <p className="text-sm font-bold text-gray-900 mt-0.5">
-                  {timingDateText}
+                  {timingDateText || "Show Date"}
                 </p>
                 <p className="text-xs font-semibold text-gray-700 mt-0.5">
-                  {timingTimeText}
+                  {timingTimeText || "Scheduled Time"}
                 </p>
               </div>
             </div>
@@ -503,7 +567,7 @@ export default function PaymentSuccess() {
                   Ticket Reference
                 </p>
                 <p className="font-mono text-sm sm:text-base font-bold text-gray-900 mt-0.5 break-all">
-                  {bookingId || "CINEXA-PASS"}
+                  {effectiveBookingId || "CINEXA-PASS"}
                 </p>
                 <p className="text-[11px] text-gray-400 mt-0.5">
                   Official Admission ID

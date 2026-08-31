@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { get } from "../api";
 import useFetch from "../hooks/useFetch";
 import Spinner from "../components/shared/Spinner";
@@ -13,6 +13,7 @@ import {
   FiUsers,
   FiDollarSign,
   FiHash,
+  FiPrinter,
 } from "react-icons/fi";
 
 const BOOKING_HOLD_MS = 5 * 60 * 1000;
@@ -257,16 +258,26 @@ export default function BookingDetail() {
             </div>
           </div>
 
-          <div className="pt-6 border-t border-gray-100">
+          <div className="pt-6 border-t border-gray-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div className="flex gap-4">
               <FiHash className="text-gray-400 shrink-0 mt-1" size={20} />
               <div className="flex-1">
-                <p className="text-gray-600 text-sm font-medium">Booking ID</p>
-                <p className="text-gray-900 font-mono text-sm mt-1 break-all">
+                <p className="text-gray-500 text-xs font-medium">Booking Reference ID</p>
+                <p className="text-gray-900 font-mono text-sm mt-0.5 break-all font-semibold">
                   {booking._id}
                 </p>
               </div>
             </div>
+
+            {booking.status === "successfull" && (
+              <Link
+                to={`/success?booking_id=${booking._id}`}
+                className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-gray-950 hover:bg-gray-800 text-white rounded-xl text-sm font-medium active:scale-[0.98] transition duration-150 shadow-xs"
+              >
+                <FiPrinter size={16} />
+                <span>View & Print Ticket Pass</span>
+              </Link>
+            )}
           </div>
         </div>
 
