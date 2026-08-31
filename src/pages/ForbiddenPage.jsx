@@ -12,7 +12,7 @@ export default function ForbiddenPage() {
       </p>
       <Link
         to="/"
-        className="px-6 py-3 bg-gray-900 text-white rounded-lg font-semibold hover:bg-gray-800 transition"
+        className="inline-flex items-center justify-center px-6 py-3 bg-gray-950 text-white rounded-xl font-medium hover:bg-gray-800 active:scale-[0.98] transition duration-150 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2"
       >
         Go to Home
       </Link>

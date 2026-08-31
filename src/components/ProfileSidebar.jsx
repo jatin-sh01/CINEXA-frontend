@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   FiArrowLeft,
   FiFileText,
@@ -17,10 +17,18 @@ export default function ProfileSidebar({ user, onClose, onLogout }) {
   const [showPrivacy, setShowPrivacy] = useState(false);
   const initial = user?.name?.charAt(0)?.toUpperCase() || "U";
 
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [onClose]);
+
   return (
     <div className="fixed inset-0 z-50 flex justify-end">
       <div
-        className="absolute inset-0 bg-black/40 backdrop-blur-sm"
+        className="absolute inset-0 bg-black/40 backdrop-blur-xs animate-fade-in"
         onClick={onClose}
         aria-hidden="true"
       />
@@ -30,7 +38,7 @@ export default function ProfileSidebar({ user, onClose, onLogout }) {
           <button
             onClick={onClose}
             aria-label="Close profile"
-            className="w-8 h-8 flex items-center justify-center rounded-full text-gray-500 hover:bg-gray-100 transition"
+            className="w-8 h-8 flex items-center justify-center rounded-full text-gray-500 hover:text-gray-900 hover:bg-gray-100 transition duration-150 active:scale-95 cursor-pointer"
           >
             <FiArrowLeft size={18} />
           </button>

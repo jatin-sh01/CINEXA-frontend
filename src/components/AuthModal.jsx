@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { useToast } from "./Toast";
@@ -17,6 +17,14 @@ export default function AuthModal({ onClose }) {
   const [busy, setBusy] = useState(false);
   const [showTerms, setShowTerms] = useState(false);
   const [showPrivacy, setShowPrivacy] = useState(false);
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [onClose]);
 
   const set = (k) => (e) => setForm((p) => ({ ...p, [k]: e.target.value }));
 
@@ -50,18 +58,18 @@ export default function AuthModal({ onClose }) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div
-        className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+        className="absolute inset-0 bg-black/50 backdrop-blur-xs animate-fade-in"
         onClick={onClose}
         aria-hidden="true"
       />
 
-      <div className="relative z-10 bg-white rounded-2xl shadow-2xl w-full max-w-md mx-4 p-8 animate-slide-up">
+      <div className="relative z-10 bg-white rounded-2xl shadow-xl w-full max-w-md p-6 sm:p-8 animate-modal-pop">
         <button
           onClick={onClose}
           aria-label="Close"
-          className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition"
+          className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition duration-150 active:scale-95 cursor-pointer"
         >
           <FiX size={18} />
         </button>
@@ -83,44 +91,80 @@ export default function AuthModal({ onClose }) {
 
         <form onSubmit={handleSubmit} className="space-y-4">
           {mode === "register" && (
-            <input
-              type="text"
-              placeholder="Full Name"
-              value={form.name}
-              onChange={set("name")}
-              required
-              className="w-full px-4 py-3 rounded-lg border border-gray-300 text-gray-800 placeholder:text-gray-400 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-300 transition text-sm"
-            />
+            <div>
+              <label
+                htmlFor="auth-modal-name"
+                className="block text-xs font-medium text-gray-700 mb-1.5"
+              >
+                Full Name
+              </label>
+              <input
+                id="auth-modal-name"
+                name="name"
+                type="text"
+                autoComplete="name"
+                placeholder="e.g. Jane Doe"
+                value={form.name}
+                onChange={set("name")}
+                required
+                className="w-full px-3.5 py-2.5 rounded-xl border border-gray-300 bg-white text-gray-900 placeholder:text-gray-400 text-sm focus:outline-none focus:border-gray-950 focus:ring-2 focus:ring-gray-950/10 transition"
+              />
+            </div>
           )}
-          <input
-            type="email"
-            placeholder="Email address"
-            value={form.email}
-            onChange={set("email")}
-            required
-            className="w-full px-4 py-3 rounded-lg border border-gray-300 text-gray-800 placeholder:text-gray-400 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-300 transition text-sm"
-          />
-          <input
-            type="password"
-            placeholder={
-              mode === "register" ? "Password (min 6 chars)" : "Password"
-            }
-            value={form.password}
-            onChange={set("password")}
-            required
-            minLength={6}
-            className="w-full px-4 py-3 rounded-lg border border-gray-300 text-gray-800 placeholder:text-gray-400 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-300 transition text-sm"
-          />
+          <div>
+            <label
+              htmlFor="auth-modal-email"
+              className="block text-xs font-medium text-gray-700 mb-1.5"
+            >
+              Email Address
+            </label>
+            <input
+              id="auth-modal-email"
+              name="email"
+              type="email"
+              autoComplete="email"
+              placeholder="you@example.com"
+              value={form.email}
+              onChange={set("email")}
+              required
+              className="w-full px-3.5 py-2.5 rounded-xl border border-gray-300 bg-white text-gray-900 placeholder:text-gray-400 text-sm focus:outline-none focus:border-gray-950 focus:ring-2 focus:ring-gray-950/10 transition"
+            />
+          </div>
+          <div>
+            <label
+              htmlFor="auth-modal-password"
+              className="block text-xs font-medium text-gray-700 mb-1.5"
+            >
+              Password
+            </label>
+            <input
+              id="auth-modal-password"
+              name="password"
+              type="password"
+              autoComplete={mode === "register" ? "new-password" : "current-password"}
+              placeholder={
+                mode === "register" ? "At least 6 characters" : "Enter your password"
+              }
+              value={form.password}
+              onChange={set("password")}
+              required
+              minLength={6}
+              className="w-full px-3.5 py-2.5 rounded-xl border border-gray-300 bg-white text-gray-900 placeholder:text-gray-400 text-sm focus:outline-none focus:border-gray-950 focus:ring-2 focus:ring-gray-950/10 transition"
+            />
+          </div>
 
           <button
+            type="submit"
             disabled={busy}
-            className="w-full py-3 rounded-lg bg-gray-900 hover:bg-gray-800 text-white font-semibold text-sm disabled:opacity-50 transition"
+            className="w-full py-3 rounded-xl bg-gray-950 hover:bg-gray-800 text-white font-medium text-sm shadow-sm active:scale-[0.98] transition duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100 cursor-pointer"
           >
             {busy
               ? mode === "login"
                 ? "Signing in\u2026"
-                : "Creating\u2026"
-              : "Continue"}
+                : "Creating account\u2026"
+              : mode === "login"
+                ? "Sign In"
+                : "Create Account"}
           </button>
         </form>
 

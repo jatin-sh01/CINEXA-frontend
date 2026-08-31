@@ -158,17 +158,17 @@ export default function SeatSelector({ show, onSelect }) {
   }, [selected, onSelect]);
 
   return (
-    <div className="space-y-6 sm:space-y-8 bg-linear-to-b from-gray-50 to-white rounded-2xl p-4 sm:p-8 border border-gray-200">
-      <div className="flex flex-col items-center gap-4">
-        <div className="w-full h-2 bg-linear-to-r from-transparent via-gray-900 to-transparent rounded-full" />
-        <div className="text-sm font-bold text-gray-600 tracking-widest">
-          SCREEN
+    <div className="space-y-6 sm:space-y-8 bg-white rounded-2xl p-4 sm:p-8 border border-gray-200/90 shadow-xs">
+      <div className="flex flex-col items-center gap-3">
+        <div className="w-3/4 max-w-md h-1.5 bg-gray-300 rounded-full shadow-inner" />
+        <div className="text-xs font-semibold text-gray-500 tracking-widest uppercase">
+          Screen This Way
         </div>
       </div>
 
-      <div className="flex justify-center pb-1 px-1">
+      <div className="flex justify-center pb-1 px-1 overflow-x-auto scrollbar-hide">
         <div
-          className="grid gap-3 sm:gap-4 w-full"
+          className="grid gap-2 sm:gap-2.5 w-fit"
           style={{ gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))` }}
         >
           {seats.map((s) => (
@@ -179,14 +179,14 @@ export default function SeatSelector({ show, onSelect }) {
                 booked.has(s.id) || (locked.has(s.id) && !selected.has(s.id))
               }
               aria-label={`Row ${String.fromCharCode(65 + s.row)} Seat ${s.col + 1}`}
-              className={`w-8 h-8 sm:w-9 sm:h-9 rounded-md sm:rounded-lg text-[10px] sm:text-[11px] leading-none whitespace-nowrap flex items-center justify-center font-bold transition-all transform hover:scale-105 ${
+              className={`w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9 rounded-lg text-[10px] sm:text-xs leading-none whitespace-nowrap flex items-center justify-center font-semibold transition-all duration-150 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 ${
                 selected.has(s.id)
-                  ? "bg-linear-to-br from-purple-600 to-purple-700 text-white shadow-lg scale-105 border-2 border-purple-800"
+                  ? "bg-gray-950 text-white border border-gray-950 shadow-sm active:scale-[0.94] cursor-pointer ring-2 ring-gray-950/20"
                   : booked.has(s.id)
-                    ? "bg-red-500 text-white cursor-not-allowed opacity-60 border border-red-600"
+                    ? "bg-gray-100 text-gray-400 border border-gray-200 cursor-not-allowed line-through"
                     : locked.has(s.id)
-                      ? "bg-amber-400 text-amber-900 cursor-not-allowed font-bold border border-amber-500 hover:scale-100"
-                      : "bg-white text-gray-700 border-2 border-gray-300 hover:border-purple-400 hover:shadow-md shadow-sm cursor-pointer"
+                      ? "bg-amber-100 text-amber-800 border border-amber-300 cursor-not-allowed"
+                      : "bg-white text-gray-700 border border-gray-300 hover:border-gray-900 hover:bg-gray-50 active:scale-[0.94] cursor-pointer shadow-2xs"
               }`}
             >
               {s.id}
@@ -195,25 +195,24 @@ export default function SeatSelector({ show, onSelect }) {
         </div>
       </div>
 
-      <div className="flex flex-wrap justify-center gap-6 text-sm pt-4 border-t border-gray-200">
-        <div className="flex items-center gap-3">
-          <div className="w-6 h-6 rounded-lg border-2 border-gray-300 bg-white" />
-          <span className="text-gray-700 font-medium">Available</span>
+      <div className="flex flex-wrap justify-center gap-6 text-xs sm:text-sm pt-4 border-t border-gray-100">
+        <div className="flex items-center gap-2.5">
+          <div className="w-5 h-5 rounded-md border border-gray-300 bg-white" />
+          <span className="text-gray-600 font-medium">Available</span>
         </div>
-        <div className="flex items-center gap-3">
-          <div className="w-6 h-6 rounded-lg bg-linear-to-br from-purple-600 to-purple-700 border-2 border-purple-800" />
-          <span className="text-gray-700 font-medium">
-            Selected{" "}
-            <span className="text-purple-600 font-bold">({selected.size})</span>
+        <div className="flex items-center gap-2.5">
+          <div className="w-5 h-5 rounded-md bg-gray-950 border border-gray-950" />
+          <span className="text-gray-900 font-medium">
+            Selected <span className="font-bold">({selected.size})</span>
           </span>
         </div>
-        <div className="flex items-center gap-3">
-          <div className="w-6 h-6 rounded-lg bg-amber-400 border border-amber-500" />
-          <span className="text-gray-700 font-medium">Locked</span>
+        <div className="flex items-center gap-2.5">
+          <div className="w-5 h-5 rounded-md bg-amber-100 border border-amber-300" />
+          <span className="text-gray-600 font-medium">Locked</span>
         </div>
-        <div className="flex items-center gap-3">
-          <div className="w-6 h-6 rounded-lg bg-red-500 border border-red-600 opacity-60" />
-          <span className="text-gray-700 font-medium">Booked</span>
+        <div className="flex items-center gap-2.5">
+          <div className="w-5 h-5 rounded-md bg-gray-100 border border-gray-200" />
+          <span className="text-gray-400 font-medium">Booked</span>
         </div>
       </div>
     </div>

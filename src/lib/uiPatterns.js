@@ -38,38 +38,41 @@ export const cardInteractiveSmall =
 
 
 export const primaryButton =
-  "px-6 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-700 active:bg-purple-800 transition duration-200 shadow-md hover:shadow-lg";
+  "inline-flex items-center justify-center px-6 py-3 bg-gray-950 text-white rounded-xl font-medium hover:bg-gray-800 active:scale-[0.98] transition duration-150 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100 cursor-pointer";
 
 export const primaryButtonSmall =
-  "px-4 py-2 bg-purple-600 text-white rounded-lg font-medium hover:bg-purple-700 active:bg-purple-800 transition";
+  "inline-flex items-center justify-center px-4 py-2 bg-gray-950 text-white rounded-xl text-sm font-medium hover:bg-gray-800 active:scale-[0.98] transition duration-150 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100 cursor-pointer";
 
 export const secondaryButton =
-  "px-6 py-3 bg-white text-gray-900 rounded-lg font-semibold border border-gray-300 hover:bg-gray-50 active:bg-gray-100 transition duration-200 shadow-sm";
+  "inline-flex items-center justify-center px-6 py-3 bg-white text-gray-900 rounded-xl font-medium border border-gray-200 hover:bg-gray-50 hover:border-gray-300 active:scale-[0.98] transition duration-150 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100 cursor-pointer";
+
+export const secondaryButtonSmall =
+  "inline-flex items-center justify-center px-4 py-2 bg-white text-gray-900 rounded-xl text-sm font-medium border border-gray-200 hover:bg-gray-50 hover:border-gray-300 active:scale-[0.98] transition duration-150 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100 cursor-pointer";
 
 export const dangerButton =
-  "px-6 py-3 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700 active:bg-red-800 transition duration-200 shadow-md hover:shadow-lg";
+  "inline-flex items-center justify-center px-6 py-3 bg-red-600 text-white rounded-xl font-medium hover:bg-red-700 active:scale-[0.98] transition duration-150 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-600 focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer";
 
 export const successButton =
-  "px-6 py-3 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 active:bg-green-800 transition duration-200";
+  "inline-flex items-center justify-center px-6 py-3 bg-emerald-600 text-white rounded-xl font-medium hover:bg-emerald-700 active:scale-[0.98] transition duration-150 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2 disabled:opacity-50 cursor-pointer";
 
 export const warningButton =
-  "px-6 py-3 bg-yellow-600 text-white rounded-lg font-semibold hover:bg-yellow-700 active:bg-yellow-800 transition duration-200";
+  "inline-flex items-center justify-center px-6 py-3 bg-amber-600 text-white rounded-xl font-medium hover:bg-amber-700 active:scale-[0.98] transition duration-150 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-600 focus-visible:ring-offset-2 disabled:opacity-50 cursor-pointer";
 
 export const ghostButton =
-  "px-4 py-2 bg-transparent text-gray-700 hover:bg-gray-100 rounded-lg transition";
+  "inline-flex items-center justify-center px-4 py-2 bg-transparent text-gray-700 hover:bg-gray-100 active:scale-[0.98] rounded-xl transition duration-150 cursor-pointer";
 
 
 
 
 
 export const inputField =
-  "w-full px-4 py-2.5 rounded-lg bg-white text-gray-900 border border-gray-300 focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-100 transition text-sm placeholder-gray-500";
+  "w-full px-4 py-2.5 rounded-xl bg-white text-gray-900 border border-gray-300 focus:border-gray-950 focus:outline-none focus:ring-2 focus:ring-gray-950/10 transition text-sm placeholder:text-gray-400";
 
 export const inputFieldCompact =
-  "px-3 py-2 rounded-lg bg-white text-gray-900 border border-gray-300 focus:border-purple-500 focus:outline-none text-sm placeholder-gray-500";
+  "px-3 py-2 rounded-xl bg-white text-gray-900 border border-gray-300 focus:border-gray-950 focus:outline-none focus:ring-2 focus:ring-gray-950/10 transition text-sm placeholder:text-gray-400";
 
 export const selectField =
-  "w-full px-4 py-2.5 rounded-lg bg-white text-gray-900 border border-gray-300 focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-100 transition text-sm";
+  "w-full px-4 py-2.5 rounded-xl bg-white text-gray-900 border border-gray-300 focus:border-gray-950 focus:outline-none focus:ring-2 focus:ring-gray-950/10 transition text-sm";
 
 
 

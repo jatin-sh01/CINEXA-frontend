@@ -256,10 +256,10 @@ export default function ShowForm({ show, onSaved }) {
         </select>
       </div>
 
-      <div className="rounded-xl border border-gray-200 p-4 bg-linear-to-br from-orange-50 to-white space-y-4">
+      <div className="rounded-2xl border border-gray-200/90 p-5 bg-gray-50/70 space-y-4">
         <label className="flex items-center gap-2 text-sm font-semibold text-gray-900">
-          <FiCalendar size={18} className="text-orange-600" />
-          Show Date And Time
+          <FiCalendar size={18} className="text-gray-700" />
+          Show Date and Time
         </label>
 
         <div className="grid md:grid-cols-2 gap-4">
@@ -374,7 +374,7 @@ export default function ShowForm({ show, onSaved }) {
       <div className="flex gap-3 pt-4">
         <button
           disabled={busy}
-          className="flex-1 py-3 rounded-lg bg-linear-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white font-bold shadow-md hover:shadow-lg transition transform hover:scale-105 disabled:opacity-50 disabled:scale-100"
+          className="flex-1 py-3 rounded-xl bg-gray-950 hover:bg-gray-800 text-white font-medium shadow-sm transition duration-150 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
         >
           {busy
             ? isEdit

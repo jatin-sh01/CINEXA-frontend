@@ -159,22 +159,22 @@ export default function TheaterForm({ theater, onSaved }) {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      <div className="rounded-2xl border border-purple-100 bg-linear-to-r from-purple-50 to-blue-50 p-4">
-        <p className="text-xs font-semibold uppercase tracking-wide text-purple-700">
+      <div className="rounded-2xl border border-gray-200/90 bg-gray-50/80 p-4">
+        <p className="text-xs font-semibold uppercase tracking-wider text-gray-500">
           {isEdit ? "Editing theater" : "New theater"}
         </p>
         <h3 className="mt-1 text-lg font-bold text-gray-900">{summaryName}</h3>
         <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
-          <div className="rounded-xl bg-white/90 px-3 py-2 border border-purple-100">
+          <div className="rounded-xl bg-white px-3 py-2 border border-gray-200 shadow-2xs">
             <p className="text-xs text-gray-500">Location</p>
             <p className="text-sm font-semibold text-gray-800">
               {summaryLocation}
             </p>
           </div>
-          <div className="rounded-xl bg-white/90 px-3 py-2 border border-purple-100">
+          <div className="rounded-xl bg-white px-3 py-2 border border-gray-200 shadow-2xs">
             <p className="text-xs text-gray-500">Screens</p>
             <p className="text-sm font-semibold text-gray-800">
-              {summaryScreens}
+              {summaryScreens} screen(s)
             </p>
           </div>
         </div>
@@ -328,7 +328,7 @@ export default function TheaterForm({ theater, onSaved }) {
       <div className="flex gap-3">
         <button
           disabled={busy}
-          className="flex-1 py-3 rounded-xl bg-linear-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white font-semibold shadow-sm transition disabled:opacity-50 inline-flex items-center justify-center gap-2"
+          className="flex-1 py-3 rounded-xl bg-gray-950 hover:bg-gray-800 text-white font-medium shadow-sm transition duration-150 active:scale-[0.98] disabled:opacity-50 inline-flex items-center justify-center gap-2 cursor-pointer"
         >
           <FiSave size={16} />
           {busy ? "Saving..." : isEdit ? "Update Theater" : "Create Theater"}

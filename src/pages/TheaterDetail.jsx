@@ -40,49 +40,55 @@ export default function TheaterDetail() {
   };
 
   return (
-    <div className="min-h-screen bg-linear-to-b from-white to-gray-50">
+    <div className="min-h-screen bg-gray-50/50">
       <div className="max-w-6xl mx-auto px-4 py-8">
-        <div className="bg-white rounded-2xl border border-gray-200 p-8 shadow-sm hover:shadow-md transition mb-10">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">
+        <div className="bg-white rounded-2xl border border-gray-200/90 p-6 sm:p-8 shadow-xs mb-8">
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-gray-900 mb-6">
             {theater.name}
           </h1>
 
           <div className="grid md:grid-cols-3 gap-6 mb-6">
             <div className="flex items-start gap-3">
-              <FiMapPin className="text-purple-600 shrink-0 mt-1" size={24} />
+              <div className="p-2.5 bg-gray-100 rounded-xl text-gray-700 shrink-0">
+                <FiMapPin size={20} />
+              </div>
               <div>
-                <p className="text-sm text-gray-600 font-medium mb-1">
+                <p className="text-xs text-gray-500 font-medium mb-1">
                   Location
                 </p>
-                <p className="text-gray-900 font-semibold">
+                <p className="text-sm font-semibold text-gray-900">
                   {theater.address}, {theater.city}
                 </p>
                 {theater.pincode && (
-                  <p className="text-gray-600 text-sm">{theater.pincode}</p>
+                  <p className="text-xs text-gray-500 mt-0.5">{theater.pincode}</p>
                 )}
               </div>
             </div>
 
             <div className="flex items-start gap-3">
-              <FiFilm className="text-blue-600 shrink-0 mt-1" size={24} />
+              <div className="p-2.5 bg-gray-100 rounded-xl text-gray-700 shrink-0">
+                <FiFilm size={20} />
+              </div>
               <div>
-                <p className="text-sm text-gray-600 font-medium mb-1">
+                <p className="text-xs text-gray-500 font-medium mb-1">
                   Screens
                 </p>
-                <p className="text-gray-900 font-semibold text-lg">
-                  {theater.totalScreens}
+                <p className="text-sm font-semibold text-gray-900">
+                  {theater.totalScreens} Screen{theater.totalScreens !== 1 ? "s" : ""}
                 </p>
               </div>
             </div>
 
             {theater.description && (
               <div className="flex items-start gap-3">
-                <FiClock className="text-orange-600 shrink-0 mt-1" size={24} />
+                <div className="p-2.5 bg-gray-100 rounded-xl text-gray-700 shrink-0">
+                  <FiClock size={20} />
+                </div>
                 <div>
-                  <p className="text-sm text-gray-600 font-medium mb-1">
+                  <p className="text-xs text-gray-500 font-medium mb-1">
                     About
                   </p>
-                  <p className="text-gray-700 text-sm line-clamp-2">
+                  <p className="text-sm text-gray-700 line-clamp-2">
                     {theater.description}
                   </p>
                 </div>
@@ -91,8 +97,8 @@ export default function TheaterDetail() {
           </div>
 
           {theater.description && (
-            <div className="pt-6 border-t border-gray-200">
-              <p className="text-gray-700 leading-relaxed">
+            <div className="pt-5 border-t border-gray-100">
+              <p className="text-sm text-gray-600 leading-relaxed">
                 {theater.description}
               </p>
             </div>
@@ -104,8 +110,8 @@ export default function TheaterDetail() {
         </div>
 
         <div>
-          <h2 className="text-3xl font-bold text-gray-900 mb-6 flex items-center gap-2">
-            <FiClock className="text-purple-600" size={32} />
+          <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-gray-900 mb-5 flex items-center gap-2">
+            <FiClock className="text-gray-700" size={22} />
             Available Shows
           </h2>
           <ShowList theaterId={id} />

@@ -8,54 +8,27 @@ export default function Footer() {
   const faqItems = [
     {
       id: 1,
-      question: "Catch the Trending Blockbusters: Get Your Movie Tickets Now!",
+      question: "How do I cancel or modify my booking?",
       answer:
-        "Browse top movies, select your preferred showtime, and book your seats instantly in a few clicks.",
+        "You can view or manage your active bookings directly from your Dashboard under 'My Bookings' up to 2 hours before the scheduled showtime.",
     },
     {
       id: 2,
-      question:
-        "Discover Trending Films in Popular Cities & Grab Tickets for the Hottest Releases!",
+      question: "When will I receive my refund if a booking is cancelled?",
       answer:
-        "Find what's trending in your city and reserve seats before popular shows sell out.",
+        "Refunds are initiated immediately and credited to your original payment method within 3–5 business days depending on your bank.",
     },
     {
       id: 3,
-      question: "Explore the Best Movies Currently Showing in Popular Cities!",
+      question: "How do I access my ticket at the cinema?",
       answer:
-        "Explore now-showing titles across top theaters with up-to-date show availability.",
+        "Your digital m-ticket with barcode and seat details is instantly available in your Dashboard and sent to your registered email. Simply show it at the cinema entrance.",
     },
     {
       id: 4,
-      question:
-        "Top Movie Genres You'll Love - Action, Comedy, Romance & More!",
+      question: "What should I do if payment was deducted but booking failed?",
       answer:
-        "Filter by your favorite genres and discover shows that match your mood.",
-    },
-    {
-      id: 5,
-      question:
-        "Explore & Book Tickets for Your Favorite Movie Genres in Popular Cities!",
-      answer:
-        "From thrillers to family films, book shows in major cities with a smooth checkout experience.",
-    },
-    {
-      id: 6,
-      question: "Dive into Your Favorite Movie Genres in More Amazing Cities!",
-      answer:
-        "Switch locations and discover fresh lineups from multiple cities on one platform.",
-    },
-    {
-      id: 7,
-      question: "Explore Movies in Your Language Across More Amazing Cities!",
-      answer:
-        "Book movies by language preferences and enjoy regional and international releases easily.",
-    },
-    {
-      id: 8,
-      question: "Find the Best Cinemas in Popular Cities and cue to popcorn!",
-      answer:
-        "Compare theaters, timings, and seat options to choose the perfect cinema experience.",
+        "Any amount deducted for an incomplete transaction is automatically reversed by the payment gateway within 24–48 hours. You can also contact our support team for instant assistance.",
     },
   ];
 
@@ -67,47 +40,39 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="mt-auto border-t border-gray-800 bg-gray-950 text-white">
-      <div className="bg-gray-200/90 py-12 md:py-14">
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="flex items-start justify-between gap-4 mb-4">
-            <div>
-              <h3 className="text-base md:text-lg font-semibold text-gray-900">
-                Frequently Asked Questions
-              </h3>
-              <p className="text-xs md:text-sm text-gray-600 mt-1">
-                Everything you need before booking.
-              </p>
-            </div>
-            <span className="hidden md:inline-flex items-center rounded-full border border-gray-300 bg-white px-3 py-1 text-xs text-gray-700">
-              Help Center
-            </span>
+    <footer className="mt-auto bg-gray-950 text-white">
+      <div className="bg-gray-50 border-t border-gray-200 py-10 md:py-12">
+        <div className="max-w-4xl mx-auto px-4">
+          <div className="text-center mb-8">
+            <h3 className="text-xl md:text-2xl font-bold text-gray-900">
+              Frequently Asked Questions
+            </h3>
+            <p className="text-sm text-gray-500 mt-1">
+              Quick answers about bookings, tickets, and refunds.
+            </p>
           </div>
 
-          <div className="space-y-3">
+          <div className="bg-white rounded-2xl border border-gray-200 divide-y divide-gray-100 shadow-xs overflow-hidden">
             {faqItems.map((item) => (
-              <div
-                key={item.id}
-                className="rounded-2xl border border-gray-300 bg-white overflow-hidden transition hover:shadow-sm"
-              >
+              <div key={item.id} className="transition">
                 <button
                   type="button"
                   onClick={() =>
                     setOpenFaq(openFaq === item.id ? null : item.id)
                   }
-                  className="w-full px-5 md:px-6 py-4 text-left flex items-center justify-between hover:bg-gray-50 transition"
+                  className="w-full px-5 py-4 text-left flex items-center justify-between hover:bg-gray-50/70 transition duration-150 cursor-pointer"
                 >
-                  <span className="text-base text-gray-900 font-medium leading-snug pr-3">
+                  <span className="text-sm md:text-base text-gray-900 font-medium leading-snug pr-4">
                     {item.question}
                   </span>
                   <FiChevronDown
                     size={18}
-                    className={`shrink-0 text-gray-700 transition-transform ${openFaq === item.id ? "rotate-180" : ""}`}
+                    className={`shrink-0 text-gray-400 transition-transform duration-200 ${openFaq === item.id ? "rotate-180 text-gray-900" : ""}`}
                   />
                 </button>
                 {openFaq === item.id && (
-                  <div className="px-5 md:px-6 pb-4 text-sm text-gray-700 border-t border-gray-200 bg-gray-50/60">
-                    <p className="pt-2.5 leading-relaxed">{item.answer}</p>
+                  <div className="px-5 pb-4 pt-1 text-sm text-gray-600 leading-relaxed bg-gray-50/40">
+                    <p>{item.answer}</p>
                   </div>
                 )}
               </div>

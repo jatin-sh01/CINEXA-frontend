@@ -135,15 +135,15 @@ export default function BookingDetail() {
     );
 
   const statusColor = {
-    processing: "bg-yellow-100 text-yellow-700 border border-yellow-200",
-    successfull: "bg-green-100 text-green-700 border border-green-200",
-    cancelled: "bg-red-100 text-red-700 border border-red-200",
+    processing: "bg-amber-100 text-amber-800 border border-amber-200",
+    successfull: "bg-emerald-100 text-emerald-800 border border-emerald-200",
+    cancelled: "bg-rose-100 text-rose-800 border border-rose-200",
     expired: "bg-gray-100 text-gray-700 border border-gray-200",
   };
 
   const statusLabel = {
     processing: "Processing",
-    successfull: "Successful",
+    successfull: "Confirmed",
     cancelled: "Cancelled",
     expired: "Expired",
   };
@@ -158,15 +158,15 @@ export default function BookingDetail() {
   const holdLabel = formatRemaining(remainingMs);
 
   return (
-    <div className="min-h-screen bg-white px-4 py-12">
+    <div className="min-h-screen bg-gray-50/50 px-4 py-8 sm:py-12">
       <div className="max-w-2xl mx-auto">
-        <div className="mb-10">
-          <h1 className="text-4xl font-bold text-gray-900 mb-1">
-            Review your booking
+        <div className="mb-6 sm:mb-8">
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-gray-900 mb-1">
+            Review Your Booking
           </h1>
-          <p className="text-gray-600 text-sm">
+          <p className="text-gray-500 text-sm">
             {booking.status === "processing"
-              ? "Review and complete payment before hold expires"
+              ? "Review and complete payment before the reservation hold expires"
               : "Review your confirmed cinema ticket details"}
           </p>
         </div>
@@ -175,7 +175,7 @@ export default function BookingDetail() {
           <div
             className={`mb-6 rounded-xl border px-4 py-3 text-sm font-medium ${
               isHoldActive
-                ? "border-violet-200 bg-violet-50 text-violet-800"
+                ? "border-amber-200 bg-amber-50/90 text-amber-900"
                 : "border-red-200 bg-red-50 text-red-700"
             }`}
           >
@@ -193,25 +193,18 @@ export default function BookingDetail() {
           </div>
         )}
 
-        <div className="mb-10">
-          <h2 className="text-3xl font-bold text-gray-900 mb-1">
-            Booking Details
-          </h2>
-          <p className="text-gray-600 text-sm">
-            Review your cinema ticket reservation
-          </p>
-        </div>
-
-        <div className="bg-white border border-gray-200 rounded-xl p-8 mb-8 space-y-8">
+        <div className="bg-white border border-gray-200/90 rounded-2xl p-6 sm:p-8 mb-6 space-y-6 shadow-xs">
           <div className="flex items-start justify-between pb-6 border-b border-gray-100">
             <div className="flex items-center gap-3">
-              <FiFilm className="text-gray-400 shrink-0" size={32} />
+              <div className="p-2.5 bg-gray-100 rounded-xl text-gray-700 shrink-0">
+                <FiFilm size={22} />
+              </div>
               <div>
-                <h2 className="text-3xl font-bold text-gray-900">
+                <h2 className="text-xl sm:text-2xl font-bold text-gray-900">
                   {movieName}
                 </h2>
-                <p className="text-gray-600 text-sm mt-1">
-                  Your cinema booking
+                <p className="text-gray-500 text-xs mt-0.5">
+                  Cinema reservation
                 </p>
               </div>
             </div>

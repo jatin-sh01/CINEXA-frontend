@@ -40,114 +40,95 @@ export default function MovieDetails() {
     );
 
   return (
-    <div className="min-h-screen bg-linear-to-b from-white via-gray-50 to-gray-100">
-      <div className="relative h-56 md:h-72 overflow-hidden bg-gray-200">
+    <div className="min-h-screen bg-gray-50/50">
+      <div className="relative h-56 md:h-72 overflow-hidden bg-gray-900">
         {movie.poster && (
           <div
-            className="absolute inset-0 bg-cover bg-center blur-md opacity-30"
+            className="absolute inset-0 bg-cover bg-center blur-lg opacity-25 scale-105"
             style={{ backgroundImage: `url(${movie.poster})` }}
           />
         )}
-        <div className="absolute inset-0 bg-linear-to-b from-white/60 via-white/40 to-gray-100" />
+        <div className="absolute inset-0 bg-gradient-to-t from-gray-50/50 via-gray-900/40 to-transparent" />
       </div>
 
-      <div className="max-w-6xl mx-auto px-4 -mt-40 relative z-10">
-        <div className="grid md:grid-cols-3 gap-6 mb-12">
+      <div className="max-w-6xl mx-auto px-4 -mt-36 md:-mt-44 relative z-10">
+        <div className="grid md:grid-cols-3 gap-8 mb-12">
           <div className="md:col-span-1">
-            <div className="rounded-xl overflow-hidden shadow-lg border border-gray-200 hover:shadow-xl transition h-fit">
+            <div className="rounded-2xl overflow-hidden shadow-md border border-gray-200 bg-white">
               {movie.poster ? (
                 <img
                   src={movie.poster}
                   alt={movie.name}
-                  className="w-full h-auto object-cover max-w-xs"
+                  className="w-full h-auto object-cover"
                 />
               ) : (
-                <div className="w-full aspect-2/3 bg-linear-to-br from-gray-100 to-gray-200 rounded-xl flex items-center justify-center text-gray-400 text-xl font-semibold">
-                  No Poster
+                <div className="w-full aspect-2/3 bg-gray-100 flex items-center justify-center text-gray-400 text-base font-medium">
+                  No Poster Available
                 </div>
               )}
             </div>
           </div>
 
-          <div className="md:col-span-2 space-y-4">
-            <div>
-              <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
-                {movie.name}
-              </h1>
-
-              <div className="flex items-center gap-2 flex-wrap">
-                <span
-                  className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                    movie.releaseStatus === "RELEASED"
-                      ? "bg-green-100 text-green-700 border border-green-300"
-                      : movie.releaseStatus === "COMING_SOON"
-                        ? "bg-blue-100 text-blue-700 border border-blue-300"
-                        : "bg-red-100 text-red-700 border border-red-300"
-                  }`}
-                >
-                  {movie.releaseStatus?.replace("_", " ")}
-                </span>
+          <div className="md:col-span-2 space-y-6">
+            <div className="space-y-3">
+              <div className="flex items-center gap-2.5 flex-wrap">
+                {movie.releaseStatus && (
+                  <span
+                    className={`px-2.5 py-0.5 rounded-full text-xs font-semibold ${
+                      movie.releaseStatus === "RELEASED"
+                        ? "bg-emerald-50 text-emerald-700 border border-emerald-200"
+                        : movie.releaseStatus === "COMING_SOON"
+                          ? "bg-blue-50 text-blue-700 border border-blue-200"
+                          : "bg-gray-100 text-gray-700 border border-gray-200"
+                    }`}
+                  >
+                    {movie.releaseStatus?.replace("_", " ")}
+                  </span>
+                )}
                 {movie.certificate && (
-                  <span className="px-3 py-1 rounded-full text-xs font-bold bg-purple-100 text-purple-700 border border-purple-300">
+                  <span className="px-2.5 py-0.5 rounded-md text-xs font-semibold bg-gray-100 text-gray-800 border border-gray-200">
                     {movie.certificate}
                   </span>
                 )}
               </div>
+
+              <h1 className="text-3xl md:text-4xl font-bold text-gray-900 tracking-tight">
+                {movie.name}
+              </h1>
             </div>
 
-            <div className="grid grid-cols-2 gap-3">
-              {movie.language && (
-                <div className="bg-white p-3 rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition">
-                  <div className="flex items-center gap-2 text-gray-600 text-xs mb-1">
-                    <FiGlobe size={16} className="text-purple-600" />
-                    <span>Language</span>
+            <div className="bg-white border border-gray-200/90 rounded-2xl p-4 sm:p-5 shadow-xs">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                {movie.language && (
+                  <div>
+                    <span className="block text-xs text-gray-500 font-medium">Language</span>
+                    <span className="text-sm font-semibold text-gray-900">{movie.language}</span>
                   </div>
-                  <p className="text-gray-900 font-semibold text-sm">
-                    {movie.language}
-                  </p>
-                </div>
-              )}
-
-              {movie.releaseDate && (
-                <div className="bg-white p-3 rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition">
-                  <div className="flex items-center gap-2 text-gray-600 text-xs mb-1">
-                    <FiCalendar size={16} className="text-blue-600" />
-                    <span>Release Date</span>
+                )}
+                {movie.releaseDate && (
+                  <div>
+                    <span className="block text-xs text-gray-500 font-medium">Release Date</span>
+                    <span className="text-sm font-semibold text-gray-900">{formatDate(movie.releaseDate)}</span>
                   </div>
-                  <p className="text-gray-900 font-semibold text-sm">
-                    {formatDate(movie.releaseDate)}
-                  </p>
-                </div>
-              )}
-
-              {movie.director && (
-                <div className="bg-white p-3 rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition">
-                  <div className="flex items-center gap-2 text-gray-600 text-xs mb-1">
-                    <FiUser size={16} className="text-orange-600" />
-                    <span>Director</span>
+                )}
+                {movie.director && (
+                  <div>
+                    <span className="block text-xs text-gray-500 font-medium">Director</span>
+                    <span className="text-sm font-semibold text-gray-900">{movie.director}</span>
                   </div>
-                  <p className="text-gray-900 font-semibold text-sm">
-                    {movie.director}
-                  </p>
-                </div>
-              )}
-
-              {movie.genres?.length > 0 && (
-                <div className="bg-white p-3 rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition">
-                  <div className="flex items-center gap-2 text-gray-600 text-xs mb-1">
-                    <FiFilm size={16} className="text-pink-600" />
-                    <span>Genre</span>
+                )}
+                {movie.genres?.length > 0 && (
+                  <div>
+                    <span className="block text-xs text-gray-500 font-medium">Genre</span>
+                    <span className="text-sm font-semibold text-gray-900">{movie.genres.join(", ")}</span>
                   </div>
-                  <p className="text-gray-900 font-semibold text-sm">
-                    {movie.genres.join(", ")}
-                  </p>
-                </div>
-              )}
+                )}
+              </div>
             </div>
 
             {movie.description && (
-              <div className="bg-white p-4 rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition">
-                <h3 className="text-base font-semibold text-gray-900 mb-2">
+              <div className="space-y-2">
+                <h3 className="text-sm font-semibold text-gray-900 uppercase tracking-wider">
                   Synopsis
                 </h3>
                 <p className="text-gray-700 leading-relaxed text-sm">
@@ -157,15 +138,15 @@ export default function MovieDetails() {
             )}
 
             {movie.cast?.length > 0 && (
-              <div className="bg-white p-4 rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition">
-                <h3 className="text-base font-semibold text-gray-900 mb-2">
+              <div className="space-y-2">
+                <h3 className="text-sm font-semibold text-gray-900 uppercase tracking-wider">
                   Cast
                 </h3>
                 <div className="flex flex-wrap gap-2">
                   {movie.cast.map((actor, idx) => (
                     <span
                       key={idx}
-                      className="px-3 py-1 bg-gray-100 text-gray-800 text-xs rounded-md hover:bg-gray-200 transition border border-gray-300"
+                      className="px-3 py-1 bg-white text-gray-800 text-xs rounded-lg border border-gray-200 shadow-xs font-medium"
                     >
                       {actor}
                     </span>
@@ -175,22 +156,24 @@ export default function MovieDetails() {
             )}
 
             {movie.trailerUrl && (
-              <a
-                href={movie.trailerUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-linear-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white px-6 py-3 rounded-lg text-sm font-bold shadow-lg hover:shadow-xl transition transform hover:scale-105"
-              >
-                <FiPlay size={18} />
-                Watch Trailer
-              </a>
+              <div className="pt-2">
+                <a
+                  href={movie.trailerUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 bg-gray-950 hover:bg-gray-800 text-white px-6 py-3 rounded-xl text-sm font-medium shadow-sm hover:shadow active:scale-[0.98] transition duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2"
+                >
+                  <FiPlay size={16} />
+                  Watch Trailer
+                </a>
+              </div>
             )}
           </div>
         </div>
 
-        <div className="bg-white rounded-xl border border-gray-200 p-6 mb-10 shadow-lg hover:shadow-xl transition">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
-            <FiPlay className="text-purple-600" size={28} />
+        <div className="bg-white rounded-2xl border border-gray-200/90 p-6 sm:p-8 mb-12 shadow-xs">
+          <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+            <FiPlay className="text-gray-900" size={22} />
             Available Shows
           </h2>
           <ShowList movieId={id} />

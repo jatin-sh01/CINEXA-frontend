@@ -36,22 +36,22 @@ export default function Dashboard() {
   }, [theatersRes]);
 
   const statusColor = {
-    processing: "bg-yellow-100 text-yellow-700 border border-yellow-200",
-    successfull: "bg-green-100 text-green-700 border border-green-200",
-    cancelled: "bg-red-100 text-red-700 border border-red-200",
+    processing: "bg-amber-100 text-amber-800 border border-amber-200",
+    successfull: "bg-emerald-100 text-emerald-800 border border-emerald-200",
+    cancelled: "bg-rose-100 text-rose-800 border border-rose-200",
     expired: "bg-gray-100 text-gray-700 border border-gray-200",
   };
 
   return (
-    <div className="min-h-screen bg-white px-4 py-12">
+    <div className="min-h-screen bg-gray-50/50 px-4 py-8 sm:py-12">
       <div className="max-w-4xl mx-auto">
-        <div className="mb-10">
+        <div className="mb-6 sm:mb-8">
           <div>
-            <h1 className="text-4xl font-bold text-gray-900 mb-1">
+            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-gray-900 mb-1">
               My Bookings
             </h1>
-            <p className="text-gray-600 text-sm">
-              Manage and track your cinema bookings
+            <p className="text-gray-500 text-sm">
+              Manage and track your cinema reservations
             </p>
           </div>
         </div>
@@ -59,24 +59,29 @@ export default function Dashboard() {
         {loading ? (
           <Spinner />
         ) : error ? (
-          <div className="bg-red-50 border border-red-200 rounded-xl p-8 text-center">
+          <div className="bg-red-50 border border-red-200 rounded-2xl p-8 text-center">
             <p className="text-red-700 font-medium">{error}</p>
           </div>
         ) : bookings.length === 0 ? (
-          <div className="bg-gray-50 border border-gray-200 rounded-xl p-12 text-center">
-            <FiFilm className="text-gray-300 mx-auto mb-4" size={48} />
-            <p className="text-gray-600 text-lg mb-4">
-              No bookings yet. Start booking your favorite movies!
+          <div className="bg-white border border-gray-200/90 rounded-2xl p-10 sm:p-12 text-center shadow-xs">
+            <div className="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center text-gray-500 mx-auto mb-4">
+              <FiFilm size={22} />
+            </div>
+            <h3 className="text-base font-semibold text-gray-900 mb-1">
+              No bookings yet
+            </h3>
+            <p className="text-gray-500 text-sm max-w-sm mx-auto mb-6">
+              When you reserve tickets for a movie, your passes and receipts will appear here.
             </p>
             <Link
               to="/movies"
-              className="inline-block bg-gray-900 text-white px-6 py-2 rounded-lg font-medium hover:bg-gray-800 transition-colors"
+              className="inline-flex items-center justify-center bg-gray-950 text-white px-5 py-2.5 rounded-xl text-sm font-medium hover:bg-gray-800 active:scale-[0.98] transition duration-150 shadow-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2"
             >
               Browse Movies
             </Link>
           </div>
         ) : (
-          <div className="grid gap-4">
+          <div className="grid gap-3 sm:gap-4">
             {bookings.map((b) => {
               const movieName =
                 typeof b.movieId === "object"
@@ -90,7 +95,7 @@ export default function Dashboard() {
                 <Link
                   key={b._id}
                   to={`/booking/${b._id}`}
-                  className="block bg-white border border-gray-200 rounded-xl p-5 hover:shadow-lg hover:border-gray-300 transition-all group"
+                  className="block bg-white border border-gray-200/90 rounded-2xl p-5 hover:border-gray-950 transition duration-150 shadow-xs group"
                 >
                   <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                     <div className="flex-1">

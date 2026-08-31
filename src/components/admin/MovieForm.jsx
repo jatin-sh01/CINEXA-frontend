@@ -238,7 +238,7 @@ export default function MovieForm({ movie, onSaved }) {
         <button
           type="submit"
           disabled={busy}
-          className="flex-1 flex items-center justify-center gap-2 py-3 rounded-lg bg-linear-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white font-semibold shadow-md hover:shadow-lg transition disabled:opacity-50 disabled:cursor-not-allowed"
+          className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl bg-gray-950 hover:bg-gray-800 text-white font-medium shadow-sm transition duration-150 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
         >
           <FiSave size={18} />
           {busy ? "Saving..." : isEdit ? "Update Movie" : "Create Movie"}

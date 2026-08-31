@@ -5,7 +5,6 @@ import Spinner from "../shared/Spinner";
 import { formatCurrency, formatTime } from "../../utils/format";
 import { Link } from "react-router-dom";
 import {
-  FiMapPin,
   FiClock,
   FiTag,
   FiChevronRight,
@@ -185,12 +184,12 @@ export default function ShowList({ theaterId, movieId }) {
 
     return (
       <div className="space-y-6">
-        <div className="rounded-xl border border-blue-100 bg-linear-to-r from-blue-50 to-slate-50 p-4">
-          <div className="flex items-center gap-2 text-sm font-semibold text-blue-700 mb-3">
-            <FiCalendar size={16} />
+        <div className="rounded-2xl border border-gray-200/90 bg-gray-50/70 p-4">
+          <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-gray-500 mb-3">
+            <FiCalendar size={14} className="text-gray-700" />
             Choose Date
           </div>
-          <div className="flex gap-2 overflow-x-auto pb-1">
+          <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
             {dateOptions.map((dateKey) => {
               const label = dateLabel(dateKey);
               const active = selectedDate === dateKey;
@@ -199,19 +198,19 @@ export default function ShowList({ theaterId, movieId }) {
                   key={dateKey}
                   type="button"
                   onClick={() => setSelectedDate(dateKey)}
-                  className={`min-w-22 rounded-xl border px-3 py-2 text-left transition ${
+                  className={`min-w-20 sm:min-w-22 rounded-xl border px-3 py-2 text-left transition duration-150 active:scale-[0.98] cursor-pointer ${
                     active
-                      ? "border-purple-500 bg-purple-600 text-white shadow-sm"
-                      : "border-gray-200 bg-white text-gray-700 hover:border-purple-300 hover:bg-purple-50"
+                      ? "border-gray-950 bg-gray-950 text-white shadow-sm"
+                      : "border-gray-200 bg-white text-gray-700 hover:border-gray-300 hover:bg-gray-50"
                   }`}
                 >
-                  <p className="text-xs font-semibold uppercase tracking-wide">
+                  <p className={`text-[11px] font-semibold uppercase tracking-wider ${active ? "text-gray-300" : "text-gray-500"}`}>
                     {label.day}
                   </p>
                   <p className="text-lg font-bold leading-tight">
                     {label.date}
                   </p>
-                  <p className="text-xs font-medium">{label.month}</p>
+                  <p className={`text-xs ${active ? "text-gray-300" : "text-gray-500"}`}>{label.month}</p>
                 </button>
               );
             })}
@@ -228,36 +227,36 @@ export default function ShowList({ theaterId, movieId }) {
           {groupedByTheaterForMovie.map((group) => (
             <div
               key={group.theaterId}
-              className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm"
+              className="rounded-2xl border border-gray-200/90 bg-white p-5 shadow-xs"
             >
               <div className="flex items-center justify-between gap-3 mb-4">
                 <div>
-                  <h3 className="text-lg font-bold text-gray-900">
+                  <h3 className="text-base font-bold text-gray-900">
                     {group.theaterName}
                   </h3>
-                  <p className="text-sm text-gray-600">
+                  <p className="text-xs text-gray-500">
                     {group.theaterCity || "City unavailable"}
                   </p>
                 </div>
-                <span className="rounded-full bg-purple-50 px-3 py-1 text-xs font-semibold text-purple-700 border border-purple-100">
+                <span className="rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-700 border border-gray-200">
                   {group.shows.length} slot{group.shows.length !== 1 ? "s" : ""}
                 </span>
               </div>
 
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-2.5">
                 {group.shows.map((show) => (
                   <Link
                     key={show._id}
                     to={`/shows/${show._id}`}
-                    className="group min-w-30 rounded-lg border border-gray-300 bg-white px-3 py-2 hover:border-purple-400 hover:bg-purple-50 transition"
+                    className="group min-w-28 rounded-xl border border-gray-200 bg-white px-3.5 py-2.5 hover:border-gray-950 hover:bg-gray-50 transition active:scale-[0.98] shadow-2xs"
                   >
                     <p className="text-sm font-bold text-gray-900">
                       {show._timingDate ? formatTime(show.timing) : show.timing}
                     </p>
-                    <p className="text-xs text-gray-600">
+                    <p className="text-xs text-gray-500">
                       {show.format || "Standard"}
                     </p>
-                    <p className="text-xs font-semibold text-purple-700 mt-1">
+                    <p className="text-xs font-semibold text-gray-900 mt-1">
                       {formatCurrency(show.price)}
                     </p>
                   </Link>
@@ -267,7 +266,7 @@ export default function ShowList({ theaterId, movieId }) {
           ))}
 
           {!groupedByTheaterForMovie.length && (
-            <p className="text-gray-600 text-center py-8">
+            <p className="text-gray-500 text-center py-8 text-sm">
               No shows available for this date.
             </p>
           )}
@@ -278,14 +277,14 @@ export default function ShowList({ theaterId, movieId }) {
 
   if (theaterId) {
     return (
-      <div className="space-y-8">
+      <div className="space-y-6">
         {groupedByMovieForTheater.map((group) => (
           <div
             key={group.movieId}
-            className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm"
+            className="rounded-2xl border border-gray-200/90 bg-white p-5 sm:p-6 shadow-xs"
           >
-            <h3 className="text-xl font-bold text-gray-900 mb-4 inline-flex items-center gap-2">
-              <FiFilm className="text-purple-600" />
+            <h3 className="text-base font-bold text-gray-900 mb-4 inline-flex items-center gap-2">
+              <FiFilm className="text-gray-700" size={18} />
               {group.movieName}
             </h3>
 
@@ -294,26 +293,34 @@ export default function ShowList({ theaterId, movieId }) {
                 <Link
                   key={show._id}
                   to={`/shows/${show._id}`}
-                  className="group rounded-lg border border-gray-200 p-3 hover:border-purple-400 hover:bg-purple-50 transition"
+                  className="group rounded-xl border border-gray-200 bg-white p-3.5 hover:border-gray-950 hover:bg-gray-50 transition active:scale-[0.98] shadow-2xs"
                 >
                   <div className="flex items-center justify-between gap-2">
-                    <div className="inline-flex items-center gap-2 text-gray-800 font-semibold">
-                      <FiClock className="text-purple-600" />
+                    <div className="inline-flex items-center gap-2 text-gray-900 font-semibold text-sm">
+                      <FiClock className="text-gray-500" size={16} />
                       {show._timingDate ? formatTime(show.timing) : show.timing}
                     </div>
-                    <span className="text-sm font-bold text-purple-700">
+                    <span className="text-xs font-bold text-gray-900">
                       {formatCurrency(show.price)}
                     </span>
                   </div>
-                  <div className="mt-2 text-xs text-gray-600 inline-flex items-center gap-2">
-                    <FiTag className="text-orange-600" />
-                    {show.format || "Standard"} • {show.noOfSeats} seats
+                  <div className="mt-2 text-xs text-gray-500 inline-flex items-center gap-1.5">
+                    <FiTag className="text-gray-400" size={14} />
+                    <span>{show.format || "Standard"}</span>
+                    <span>•</span>
+                    <span>{show.noOfSeats} seats</span>
                   </div>
                 </Link>
               ))}
             </div>
           </div>
         ))}
+
+        {!groupedByMovieForTheater.length && (
+          <p className="text-gray-500 text-center py-8 text-sm">
+            No shows scheduled for this theater.
+          </p>
+        )}
       </div>
     );
   }
@@ -324,54 +331,35 @@ export default function ShowList({ theaterId, movieId }) {
         <Link
           key={show._id}
           to={`/shows/${show._id}`}
-          className="group block bg-white rounded-xl border border-gray-200 overflow-hidden hover:border-purple-400 hover:shadow-lg transition-all duration-300"
+          className="group block bg-white rounded-2xl border border-gray-200/90 p-5 hover:border-gray-950 hover:shadow-xs transition duration-150"
         >
-          <div className="bg-linear-to-r from-purple-500 to-blue-500 h-1.5" />
-
-          <div className="p-4">
-            <div className="text-sm font-bold text-blue-600 mb-2 flex items-center gap-1">
-              <FiFilm size={16} />
-              {show.movieId?.name || "Unknown"}
+          <div className="flex items-center justify-between gap-2 mb-3">
+            <div className="text-sm font-bold text-gray-900 flex items-center gap-1.5">
+              <FiFilm size={15} className="text-gray-700" />
+              <span>{show.movieId?.name || "Unknown Movie"}</span>
             </div>
+            <span className="text-xs font-semibold text-gray-900">
+              {formatCurrency(show.price)}
+            </span>
+          </div>
 
-            <div className="flex items-center gap-2 mb-3">
-              <FiClock className="text-purple-600 shrink-0" size={18} />
-              <div className="text-lg font-bold text-gray-900">
-                {show._timingDate ? formatTime(show.timing) : show.timing}
-              </div>
-            </div>
+          <div className="flex items-center gap-2 mb-2 text-gray-700 text-sm">
+            <FiClock size={16} className="text-gray-500 shrink-0" />
+            <span className="font-semibold text-gray-900">
+              {show._timingDate ? formatTime(show.timing) : show.timing}
+            </span>
+            <span className="text-xs text-gray-400">•</span>
+            <span className="text-xs text-gray-500">{show.format || "Standard"}</span>
+          </div>
 
-            <div className="flex items-start justify-between gap-3 mb-3 pb-3 border-b border-gray-100">
-              <div>
-                <div className="text-xs text-gray-500 font-semibold mb-1">
-                  Format
-                </div>
-                <div className="inline-block bg-orange-100 text-orange-700 px-2.5 py-1 rounded-lg text-sm font-bold">
-                  {show.format || "Standard"}
-                </div>
-              </div>
-              <div className="text-right">
-                <div className="text-xs text-gray-500 font-semibold mb-1">
-                  Price
-                </div>
-                <div className="text-xl font-bold text-purple-600">
-                  {formatCurrency(show.price)}
-                </div>
-              </div>
-            </div>
+          <div className="flex items-center gap-2 text-xs text-gray-500 mb-4">
+            <FiTag size={14} className="text-gray-400" />
+            <span>{show.noOfSeats} seats available</span>
+          </div>
 
-            <div className="flex items-center gap-2 mb-4">
-              <FiTag className="text-orange-600" size={16} />
-              <span className="text-sm text-gray-700">
-                <span className="font-bold">{show.noOfSeats}</span> seats
-                available
-              </span>
-            </div>
-
-            <button className="w-full bg-linear-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white py-2.5 rounded-lg text-sm font-bold flex items-center justify-center gap-2 transition-all duration-300 group-hover:shadow-lg">
-              Book Tickets
-              <FiChevronRight size={16} />
-            </button>
+          <div className="w-full bg-gray-950 hover:bg-gray-800 text-white py-2.5 rounded-xl text-xs font-medium flex items-center justify-center gap-1.5 transition duration-150 active:scale-[0.98] shadow-2xs">
+            Book Tickets
+            <FiChevronRight size={15} />
           </div>
         </Link>
       ))}

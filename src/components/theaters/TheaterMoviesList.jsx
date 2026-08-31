@@ -30,9 +30,9 @@ export default function TheaterMoviesList({ theaterId, onMovieClick }) {
   };
 
   return (
-    <div className="space-y-6">
-      <h2 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
-        <FiFilm className="text-purple-600" size={28} />
+    <div className="space-y-5">
+      <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-gray-900 flex items-center gap-2">
+        <FiFilm className="text-gray-700" size={22} />
         Movies Playing
       </h2>
       {moviesList.length ? (
@@ -50,9 +50,9 @@ export default function TheaterMoviesList({ theaterId, onMovieClick }) {
           ))}
         </div>
       ) : (
-        <div className="bg-white rounded-xl border border-gray-200 p-8 text-center">
-          <p className="text-gray-600 font-medium">
-            No movies assigned to this theater yet
+        <div className="bg-white rounded-2xl border border-gray-200/90 p-8 text-center shadow-xs">
+          <p className="text-gray-500 text-sm">
+            No movies currently scheduled at this cinema
           </p>
         </div>
       )}

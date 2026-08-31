@@ -36,87 +36,62 @@ export default function BookingSummary() {
   };
 
   return (
-    <div className="min-h-screen bg-linear-to-b from-white to-gray-50 px-4 py-12">
-      <div className="max-w-2xl mx-auto space-y-8">
+    <div className="min-h-screen bg-gray-50/50 px-4 py-8 md:py-12">
+      <div className="max-w-xl mx-auto space-y-6">
         <div>
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-1">
             Booking Summary
           </h1>
-          <p className="text-gray-600">
+          <p className="text-sm text-gray-600">
             Review and confirm your ticket reservation
           </p>
         </div>
 
-        <div className="bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-md transition p-8 space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="flex items-start gap-4 p-5 bg-blue-50 rounded-xl border border-blue-100">
-              <FiClock className="text-blue-600 shrink-0 mt-1" size={24} />
-              <div>
-                <p className="text-sm text-blue-600 font-medium mb-1">
-                  Show Time
-                </p>
-                <p className="text-gray-900 font-bold text-lg">{timing}</p>
+        <div className="bg-white rounded-2xl border border-gray-200/90 shadow-sm p-6 sm:p-8 space-y-6">
+          <div className="divide-y divide-gray-100 text-sm">
+            <div className="flex items-center justify-between py-3.5">
+              <div className="flex items-center gap-2.5 text-gray-600">
+                <FiClock size={16} />
+                <span>Show Time</span>
               </div>
+              <span className="font-semibold text-gray-900">{timing}</span>
             </div>
 
-            <div className="flex items-start gap-4 p-5 bg-purple-50 rounded-xl border border-purple-100">
-              <FiUsers className="text-purple-600 shrink-0 mt-1" size={24} />
-              <div>
-                <p className="text-sm text-purple-600 font-medium mb-1">
-                  Number of Seats
-                </p>
-                <p className="text-gray-900 font-bold text-lg">
-                  {noOfSeats} {seat ? `(${seat})` : ""}
-                </p>
+            <div className="flex items-center justify-between py-3.5">
+              <div className="flex items-center gap-2.5 text-gray-600">
+                <FiUsers size={16} />
+                <span>Seats ({noOfSeats})</span>
               </div>
+              <span className="font-semibold text-gray-900">
+                {seat ? seat : `${noOfSeats} Selected`}
+              </span>
             </div>
 
-            <div className="flex items-start gap-4 p-5 bg-orange-50 rounded-xl border border-orange-100">
-              <FiDollarSign
-                className="text-orange-600 shrink-0 mt-1"
-                size={24}
-              />
-              <div>
-                <p className="text-sm text-orange-600 font-medium mb-1">
-                  Price per Seat
-                </p>
-                <p className="text-gray-900 font-bold text-lg">
-                  {formatCurrency(price)}
-                </p>
+            <div className="flex items-center justify-between py-3.5">
+              <div className="flex items-center gap-2.5 text-gray-600">
+                <FiDollarSign size={16} />
+                <span>Price per Seat</span>
               </div>
+              <span className="text-gray-900">{formatCurrency(price)}</span>
             </div>
 
-            <div className="flex items-start gap-4 p-5 bg-linear-to-br from-green-50 to-emerald-50 rounded-xl border border-green-200">
-              <FiCheck className="text-green-600 shrink-0 mt-1" size={24} />
-              <div>
-                <p className="text-sm text-green-600 font-medium mb-1">
-                  Total Amount
-                </p>
-                <p className="text-gray-900 font-bold text-2xl">
-                  {formatCurrency(totalCost)}
-                </p>
-              </div>
+            <div className="flex items-center justify-between py-4 pt-5">
+              <span className="text-base font-bold text-gray-900">Total Payable</span>
+              <span className="text-2xl font-bold text-gray-950">
+                {formatCurrency(totalCost)}
+              </span>
             </div>
           </div>
 
-          <div className="border-t border-gray-200" />
-
-          <div className="bg-gray-50 rounded-xl p-4 text-center text-sm text-gray-700">
-            You are about to book{" "}
-            <span className="font-bold text-gray-900">
-              {noOfSeats} ticket{Number(noOfSeats) > 1 ? "s" : ""}
-            </span>{" "}
-            for a total of{" "}
-            <span className="font-bold text-green-600">
-              {formatCurrency(totalCost)}
-            </span>
+          <div className="bg-gray-50 rounded-xl p-3.5 text-center text-xs text-gray-600 border border-gray-100">
+            Seats will be reserved for 5 minutes once you confirm.
           </div>
         </div>
 
         <button
           onClick={handleConfirm}
           disabled={busy}
-          className="w-full py-4 rounded-xl bg-linear-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white font-bold text-lg shadow-lg hover:shadow-xl transition-all transform hover:scale-105 disabled:opacity-50 disabled:scale-100 disabled:cursor-not-allowed"
+          className="w-full py-3.5 rounded-xl bg-gray-950 hover:bg-gray-800 text-white font-medium text-base shadow-sm hover:shadow active:scale-[0.98] transition duration-150 flex items-center justify-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100 cursor-pointer"
         >
           {busy ? "Creating Booking..." : "Confirm Booking"}
         </button>

@@ -72,7 +72,7 @@ function StripeCardForm({ bookingId, paymentId, onPaymentDone }) {
       <button
         type="submit"
         disabled={!stripe || !elements || submitting}
-        className="w-full rounded-lg bg-gray-900 px-4 py-3 text-sm font-semibold text-white hover:bg-black disabled:cursor-not-allowed disabled:opacity-60"
+        className="w-full rounded-xl bg-gray-950 px-4 py-3.5 text-sm font-medium text-white hover:bg-gray-800 active:scale-[0.98] transition duration-150 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 disabled:active:scale-100 cursor-pointer"
       >
         {submitting ? "Processing payment..." : "Pay with Card"}
       </button>
@@ -217,7 +217,7 @@ export default function PaymentForm({ booking, onSuccess }) {
       <button
         onClick={handleHostedCheckout}
         disabled={checkoutBusy}
-        className="w-full rounded-lg bg-indigo-600 px-4 py-3 text-sm font-semibold text-white hover:bg-indigo-700 disabled:cursor-not-allowed disabled:opacity-60"
+        className="w-full rounded-xl bg-[#635BFF] hover:bg-[#5851EA] active:scale-[0.98] px-4 py-3.5 text-sm font-medium text-white shadow-sm transition duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#635BFF] focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 disabled:active:scale-100 cursor-pointer"
       >
         {checkoutBusy ? "Redirecting to Stripe..." : "Pay with Stripe Checkout"}
       </button>
@@ -233,7 +233,7 @@ export default function PaymentForm({ booking, onSuccess }) {
         <button
           onClick={handleInitializeCardPayment}
           disabled={intentBusy}
-          className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-sm font-semibold text-gray-900 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-60"
+          className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3.5 text-sm font-medium text-gray-900 hover:bg-gray-50 active:scale-[0.98] shadow-sm transition duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 disabled:active:scale-100 cursor-pointer"
         >
           {intentBusy ? "Preparing secure card form..." : "Pay with Card"}
         </button>

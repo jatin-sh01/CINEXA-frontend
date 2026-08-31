@@ -50,24 +50,24 @@ const MovieRow = memo(function MovieRow({
           <button
             onClick={() => scroll("left")}
             aria-label={`Scroll ${title} left`}
-            className="absolute -left-md top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-neutral-0 shadow-card flex items-center justify-center text-neutral-700 opacity-0 group-hover/row:opacity-100 transition hover:bg-neutral-100 focus-ring"
+            className="absolute -left-3 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-white shadow-md border border-gray-200 flex items-center justify-center text-gray-700 opacity-0 group-hover/row:opacity-100 transition hover:bg-gray-50 focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-900"
           >
             <FiChevronLeft size={18} />
           </button>
           <button
             onClick={() => scroll("right")}
             aria-label={`Scroll ${title} right`}
-            className="absolute -right-md top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-neutral-0 shadow-card flex items-center justify-center text-neutral-700 opacity-0 group-hover/row:opacity-100 transition hover:bg-neutral-100 focus-ring"
+            className="absolute -right-3 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-white shadow-md border border-gray-200 flex items-center justify-center text-gray-700 opacity-0 group-hover/row:opacity-100 transition hover:bg-gray-50 focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-900"
           >
             <FiChevronRight size={18} />
           </button>
 
           <div
             ref={scrollRef}
-            className="flex gap-md lg:gap-lg overflow-x-auto scrollbar-hide scroll-smooth pb-sm"
+            className="flex gap-4 lg:gap-6 overflow-x-auto scrollbar-hide scroll-smooth pb-2"
           >
             {movies.map((movie) => (
-              <div key={movie.id} className="shrink-0 w-37.5 sm:w-42.5">
+              <div key={movie.id} className="shrink-0 w-36 sm:w-44">
                 <MovieCard movie={movie} onClick={onCardClick} />
               </div>
             ))}

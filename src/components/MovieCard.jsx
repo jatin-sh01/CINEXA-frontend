@@ -60,16 +60,16 @@ const MovieCard = memo(function MovieCard({
   };
 
   const PosterSection = () => (
-    <div className="aspect-2/3 rounded-xl overflow-hidden bg-neutral-200 shadow-sm hover:shadow-lg transition-shadow duration-300">
+    <div className="aspect-2/3 rounded-2xl overflow-hidden bg-gray-100 shadow-xs group-hover:shadow-md transition-shadow duration-200">
       {posterUrl ? (
         <img
           src={posterUrl}
           alt={`${title} poster`}
           loading="lazy"
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+          className="w-full h-full object-cover group-hover:scale-[1.025] transition-transform duration-200 ease-out"
         />
       ) : (
-        <div className="w-full h-full flex items-center justify-center text-neutral-500 text-sm">
+        <div className="w-full h-full flex items-center justify-center text-gray-400 text-sm">
           No Poster
         </div>
       )}
@@ -77,10 +77,10 @@ const MovieCard = memo(function MovieCard({
   );
 
   const InfoSection = () => (
-    <div className="mt-2 px-0.5">
+    <div className="mt-2.5 px-0.5">
       <h3 className={getTitleClass()}>{title}</h3>
 
-      <p className="text-xs text-neutral-600 mt-1 truncate">
+      <p className="text-xs text-gray-500 mt-1 truncate">
         {certificate && <span>{certificate}</span>}
         {certificate && language && <span className="mx-1">•</span>}
         {language && <span>{language}</span>}
@@ -92,7 +92,7 @@ const MovieCard = memo(function MovieCard({
           {badges.map((badge) => (
             <span
               key={badge}
-              className={`${badgeSuccess} text-[10px] px-2 py-1`}
+              className={`${badgeSuccess} text-[10px] px-2 py-0.5`}
             >
               {badge}
             </span>
@@ -100,7 +100,7 @@ const MovieCard = memo(function MovieCard({
         </div>
       ) : releaseStatus ? (
         <span
-          className={`${getStatusBadgeClass(releaseStatus)} text-[10px] px-2 py-1 mt-2 inline-block`}
+          className={`${getStatusBadgeClass(releaseStatus)} text-[10px] px-2 py-0.5 mt-2 inline-block`}
         >
           {releaseStatus.replace("_", " ")}
         </span>
@@ -112,7 +112,7 @@ const MovieCard = memo(function MovieCard({
     return (
       <Link
         to={`/movies/${id}`}
-        className="group block hover:opacity-90 transition"
+        className="group block rounded-2xl active:scale-[0.98] transition-transform duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2"
       >
         <PosterSection />
         <InfoSection />
@@ -122,7 +122,7 @@ const MovieCard = memo(function MovieCard({
 
   return (
     <div
-      className="group block cursor-pointer hover:opacity-90 transition"
+      className="group block cursor-pointer rounded-2xl active:scale-[0.98] transition-transform duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2"
       role="button"
       tabIndex={0}
       aria-label={`View ${title}`}

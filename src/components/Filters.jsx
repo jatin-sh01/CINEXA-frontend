@@ -24,10 +24,10 @@ const Filters = memo(function Filters({
               key={`${type}-${value}`}
               onClick={() => onToggle(type, value)}
               aria-pressed={isActive}
-              className={`shrink-0 px-4 py-1.5 rounded-full text-sm font-medium border transition-colors ${
+              className={`shrink-0 px-4 py-1.5 rounded-full text-xs sm:text-sm font-medium border transition duration-150 active:scale-[0.96] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-1 ${
                 isActive
-                  ? "bg-gray-900 text-white border-gray-900"
-                  : "bg-white text-gray-600 border-gray-300 hover:border-gray-400"
+                  ? "bg-gray-950 text-white border-gray-950 shadow-xs"
+                  : "bg-white text-gray-700 border-gray-200 hover:border-gray-300 hover:bg-gray-50 shadow-2xs"
               }`}
             >
               {value}

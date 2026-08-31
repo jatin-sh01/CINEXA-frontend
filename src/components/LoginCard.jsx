@@ -73,44 +73,80 @@ export default function LoginCard() {
 
         <form onSubmit={handleSubmit} className="space-y-4">
           {mode === "register" && (
-            <input
-              type="text"
-              placeholder="Full Name"
-              value={form.name}
-              onChange={set("name")}
-              required
-              className="w-full px-4 py-3 rounded-lg border border-gray-300 text-gray-800 placeholder:text-gray-400 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-300 transition text-sm"
-            />
+            <div>
+              <label
+                htmlFor="login-card-name"
+                className="block text-xs font-medium text-gray-700 mb-1.5"
+              >
+                Full Name
+              </label>
+              <input
+                id="login-card-name"
+                name="name"
+                type="text"
+                autoComplete="name"
+                placeholder="e.g. Jane Doe"
+                value={form.name}
+                onChange={set("name")}
+                required
+                className="w-full px-3.5 py-2.5 rounded-xl border border-gray-300 bg-white text-gray-900 placeholder:text-gray-400 text-sm focus:outline-none focus:border-gray-950 focus:ring-2 focus:ring-gray-950/10 transition"
+              />
+            </div>
           )}
-          <input
-            type="email"
-            placeholder="Email address"
-            value={form.email}
-            onChange={set("email")}
-            required
-            className="w-full px-4 py-3 rounded-lg border border-gray-300 text-gray-800 placeholder:text-gray-400 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-300 transition text-sm"
-          />
-          <input
-            type="password"
-            placeholder={
-              mode === "register" ? "Password (min 6 chars)" : "Password"
-            }
-            value={form.password}
-            onChange={set("password")}
-            required
-            minLength={6}
-            className="w-full px-4 py-3 rounded-lg border border-gray-300 text-gray-800 placeholder:text-gray-400 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-300 transition text-sm"
-          />
+          <div>
+            <label
+              htmlFor="login-card-email"
+              className="block text-xs font-medium text-gray-700 mb-1.5"
+            >
+              Email Address
+            </label>
+            <input
+              id="login-card-email"
+              name="email"
+              type="email"
+              autoComplete="email"
+              placeholder="you@example.com"
+              value={form.email}
+              onChange={set("email")}
+              required
+              className="w-full px-3.5 py-2.5 rounded-xl border border-gray-300 bg-white text-gray-900 placeholder:text-gray-400 text-sm focus:outline-none focus:border-gray-950 focus:ring-2 focus:ring-gray-950/10 transition"
+            />
+          </div>
+          <div>
+            <label
+              htmlFor="login-card-password"
+              className="block text-xs font-medium text-gray-700 mb-1.5"
+            >
+              Password
+            </label>
+            <input
+              id="login-card-password"
+              name="password"
+              type="password"
+              autoComplete={mode === "register" ? "new-password" : "current-password"}
+              placeholder={
+                mode === "register" ? "At least 6 characters" : "Enter your password"
+              }
+              value={form.password}
+              onChange={set("password")}
+              required
+              minLength={6}
+              className="w-full px-3.5 py-2.5 rounded-xl border border-gray-300 bg-white text-gray-900 placeholder:text-gray-400 text-sm focus:outline-none focus:border-gray-950 focus:ring-2 focus:ring-gray-950/10 transition"
+            />
+          </div>
 
           <button
+            type="submit"
             disabled={busy}
-            className="w-full py-3 rounded-lg bg-gray-900 hover:bg-gray-800 text-white font-semibold text-sm disabled:opacity-50 transition"
+            className="w-full py-3 rounded-xl bg-gray-950 hover:bg-gray-800 text-white font-medium text-sm shadow-sm active:scale-[0.98] transition duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100 cursor-pointer"
           >
             {busy
               ? mode === "login"
                 ? "Signing in\u2026"
-                : "Creating\u2026"
-              : "Continue"}
+                : "Creating account\u2026"
+              : mode === "login"
+                ? "Sign In"
+                : "Create Account"}
           </button>
         </form>
 

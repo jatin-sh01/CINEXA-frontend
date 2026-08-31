@@ -68,7 +68,7 @@ const HeroBanner = memo(function HeroBanner({
                     src={item.backdropUrl}
                     alt=""
                     aria-hidden="true"
-                    className="absolute inset-0 w-full h-full object-cover blur-2xl opacity-60 animate-ken-burns"
+                    className="absolute inset-0 w-full h-full object-cover blur-2xl opacity-50"
                     loading={idx === 0 ? "eager" : "lazy"}
                   />
                 )}
@@ -79,7 +79,7 @@ const HeroBanner = memo(function HeroBanner({
 
                 <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-10 h-full flex items-center">
                   {isActive && (
-                    <div className="max-w-xl animate-poster-in">
+                    <div className="max-w-xl animate-fade-in">
                       <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 leading-tight mb-3">
                         {item.title}
                       </h2>
@@ -101,7 +101,7 @@ const HeroBanner = memo(function HeroBanner({
                       {item.cta && (
                         <Link
                           to={item.cta.href || "#"}
-                          className="inline-block bg-gray-900 hover:bg-gray-800 text-white text-xs sm:text-sm font-semibold px-4 py-2 sm:px-8 sm:py-3 rounded-xl shadow-lg transition-all"
+                          className="inline-flex items-center justify-center bg-gray-950 hover:bg-gray-800 active:scale-[0.98] text-white text-xs sm:text-sm font-medium px-5 py-2.5 sm:px-7 sm:py-3.5 rounded-xl shadow-sm transition duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2"
                         >
                           {item.cta.label}
                         </Link>
@@ -110,11 +110,11 @@ const HeroBanner = memo(function HeroBanner({
                   )}
 
                   {item.posterUrl && isActive && (
-                    <div className="ml-auto shrink-0 animate-poster-in">
+                    <div className="ml-auto shrink-0 animate-fade-in">
                       <img
                         src={item.posterUrl}
                         alt={`${item.title} poster`}
-                        className="h-48 sm:h-56 md:h-80 lg:h-96 w-32 sm:w-40 md:w-52 lg:w-64 rounded-2xl shadow-2xl object-cover animate-poster-in"
+                        className="h-48 sm:h-56 md:h-80 lg:h-96 w-32 sm:w-40 md:w-52 lg:w-64 rounded-2xl shadow-xl object-cover"
                         loading={idx === 0 ? "eager" : "lazy"}
                       />
                     </div>
@@ -132,17 +132,17 @@ const HeroBanner = memo(function HeroBanner({
             type="button"
             onClick={() => swiperInstance?.slidePrev()}
             aria-label="Previous slide"
-            className="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-9 h-9 hidden md:flex items-center justify-center text-gray-700"
+            className="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 hidden md:flex items-center justify-center rounded-full bg-white/80 hover:bg-white text-gray-900 shadow-sm backdrop-blur-xs transition duration-150 active:scale-95 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950"
           >
-            <FiChevronLeft size={30} />
+            <FiChevronLeft size={22} />
           </button>
           <button
             type="button"
             onClick={() => swiperInstance?.slideNext()}
             aria-label="Next slide"
-            className="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-9 h-9 hidden md:flex items-center justify-center text-gray-700"
+            className="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 hidden md:flex items-center justify-center rounded-full bg-white/80 hover:bg-white text-gray-900 shadow-sm backdrop-blur-xs transition duration-150 active:scale-95 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950"
           >
-            <FiChevronRight size={30} />
+            <FiChevronRight size={22} />
           </button>
         </>
       )}

@@ -108,24 +108,24 @@ export default function AdminShows() {
       ) : (
         <div className="space-y-5">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div className="rounded-xl border border-purple-100 bg-linear-to-r from-purple-50 to-white p-4">
-              <p className="text-xs font-semibold uppercase tracking-wide text-purple-700">
+            <div className="rounded-2xl border border-gray-200/90 bg-white p-5 shadow-xs">
+              <p className="text-xs font-semibold uppercase tracking-wider text-gray-500">
                 Total Shows
               </p>
               <p className="mt-1 text-2xl font-bold text-gray-900">
                 {shows.length}
               </p>
             </div>
-            <div className="rounded-xl border border-blue-100 bg-linear-to-r from-blue-50 to-white p-4">
-              <p className="text-xs font-semibold uppercase tracking-wide text-blue-700">
+            <div className="rounded-2xl border border-gray-200/90 bg-white p-5 shadow-xs">
+              <p className="text-xs font-semibold uppercase tracking-wider text-gray-500">
                 Movies Active
               </p>
               <p className="mt-1 text-2xl font-bold text-gray-900">
                 {new Set(shows.map((s) => s.movieId?._id).filter(Boolean)).size}
               </p>
             </div>
-            <div className="rounded-xl border border-orange-100 bg-linear-to-r from-orange-50 to-white p-4">
-              <p className="text-xs font-semibold uppercase tracking-wide text-orange-700">
+            <div className="rounded-2xl border border-gray-200/90 bg-white p-5 shadow-xs">
+              <p className="text-xs font-semibold uppercase tracking-wider text-gray-500">
                 Theaters Running
               </p>
               <p className="mt-1 text-2xl font-bold text-gray-900">

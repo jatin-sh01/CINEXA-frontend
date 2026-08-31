@@ -61,55 +61,63 @@ export default function ShowPage() {
   };
 
   return (
-    <div className="min-h-screen bg-linear-to-b from-white to-gray-50 px-4 py-12">
-      <div className="max-w-4xl mx-auto space-y-8">
-        <div className="space-y-3">
-          <div className="flex items-center gap-2 text-purple-600 font-semibold">
-            <FiFilm size={20} />
+    <div className="min-h-screen bg-gray-50/50 px-4 py-8 md:py-12">
+      <div className="max-w-4xl mx-auto space-y-6">
+        <div className="space-y-1">
+          <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-gray-500">
+            <FiFilm size={14} className="text-gray-900" />
             <span>Select Your Seats</span>
           </div>
-          <h1 className="text-4xl font-bold text-gray-900">{movieName}</h1>
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-900">{movieName}</h1>
         </div>
 
-        <div className="bg-white border border-gray-200 rounded-2xl p-8 shadow-sm hover:shadow-md transition">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-            <div className="flex flex-col items-start gap-3 p-4 bg-linear-to-br from-blue-50 to-blue-100/50 rounded-xl border border-blue-200">
-              <div className="flex items-center gap-2 text-blue-700 font-semibold">
-                <FiClock size={20} />
-                <span>Show Time</span>
+        <div className="bg-white border border-gray-200/90 rounded-2xl p-4 sm:p-5 shadow-xs">
+          <div className={`grid grid-cols-2 ${show.format ? "sm:grid-cols-4" : "sm:grid-cols-3"} gap-4`}>
+            <div className="flex items-center gap-3 p-2 rounded-xl bg-gray-50/80">
+              <div className="w-9 h-9 rounded-lg bg-white border border-gray-200 flex items-center justify-center text-gray-700 shrink-0">
+                <FiClock size={16} />
               </div>
-              <p className="text-gray-900 font-bold text-lg">
-                {formatTime(show.timing)}
-              </p>
+              <div>
+                <span className="block text-xs text-gray-500">Show Time</span>
+                <span className="text-sm font-semibold text-gray-900">
+                  {formatTime(show.timing)}
+                </span>
+              </div>
             </div>
 
-            <div className="flex flex-col items-start gap-3 p-4 bg-linear-to-br from-purple-50 to-purple-100/50 rounded-xl border border-purple-200">
-              <div className="flex items-center gap-2 text-purple-700 font-semibold">
-                <FiUsers size={20} />
-                <span>Available</span>
+            <div className="flex items-center gap-3 p-2 rounded-xl bg-gray-50/80">
+              <div className="w-9 h-9 rounded-lg bg-white border border-gray-200 flex items-center justify-center text-gray-700 shrink-0">
+                <FiUsers size={16} />
               </div>
-              <p className="text-gray-900 font-bold text-lg">
-                {show.noOfSeats} seats
-              </p>
+              <div>
+                <span className="block text-xs text-gray-500">Availability</span>
+                <span className="text-sm font-semibold text-gray-900">
+                  {show.noOfSeats} seats
+                </span>
+              </div>
             </div>
 
-            <div className="flex flex-col items-start gap-3 p-4 bg-linear-to-br from-orange-50 to-orange-100/50 rounded-xl border border-orange-200">
-              <div className="flex items-center gap-2 text-orange-700 font-semibold">
-                <FiDollarSign size={20} />
-                <span>Per Seat</span>
+            <div className="flex items-center gap-3 p-2 rounded-xl bg-gray-50/80">
+              <div className="w-9 h-9 rounded-lg bg-white border border-gray-200 flex items-center justify-center text-gray-700 shrink-0">
+                <FiDollarSign size={16} />
               </div>
-              <p className="text-gray-900 font-bold text-lg">
-                {formatCurrency(show.price)}
-              </p>
+              <div>
+                <span className="block text-xs text-gray-500">Per Seat</span>
+                <span className="text-sm font-semibold text-gray-900">
+                  {formatCurrency(show.price)}
+                </span>
+              </div>
             </div>
 
             {show.format && (
-              <div className="flex flex-col items-start gap-3 p-4 bg-linear-to-br from-green-50 to-green-100/50 rounded-xl border border-green-200">
-                <div className="flex items-center gap-2 text-green-700 font-semibold">
-                  <FiPlay size={20} />
-                  <span>Format</span>
+              <div className="flex items-center gap-3 p-2 rounded-xl bg-gray-50/80">
+                <div className="w-9 h-9 rounded-lg bg-white border border-gray-200 flex items-center justify-center text-gray-700 shrink-0">
+                  <FiPlay size={16} />
                 </div>
-                <p className="text-gray-900 font-bold text-lg">{show.format}</p>
+                <div>
+                  <span className="block text-xs text-gray-500">Format</span>
+                  <span className="text-sm font-semibold text-gray-900">{show.format}</span>
+                </div>
               </div>
             )}
           </div>
@@ -121,19 +129,17 @@ export default function ShowPage() {
           <button
             onClick={handleBook}
             disabled={seats.length === 0}
-            className="w-full py-4 rounded-xl bg-linear-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white font-bold text-lg shadow-lg hover:shadow-xl transition-all transform hover:scale-105 disabled:opacity-50 disabled:scale-100 disabled:cursor-not-allowed"
+            className="w-full py-3.5 rounded-xl bg-gray-950 hover:bg-gray-800 text-white font-medium text-base shadow-sm hover:shadow active:scale-[0.98] transition duration-150 flex items-center justify-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100 cursor-pointer"
           >
-            <div className="flex items-center justify-center gap-2">
-              <FiPlay size={20} />
-              {seats.length > 0 ? (
-                <>
-                  Book {seats.length} Seat{seats.length !== 1 ? "s" : ""} •{" "}
-                  {formatCurrency(totalPrice)}
-                </>
-              ) : (
-                "Select Seats to Continue"
-              )}
-            </div>
+            <FiPlay size={18} />
+            {seats.length > 0 ? (
+              <>
+                Book {seats.length} Seat{seats.length !== 1 ? "s" : ""} •{" "}
+                {formatCurrency(totalPrice)}
+              </>
+            ) : (
+              "Select Seats to Continue"
+            )}
           </button>
           {seats.length === 0 && (
             <p className="text-center text-gray-600 text-sm">
