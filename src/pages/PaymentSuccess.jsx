@@ -8,7 +8,9 @@ import {
   FiCopy,
   FiFilm,
   FiList,
+  FiMapPin,
   FiPrinter,
+  FiUser,
 } from "react-icons/fi";
 import {
   clearPendingPayment,
@@ -17,11 +19,13 @@ import {
   loadPendingPayment,
 } from "../services/paymentService";
 import { get } from "../api";
+import { useAuth } from "../contexts/AuthContext";
 import { formatCurrency, formatDate, formatTime } from "../utils/format";
 import CinexaLogo from "../components/shared/CinexaLogo";
 
 export default function PaymentSuccess() {
   const [searchParams] = useSearchParams();
+  const { user } = useAuth();
   const [bookingStatus, setBookingStatus] = useState("");
   const [paymentStatus, setPaymentStatus] = useState("");
   const [verifying, setVerifying] = useState(true);
@@ -30,6 +34,7 @@ export default function PaymentSuccess() {
   const [booking, setBooking] = useState(null);
   const [movie, setMovie] = useState(null);
   const [theater, setTheater] = useState(null);
+  const [show, setShow] = useState(null);
   const [copied, setCopied] = useState(false);
 
   const pending = useMemo(() => loadPendingPayment(), []);
@@ -147,10 +152,11 @@ export default function PaymentSuccess() {
     };
   }, [bookingId, paymentId, paymentIntent, sessionId]);
 
-  // Fetch movie and theater if not fully populated in booking object
+  // Fetch real movie, theater, and show records from DB
   useEffect(() => {
     if (!booking) return;
 
+    // 1. Movie record
     const rawMovie = booking.movieId;
     if (rawMovie && typeof rawMovie === "object") {
       setMovie(rawMovie);
@@ -162,6 +168,7 @@ export default function PaymentSuccess() {
         .catch(() => null);
     }
 
+    // 2. Theater record
     const rawTheater = booking.theaterId;
     if (rawTheater && typeof rawTheater === "object") {
       setTheater(rawTheater);
@@ -169,6 +176,18 @@ export default function PaymentSuccess() {
       get(`/api/theaters/${rawTheater}`)
         .then((res) => {
           if (res?.data) setTheater(res.data);
+        })
+        .catch(() => null);
+    }
+
+    // 3. Show record (to get exact show price, screen format, and timing)
+    const rawShow = booking.showId;
+    if (rawShow && typeof rawShow === "object") {
+      setShow(rawShow);
+    } else if (rawShow && typeof rawShow === "string") {
+      get(`/api/show/${rawShow}`)
+        .then((res) => {
+          if (res?.data) setShow(res.data);
         })
         .catch(() => null);
     }
@@ -183,17 +202,48 @@ export default function PaymentSuccess() {
     bookingStatus === "expired" ||
     paymentStatus === "FAILED";
 
-  const movieName = movie?.name || (typeof booking?.movieId === "object" ? booking?.movieId?.name : null) || "Movie";
-  const moviePoster = movie?.poster || (typeof booking?.movieId === "object" ? booking?.movieId?.poster : null) || "";
-  const movieLanguage = movie?.language || "";
-  const movieGenre = movie?.genre || "";
-  const movieDuration = movie?.duration ? `${movie.duration} min` : "";
+  // Exact real data mapping from database
+  const realMovieName =
+    movie?.name ||
+    (typeof booking?.movieId === "object" ? booking?.movieId?.name : null) ||
+    show?.movieId?.name ||
+    "Movie";
 
-  const theaterName = theater?.name || (typeof booking?.theaterId === "object" ? booking?.theaterId?.name : null) || "Cinema Theater";
-  const theaterAddress = theater?.address || "";
-  const theaterCity = theater?.city || "";
+  const realMoviePoster =
+    movie?.poster ||
+    (typeof booking?.movieId === "object" ? booking?.movieId?.poster : null) ||
+    show?.movieId?.poster ||
+    "";
 
-  const timing = booking?.timing || "";
+  const realMovieLanguage = movie?.language || show?.movieId?.language || "";
+  const realMovieGenre = movie?.genre || show?.movieId?.genre || "";
+  const realMovieDuration = movie?.duration
+    ? `${movie.duration} min`
+    : show?.movieId?.duration
+      ? `${show.movieId.duration} min`
+      : "";
+
+  const realTheaterName =
+    theater?.name ||
+    (typeof booking?.theaterId === "object" ? booking?.theaterId?.name : null) ||
+    show?.theaterId?.name ||
+    "Cinema Theater";
+
+  const realTheaterAddress =
+    theater?.address ||
+    (typeof booking?.theaterId === "object" ? booking?.theaterId?.address : null) ||
+    show?.theaterId?.address ||
+    "";
+
+  const realTheaterCity =
+    theater?.city ||
+    (typeof booking?.theaterId === "object" ? booking?.theaterId?.city : null) ||
+    show?.theaterId?.city ||
+    "";
+
+  const realScreenFormat = show?.format || "Standard";
+
+  const timing = booking?.timing || show?.timing || "";
   const hasTimingDate = timing && !Number.isNaN(Date.parse(timing));
   const timingDateText = hasTimingDate
     ? formatDate(timing)
@@ -202,9 +252,8 @@ export default function PaymentSuccess() {
       : "Confirmed Date";
   const timingTimeText = hasTimingDate
     ? formatTime(timing)
-    : timing || "Standard Showtime";
+    : timing || "Showtime";
 
-  const totalCost = Number(booking?.totalCost || 0);
   const seatString = booking?.seat || "";
   const seatList = useMemo(() => {
     if (!seatString) {
@@ -218,7 +267,18 @@ export default function PaymentSuccess() {
   }, [seatString, booking?.noOfSeats]);
 
   const noOfSeats = Number(booking?.noOfSeats || seatList.length || 1);
-  const pricePerSeat = noOfSeats > 0 ? Math.round(totalCost / noOfSeats) : totalCost;
+
+  // Exact real price calculation
+  const realTotalCost = Number(booking?.totalCost || (show?.price ? show.price * noOfSeats : 0));
+  const realUnitPrice = show?.price || (noOfSeats > 0 && realTotalCost > 0 ? Math.round(realTotalCost / noOfSeats) : 0);
+
+  // Real Ticket Holder
+  const ticketHolderName =
+    (typeof booking?.userId === "object" ? booking.userId?.name : null) ||
+    user?.name ||
+    (typeof booking?.userId === "object" ? booking.userId?.email : null) ||
+    user?.email ||
+    "";
 
   const copyBookingId = () => {
     if (!bookingId) return;
@@ -323,10 +383,10 @@ export default function PaymentSuccess() {
           <div className="p-6 sm:p-8 space-y-6">
             {/* Movie Details */}
             <div className="flex gap-4 sm:gap-5 items-start">
-              {moviePoster ? (
+              {realMoviePoster ? (
                 <img
-                  src={moviePoster}
-                  alt={movieName}
+                  src={realMoviePoster}
+                  alt={realMovieName}
                   className="w-20 h-28 sm:w-22 sm:h-32 object-cover rounded-xl border border-gray-200 shadow-2xs shrink-0"
                 />
               ) : (
@@ -337,26 +397,38 @@ export default function PaymentSuccess() {
 
               <div className="flex-1 min-w-0">
                 <div className="flex flex-wrap items-center gap-1.5 mb-1.5">
-                  {movieLanguage && (
+                  {realMovieLanguage && (
                     <span className="px-2 py-0.5 rounded-md bg-gray-100 text-gray-700 text-[10px] font-bold uppercase tracking-wider">
-                      {movieLanguage}
+                      {realMovieLanguage}
                     </span>
                   )}
-                  {movieGenre && (
+                  {realScreenFormat && (
+                    <span className="px-2 py-0.5 rounded-md bg-gray-100 text-gray-700 text-[10px] font-bold uppercase tracking-wider">
+                      {realScreenFormat}
+                    </span>
+                  )}
+                  {realMovieGenre && (
                     <span className="text-xs text-gray-500 font-medium">
-                      {movieGenre}
+                      {realMovieGenre}
                     </span>
                   )}
                 </div>
 
                 <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-gray-900 leading-snug">
-                  {movieName}
+                  {realMovieName}
                 </h2>
 
-                {movieDuration && (
+                {realMovieDuration && (
                   <p className="text-xs text-gray-500 mt-1 flex items-center gap-1.5">
                     <FiClock size={12} className="text-gray-400" />
-                    <span>{movieDuration}</span>
+                    <span>{realMovieDuration}</span>
+                  </p>
+                )}
+
+                {ticketHolderName && (
+                  <p className="text-xs text-gray-600 mt-2 flex items-center gap-1.5 font-medium">
+                    <FiUser size={13} className="text-gray-400 shrink-0" />
+                    <span>Guest: {ticketHolderName}</span>
                   </p>
                 )}
               </div>
@@ -365,21 +437,23 @@ export default function PaymentSuccess() {
             {/* Event Meta Grid */}
             <div className="grid grid-cols-2 gap-4 pt-4 border-t border-gray-100">
               <div>
-                <p className="text-[11px] font-semibold uppercase tracking-wider text-gray-400">
+                <p className="text-[11px] font-semibold uppercase tracking-wider text-gray-400 flex items-center gap-1">
+                  <FiMapPin size={11} />
                   Theater
                 </p>
                 <p className="text-sm font-bold text-gray-900 mt-0.5 leading-snug">
-                  {theaterName}
+                  {realTheaterName}
                 </p>
-                {theaterAddress && (
+                {realTheaterAddress && (
                   <p className="text-xs text-gray-500 mt-0.5 truncate">
-                    {theaterAddress}{theaterCity ? `, ${theaterCity}` : ""}
+                    {realTheaterAddress}{realTheaterCity ? `, ${realTheaterCity}` : ""}
                   </p>
                 )}
               </div>
 
               <div>
-                <p className="text-[11px] font-semibold uppercase tracking-wider text-gray-400">
+                <p className="text-[11px] font-semibold uppercase tracking-wider text-gray-400 flex items-center gap-1">
+                  <FiClock size={11} />
                   Date & Time
                 </p>
                 <p className="text-sm font-bold text-gray-900 mt-0.5">
@@ -474,14 +548,16 @@ export default function PaymentSuccess() {
             {/* Financial Summary */}
             <div className="divide-y divide-gray-100 text-xs text-gray-600">
               <div className="flex justify-between py-2">
-                <span>Tickets ({noOfSeats} × {formatCurrency(pricePerSeat)})</span>
-                <span className="font-semibold text-gray-900">{formatCurrency(totalCost)}</span>
+                <span>
+                  Tickets ({noOfSeats} {realUnitPrice > 0 ? `× ${formatCurrency(realUnitPrice)}` : ""})
+                </span>
+                <span className="font-semibold text-gray-900">{formatCurrency(realTotalCost)}</span>
               </div>
               <div className="flex justify-between py-2 pt-3 items-center">
                 <span className="text-sm font-bold text-gray-900">Total Paid</span>
                 <div className="text-right">
                   <span className="text-lg font-extrabold text-gray-950">
-                    {formatCurrency(totalCost)}
+                    {formatCurrency(realTotalCost)}
                   </span>
                   <p className="text-[10px] font-semibold text-emerald-600 uppercase tracking-wider">
                     Paid via Stripe
